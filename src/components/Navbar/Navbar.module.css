@@ -1,0 +1,118 @@
+/* Styles for the main container */
+.mainContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+.myContainer {
+  justify-content: space-between;
+}
+.onMobileViewExtraMenu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: var(--font-Xlarge-size);
+  height: 100%;
+  color: var(--color-primary);
+}
+.logoName {
+  font-size: var(--font-Xlarge-size);
+}
+.navbarItems {
+  display: flex;
+  flex-direction: row-reverse;
+}
+/* Styles for the inner container */
+.innerContainer {
+  width: 100%;
+  height: 4.0625rem; /* 65px converted to rem */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logoImage {
+  width: 100%;
+  height: 46px;
+}
+.reverse {
+  flex-direction: row-reverse;
+}
+/* Styles for the tools */
+.tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tools > div:first-child {
+  width: fit-content !important;
+}
+/* Media queries for responsiveness */
+.logo {
+  font-size: xxx-large;
+}
+/* Styles for small devices (phones) */
+@media (max-width: 36rem) {
+  /* 576px converted to rem */
+  /* Add CSS styles for small devices here */
+  .navbarItems {
+    display: none;
+  }
+  .myContainer {
+    justify-content: none;
+    flex-direction: row !important;
+  }
+  .tools > span:last-child {
+    display: none;
+  }
+  .logo {
+    font-size: xxx-large;
+  }
+  .logoImage {
+    width: 76px;
+    height: auto;
+  }
+}
+
+/* Styles for small devices (tablets) */
+@media (min-width: 36.063rem) and (max-width: 48rem) {
+  /* 577px and 768px converted to rem */
+  /* Add CSS styles for small devices here */
+  .onMobileViewExtraMenu {
+    display: block;
+  }
+}
+
+/* Styles for medium devices (laptops and desktops) */
+@media (min-width: 48.063rem) and (max-width: 62rem) {
+  /* 769px and 992px converted to rem */
+  /* Add CSS styles for medium devices here */
+  .onMobileViewExtraMenu {
+    display: none;
+  }
+}
+
+/* Styles for large devices (desktops) */
+@media (min-width: 62.063rem) and (max-width: 75rem) {
+  /* 993px and 1200px converted to rem */
+  /* Add CSS styles for large devices here */
+  .onMobileViewExtraMenu {
+    display: none;
+  }
+}
+
+/* Styles for extra large devices (large desktops and TVs) */
+@media (min-width: 75.063rem) {
+  /* 1201px converted to rem */
+  /* Add CSS styles for extra large devices here */
+  .onMobileViewExtraMenu {
+    display: none;
+  }
+}

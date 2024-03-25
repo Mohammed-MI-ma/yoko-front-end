@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 27px;
+  font-family: "MontserratSemiBold";
+  font-size: 10px;
+}
+
+/* Styles for extra small devices (phones) */
+@media (max-width: 576px) {
+  /* Your CSS styles here */
+}
+
+/* Styles for small devices (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+  /* Your CSS styles here */
+}
+
+/* Styles for medium devices (laptops and desktops) */
+@media (min-width: 769px) and (max-width: 992px) {
+}
+
+/* Styles for large devices (desktops) */
+@media (min-width: 993px) and (max-width: 1200px) {
+}
+
+/* Styles for extra large devices (large desktops and TVs) */
+@media (min-width: 1201px) {
+}

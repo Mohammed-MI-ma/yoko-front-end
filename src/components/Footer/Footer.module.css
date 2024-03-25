@@ -1,0 +1,8 @@
+.pageFooter {
+  width: 100%;
+  background-repeat: no-repeat;
+  padding: 0 1rem 0 1rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,37 @@
+.basketAr {
+  transform: translateX(-40%);
+}
+/* Styles for extra small devices (phones) */
+@media (max-width: 576px) {
+  .basketAr {
+    transform: translateX(-40%);
+  }
+}
+
+/* Styles for small devices (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .basketAr {
+    transform: translateX(-40%);
+  }
+}
+
+/* Styles for medium devices (laptops and desktops) */
+@media (min-width: 769px) and (max-width: 992px) {
+  .basketAr {
+    transform: translateX(-40%);
+  }
+}
+
+/* Styles for large devices (desktops) */
+@media (min-width: 993px) and (max-width: 1200px) {
+  .basketAr {
+    transform: translateX(-40%);
+  }
+}
+
+/* Styles for extra large devices (large desktops and TVs) */
+@media (min-width: 1201px) {
+  .basket {
+    transform: translateX(-40%);
+  }
+}

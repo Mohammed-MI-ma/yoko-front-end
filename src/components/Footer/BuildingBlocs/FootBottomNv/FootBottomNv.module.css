@@ -1,0 +1,8 @@
+.footBottomNv {
+  width: 100%;
+  height: 0.125rem; /* 2px converted to rem */
+  background-color: #707785;
+  opacity: 0.3;
+  margin-top: 2.5rem; /* 40px converted to rem */
+  margin-bottom: 0.4375rem; /* 7px converted to rem */
+}
