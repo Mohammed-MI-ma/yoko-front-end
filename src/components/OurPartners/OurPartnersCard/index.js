@@ -22,6 +22,7 @@ const OurPartnersCard = ({ font, lowQualitySrc, highQualitySrc, alt }) => {
       }}
     >
       <Card
+        hoverable
         cover={
           <ProgressiveImage
             lowQualitySrc={lowQualitySrc}
@@ -29,17 +30,20 @@ const OurPartnersCard = ({ font, lowQualitySrc, highQualitySrc, alt }) => {
             alt={alt}
           />
         }
-        hoverable
         style={{
           width: 240,
+          cursor: "pointer",
           height: 280,
           background: "var(--color-primary)",
         }}
       >
         <Meta
           title={alt}
-          className=""
-          style={{ color: "white", fontFamily: font, fontWeight: "700" }}
+          style={{
+            color: "white",
+            fontFamily: "Primary-Regular-fr",
+            fontWeight: "700",
+          }}
         />
       </Card>
     </ConfigProvider>

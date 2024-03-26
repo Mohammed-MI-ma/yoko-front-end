@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const useResponsiveState = () => {
-  const isMobileInitial = useMediaQuery({ maxWidth: 390 });
-  const isSmallDeviceInitial = useMediaQuery({ minWidth: 391, maxWidth: 575 });
+  const isMobileInitial = useMediaQuery({ maxWidth: 388 });
+  const isSmallDeviceInitial = useMediaQuery({ minWidth: 389, maxWidth: 575 });
   const isMediumDeviceInitial = useMediaQuery({ minWidth: 576, maxWidth: 767 });
   const isLargeDeviceInitial = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const isExtraLargeDeviceInitial = useMediaQuery({
@@ -26,7 +26,7 @@ const useResponsiveState = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 390);
-      setIsSmallDevice(window.innerWidth >= 391 && window.innerWidth <= 575);
+      setIsSmallDevice(window.innerWidth > 391 && window.innerWidth <= 575);
       setIsMediumDevice(window.innerWidth >= 576 && window.innerWidth <= 767);
       setIsLargeDevice(window.innerWidth >= 768 && window.innerWidth <= 991);
       setIsExtraLargeDevice(

@@ -44,7 +44,7 @@ const HeroContainer = forwardRef(({ language, children }, ref) => {
       style={{
         backgroundImage: `url(${glow})`,
         height: `calc(100vh - ${
-          isMobile ? "-7rem" : isSmallDevice ? "8rem" : "4.0625rem"
+          isMobile ? "145px" : isSmallDevice ? "145px" : "145px"
         } )`,
         backgroundColor: "var(--color-secondary)",
         color: "var(--color-accent)",

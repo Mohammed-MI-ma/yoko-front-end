@@ -6,7 +6,6 @@ const ProgressiveImage = ({ lowQualitySrc, highQualitySrc, alt }) => {
   const handleHighQualityLoad = () => {
     setHighQualityLoaded(true);
   };
-  console.log("thi", lowQualitySrc, highQualitySrc, alt);
 
   return (
     <img

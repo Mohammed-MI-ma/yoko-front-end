@@ -98,8 +98,9 @@ function App() {
             element={<HomePage language={language} />}
           />
         </Routes>
-        <Footer />
+
         <BackTop visibilityHeight={0} />
+        <Footer />
       </div>
     </ConfigProvider>
   );

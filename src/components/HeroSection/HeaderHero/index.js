@@ -3,23 +3,24 @@ import React, { useEffect, useState } from "react";
 //__FRAMER__MOTION
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
+import useResponsiveState from "../../../utils/useResponsiveState";
 
 const HeaderHero = ({ primaryRegularFont, language, children }) => {
-  const isMobileInitial = useMediaQuery({ maxWidth: 500 });
-  const [isMobile, setIsMobile] = useState(isMobileInitial);
+  const { isMobile, isSmallDevice, isMediumDevice } = useResponsiveState();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 500);
-    };
+  const regularStyles = {
+    /* Regular styles here */
+    textTransform: "uppercase",
+    fontSize: "2rem",
+  };
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
+  const mobileStyles = {
+    /* Styles specific to mobile screens */
+    /* Regular styles here */
+    textTransform: "uppercase",
+    fontSize: "1.5rem",
+    textAlign: "center",
+  };
   return (
     <motion.h1
       initial={{ opacity: 0, y: 20 }}
@@ -28,24 +29,14 @@ const HeaderHero = ({ primaryRegularFont, language, children }) => {
       style={{
         fontFamily: primaryRegularFont,
         direction: language === "ar" ? "rtl" : "ltr",
-        ...(isMobile ? mobileStyles : regularStyles),
+        ...(isMobile || isSmallDevice || isMediumDevice
+          ? mobileStyles
+          : regularStyles),
       }}
     >
       {children}
     </motion.h1>
   );
 };
-const regularStyles = {
-  /* Regular styles here */
-  textTransform: "uppercase",
-  fontSize: "2rem",
-};
 
-const mobileStyles = {
-  /* Styles specific to mobile screens */
-  /* Regular styles here */
-  textTransform: "uppercase",
-  fontSize: "2rem",
-  textAlign: "center",
-};
 export default HeaderHero;

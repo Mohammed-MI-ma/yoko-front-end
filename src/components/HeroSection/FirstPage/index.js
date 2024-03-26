@@ -20,7 +20,7 @@ import HeroContainer from "../HeroContainer";
 import HeaderHero from "../HeaderHero";
 import { useInView } from "react-intersection-observer";
 
-import { useMediaQuery } from "react-responsive";
+import useResponsiveState from "../../../utils/useResponsiveState";
 
 const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
   //__USE_IN_VIEW
@@ -36,30 +36,23 @@ const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
     }
   }, [controls, inView]);
 
-  const isMobileInitial = useMediaQuery({ maxWidth: 500 });
-  const [isMobile, setIsMobile] = useState(isMobileInitial);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 500);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const { isMobile, isSmallDevice, isMediumDevice } = useResponsiveState();
 
   return (
     <HeroContainer language={language} ref={ref || refInView}>
       <div className="lg:w-1/2 p-4 items-center flex gap-1 flex-col">
         <HeaderHero primaryRegularFont={primaryRegularFont} language={language}>
-          {t("basket")}
-          <br />
-          {t("Fresh")}
-          <br />
-          {t("ForYou")}
+          {isMobile || isSmallDevice || isMediumDevice ? (
+            t("ForYou")
+          ) : (
+            <>
+              {t("basket")}
+              <br />
+              {t("Fresh")}
+              <br />
+              {t("ForYou")}
+            </>
+          )}
         </HeaderHero>
         <Button
           className="text-white px-10 py-3 text-xl rounded-full"
@@ -74,7 +67,6 @@ const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
         >
           {t("takeAdvantage")}
         </Button>
-        <Divider />
         <Button
           type="Link"
           className="text-white px-10 py-3 text-xl rounded-full mt-10"
@@ -91,14 +83,26 @@ const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
         <SocialMediaButtons />
       </div>
       <div
-        className={`lg:w-1/2  p-4 flex items-center sm:m-10 ${
+        className={`lg:w-1/2  p-4 flex items-center sm:m-10 h-full justify-center ${
           language === "ar" ? style.basketAr : null
-        }`}
-        style={isMobile ? mobileStyles : regularStyles}
+        } `}
+        style={
+          isMobile
+            ? mobileStyles
+            : isSmallDevice
+            ? { padding: 0 }
+            : regularStyles
+        }
       >
         <Image
-          src={isMobile ? bucketMobile : bucket}
-          style={isMobile ? mobileStyles : regularStyles}
+          src={
+            isMobile || isSmallDevice || isMediumDevice ? bucketMobile : bucket
+          }
+          style={
+            isMobile || isSmallDevice || isMediumDevice
+              ? mobileStyles
+              : regularStyles
+          }
           preview={false}
         />
       </div>
@@ -112,7 +116,7 @@ const regularStyles = {
 
 const mobileStyles = {
   /* Styles specific to mobile screens */
-  width: "250px",
+  width: "45vw",
 };
 
 export default FirstPage;

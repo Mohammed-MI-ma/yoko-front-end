@@ -19,8 +19,8 @@ const HeroSection = () => {
   return (
     <section id="hero-section">
       <Carousel
-        autoplay
         infinite
+        autoplay
         autoplaySpeed={3000}
         dotPosition="right"
         easing="linear" // Example easing function, replace with your desired easing function

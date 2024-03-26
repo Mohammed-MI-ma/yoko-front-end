@@ -8,7 +8,7 @@ import { useInView } from "react-intersection-observer";
 import { LogoB, casablanca, glow, scooter } from "../../../images";
 
 //__ANTD
-import { Button, Divider, Image } from "antd";
+import { Button, Image } from "antd";
 
 //__USE_TRANSLATION
 import { useTranslation } from "react-i18next";
@@ -33,12 +33,6 @@ const SecondPage = ({ language, primaryRegularFont }) => {
     isLargeDevice,
     isExtraLargeDevice,
     isExtraExtraLargeDevice,
-    setIsMobile,
-    setIsSmallDevice,
-    setIsLargeDevice,
-    setIsExtraLargeDevice,
-    setIsMediumDevice,
-    setIsExtraExtraLargeDevice,
   } = useResponsiveState();
 
   //__USE_TRANSLATION
@@ -63,7 +57,7 @@ const SecondPage = ({ language, primaryRegularFont }) => {
         backgroundImage: `url(${glow})`,
         color: "var(--color-accent)",
         height: `calc(100vh - ${
-          isMobile ? "-7rem" : isSmallDevice ? "8rem" : "4.0625rem"
+          isMobile ? "145px" : isSmallDevice ? "145px" : "145px"
         } )`,
         backgroundColor: "var(--color-secondary)",
       }}
@@ -80,7 +74,7 @@ const SecondPage = ({ language, primaryRegularFont }) => {
           style={{
             position: "absolute",
             zIndex: 99999,
-            top: "calc(100vh / 2)",
+            bottom: "25px",
             left: "50%",
             transform: "translate(-50%)",
           }}
@@ -106,18 +100,26 @@ const SecondPage = ({ language, primaryRegularFont }) => {
       )}
 
       <div
-        className="lg:w-1/2 p-4 items-center flex gap-1 flex-col  items-center justify-center"
+        className="lg:w-1/2 p-4 items-center flex gap-1 flex-col  items-center "
         style={{
           height: "100%",
           fontSize: "2.5rem",
           fontFamily: primaryRegularFont,
           fontWeight: "900",
+          justifyContent:
+            isMobile || isSmallDevice || isMediumDevice ? null : "center",
         }}
       >
         {/** HeaderHero */}
         <HeaderHero primaryRegularFont={primaryRegularFont} language={language}>
-          {t("aCasa")} <br />
-          {t("maintenant")}
+          {isMobile || isSmallDevice || isMediumDevice ? (
+            t("ForYou")
+          ) : (
+            <>
+              {t("aCasa")} <br />
+              {t("maintenant")}
+            </>
+          )}
         </HeaderHero>
         {/** Action Button */}
         <ActionButton font={primaryRegularFont}>
@@ -145,7 +147,7 @@ const SecondPage = ({ language, primaryRegularFont }) => {
         }`}
         style={{
           background: `url(${casablanca})`,
-          height: isMobile || isSmallDevice ? "50%" : "100%",
+          height: "100%",
           backgroundSize: "cover",
           backgroundPositionX: "right",
         }}
