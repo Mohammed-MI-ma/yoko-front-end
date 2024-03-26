@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 
 //__IMAGES
 import { bucket, bucketMobile } from "../../../images";
@@ -22,9 +22,9 @@ import { useInView } from "react-intersection-observer";
 
 import { useMediaQuery } from "react-responsive";
 
-const FirstPage = ({ language, primaryRegularFont, t }) => {
+const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
   //__USE_IN_VIEW
-  const [ref, inView] = useInView();
+  const [refInView, inView] = useInView();
 
   //__CONTROLS
   const controls = useAnimation();
@@ -52,7 +52,7 @@ const FirstPage = ({ language, primaryRegularFont, t }) => {
   }, []);
 
   return (
-    <HeroContainer language={language} ref={ref}>
+    <HeroContainer language={language} ref={ref || refInView}>
       <div className="lg:w-1/2 p-4 items-center flex gap-1 flex-col">
         <HeaderHero primaryRegularFont={primaryRegularFont} language={language}>
           {t("basket")}
@@ -104,7 +104,7 @@ const FirstPage = ({ language, primaryRegularFont, t }) => {
       </div>
     </HeroContainer>
   );
-};
+});
 
 const regularStyles = {
   /* Regular styles here */

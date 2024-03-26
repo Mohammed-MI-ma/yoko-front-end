@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { glow } from "../../../images";
 import PropTypes from "prop-types";
 import { useAnimation } from "framer-motion";
@@ -6,13 +6,14 @@ import { useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import useResponsiveState from "../../../utils/useResponsiveState";
 
-const HeroContainer = ({ language, children }) => {
+const HeroContainer = forwardRef(({ language, children }, ref) => {
   // Determine the direction of flex items based on language
   const flexDirectionClass =
     language === "fr" ? "lg:flex-row-reverse" : "lg:flex-row";
 
   //__USE_IN_VIEW
-  const [ref, inView] = useInView();
+  //__USE_IN_VIEW
+  const [refInView, inView] = useInView();
 
   //__CONTROLS
   const controls = useAnimation();
@@ -48,12 +49,12 @@ const HeroContainer = ({ language, children }) => {
         backgroundColor: "var(--color-secondary)",
         color: "var(--color-accent)",
       }}
-      ref={ref}
+      ref={ref || refInView}
     >
       {children}
     </section>
   );
-};
+});
 
 HeroContainer.propTypes = {
   language: PropTypes.string.isRequired,

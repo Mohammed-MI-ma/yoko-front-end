@@ -5,7 +5,9 @@
   flex-direction: row;
   gap: 10px;
 }
-
+.heroSection {
+  min-height: 500px;
+}
 .descriptionCmtMeng > h1 {
   margin-bottom: 15px;
   color: #c1272d;

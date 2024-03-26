@@ -1,5 +1,5 @@
 //__REACT
-import React, { useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 
 //__REACT__OBSERVER
 import { useInView } from "react-intersection-observer";
@@ -25,13 +25,11 @@ import HeroContainer from "../HeroContainer";
 import SeeMore from "../../SeeMore";
 import HeaderHero from "../HeaderHero";
 
-const ThirdPage = ({ language, primaryRegularFont }) => {
+const ThirdPage = forwardRef(({ language, primaryRegularFont }, ref) => {
   //__USE_TRANSLATION
   const { t } = useTranslation();
-
   //__USE_IN_VIEW
-  const [ref, inView] = useInView();
-
+  const [refInView, inView] = useInView();
   //__CONTROLS
   const controls = useAnimation();
 
@@ -44,7 +42,7 @@ const ThirdPage = ({ language, primaryRegularFont }) => {
   }, [controls, inView]);
 
   return (
-    <HeroContainer language={language} ref={ref}>
+    <HeroContainer language={language} ref={ref || refInView}>
       <div
         className="lg:w-1/2 p-4 items-center flex gap-1 flex-col  items-center justify-center"
         style={{
@@ -77,6 +75,6 @@ const ThirdPage = ({ language, primaryRegularFont }) => {
       </div>
     </HeroContainer>
   );
-};
+});
 
 export default ThirdPage;

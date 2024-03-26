@@ -8,6 +8,10 @@ import {
   scooter,
   basket,
   bucketMobile,
+  YokoEat_low,
+  YOKOMarket_low,
+  Tagine_low,
+  Delivery_low,
 } from "./images.js";
 
 const ImageConfig = [
@@ -20,6 +24,10 @@ const ImageConfig = [
   { uri: scooter },
   { uri: basket },
   { uri: bucketMobile },
+  { uri: YokoEat_low },
+  { uri: YOKOMarket_low },
+  { uri: Tagine_low },
+  { uri: Delivery_low },
 ];
 
 export default ImageConfig;

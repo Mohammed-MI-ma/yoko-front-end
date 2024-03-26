@@ -22,3 +22,15 @@ export const scooter =
 
 export const basket =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/54c86c0695344020b39470c6bdfdd967.jpeg";
+
+export const YokoEat_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YokoEat_low.jpg";
+
+export const YOKOMarket_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YOKOMarket_low.jpg";
+
+export const Tagine_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Le-tajine-low.jpg";
+
+export const Delivery_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Delivery-low.jpg";

@@ -1,14 +1,12 @@
-import React, { Suspense, lazy, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Carousel, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Carousel } from "antd";
 import style from "./heroSection.module.css"; // Make sure this import is necessary
 import { useTranslation } from "react-i18next";
+import FirstPage from "./FirstPage";
+import SecondPage from "./SecondPage";
+import ThirdPage from "./ThirdPage";
 
-// Import your pages (FirstPage and SecondPage) lazily
-const FirstPage = lazy(() => import("./FirstPage"));
-const SecondPage = lazy(() => import("./SecondPage"));
-const ThirdPage = lazy(() => import("./ThirdPage"));
 const HeroSection = () => {
   const language = useSelector((state) => state.application.language);
   const { t } = useTranslation();
@@ -21,8 +19,8 @@ const HeroSection = () => {
   return (
     <section id="hero-section">
       <Carousel
-        infinite
         autoplay
+        infinite
         autoplaySpeed={3000}
         dotPosition="right"
         easing="linear" // Example easing function, replace with your desired easing function
@@ -32,36 +30,22 @@ const HeroSection = () => {
           language === "fr" ? "lg:flex-row-reverse" : ""
         }`}
       >
-        <Suspense
-          fallback={
-            <Spin
-              spinning
-              fullscreen
-              indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-            />
-          }
-        >
-          <FirstPage
-            language={language}
-            primaryRegularFont={primaryRegularFont}
-            t={t}
-          />
-        </Suspense>
+        <FirstPage
+          language={language}
+          primaryRegularFont={primaryRegularFont}
+          t={t}
+        />
+        <SecondPage
+          language={language}
+          primaryRegularFont={primaryRegularFont}
+          t={t}
+        />
 
-        <Suspense fallback={<>Loading...</>}>
-          <SecondPage
-            language={language}
-            primaryRegularFont={primaryRegularFont}
-            t={t}
-          />
-        </Suspense>
-        <Suspense fallback={<>Loading...</>}>
-          <ThirdPage
-            language={language}
-            primaryRegularFont={primaryRegularFont}
-            t={t}
-          />
-        </Suspense>
+        <ThirdPage
+          language={language}
+          primaryRegularFont={primaryRegularFont}
+          t={t}
+        />
       </Carousel>
     </section>
   );

@@ -13,7 +13,7 @@ const Loader = ({ isLoading }) => {
         alignItems: "center",
       }}
     >
-      <Spin size="large" spinning={isLoading} />
+      <Spin spinning={isLoading} />
     </div>
   );
 };

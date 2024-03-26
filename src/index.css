@@ -93,3 +93,10 @@ header {
   background: var(--color-primary);
   border-radius: 5px;
 }
+:where(.css-dev-only-do-not-override-14u4av6).ant-card .ant-card-meta-title {
+  font-family: "Primary-Regular-fr";
+  font-weight: 700;
+}
+.sortable-handler {
+  touch-action: none;
+}

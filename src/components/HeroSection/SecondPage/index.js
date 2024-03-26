@@ -23,7 +23,6 @@ import { useAnimation, motion } from "framer-motion";
 import style from "./secondpage.module.css";
 import HeaderHero from "../HeaderHero";
 import ActionButton from "../ActionButton";
-import { useMediaQuery } from "react-responsive";
 import useResponsiveState from "../../../utils/useResponsiveState";
 
 const SecondPage = ({ language, primaryRegularFont }) => {
@@ -146,7 +145,7 @@ const SecondPage = ({ language, primaryRegularFont }) => {
         }`}
         style={{
           background: `url(${casablanca})`,
-          height: "50%",
+          height: isMobile || isSmallDevice ? "50%" : "100%",
           backgroundSize: "cover",
           backgroundPositionX: "right",
         }}
