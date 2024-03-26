@@ -43,9 +43,8 @@ const HeroContainer = forwardRef(({ language, children }, ref) => {
       className={`bg-cover relative flex flex-col-reverse lg:flex-row items-center w-full ${flexDirectionClass}`}
       style={{
         backgroundImage: `url(${glow})`,
-        height: `calc(100vh - ${
-          isMobile ? "145px" : isSmallDevice ? "145px" : "145px"
-        } )`,
+        height: `calc(100vh - 140px)`,
+
         backgroundColor: "var(--color-secondary)",
         color: "var(--color-accent)",
       }}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Carousel } from "antd";
 import style from "./heroSection.module.css"; // Make sure this import is necessary
@@ -15,10 +15,15 @@ const HeroSection = () => {
     () => `Primary-Bold-${language}`,
     [language]
   );
-
+  const [index, setIndex] = useState();
+  const afterChange = (e) => {
+    console.log(e);
+    setIndex(e);
+  };
   return (
     <section id="hero-section">
       <Carousel
+        afterChange={afterChange}
         infinite
         autoplay
         autoplaySpeed={3000}
@@ -31,17 +36,20 @@ const HeroSection = () => {
         }`}
       >
         <FirstPage
+          index={index}
           language={language}
           primaryRegularFont={primaryRegularFont}
           t={t}
         />
         <SecondPage
+          index={index}
           language={language}
           primaryRegularFont={primaryRegularFont}
           t={t}
         />
 
         <ThirdPage
+          index={index}
           language={language}
           primaryRegularFont={primaryRegularFont}
           t={t}
