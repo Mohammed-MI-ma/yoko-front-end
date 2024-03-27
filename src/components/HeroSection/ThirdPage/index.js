@@ -68,7 +68,7 @@ const ThirdPage = forwardRef(({ language, primaryRegularFont }, ref) => {
       </div>
       <div
         className={` bg-white h-full lg:w-1/2  p-4 flex items-center justify-center ${
-          language === "ar" ? style.basketAr : ""
+          language === "ar" ? "" : ""
         }`}
       >
         <Image src={basket} preview={false} width={"50%"} />

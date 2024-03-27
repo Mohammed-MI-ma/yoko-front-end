@@ -1,9 +1,10 @@
-import { Card, ConfigProvider } from "antd";
+import { Badge, Card, ConfigProvider } from "antd";
 import Meta from "antd/es/card/Meta";
 import React from "react";
 import ProgressiveImage from "../ProgressiveImage";
 
-const OurPartnersCard = ({ font, lowQualitySrc, highQualitySrc, alt }) => {
+const OurPartnersCard = ({ badge, lowQualitySrc, highQualitySrc, alt }) => {
+  console.log("badge", badge);
   return (
     <ConfigProvider
       theme={{
@@ -14,38 +15,42 @@ const OurPartnersCard = ({ font, lowQualitySrc, highQualitySrc, alt }) => {
           },
         },
         token: {
-          borderRadiusLG: 50,
+          borderRadiusLG: 30,
           headerHeight: 0,
           headerHeightSM: 0,
           colorText: "white",
         },
       }}
     >
-      <Card
-        hoverable
-        cover={
-          <ProgressiveImage
-            lowQualitySrc={lowQualitySrc}
-            highQualitySrc={highQualitySrc}
-            alt={alt}
-          />
-        }
-        style={{
-          width: 240,
-          cursor: "pointer",
-          height: 280,
-          background: "var(--color-primary)",
-        }}
-      >
-        <Meta
-          title={alt}
+      <Badge.Ribbon text={badge} color={"var(--color-secondary)"}>
+        <Card
+          className="shadow-lg"
+          hoverable
+          cover={
+            <ProgressiveImage
+              lowQualitySrc={lowQualitySrc}
+              highQualitySrc={highQualitySrc}
+              alt={alt}
+            />
+          }
           style={{
-            color: "white",
-            fontFamily: "Primary-Regular-fr",
-            fontWeight: "700",
+            width: 240,
+            cursor: "not-allowed",
+            height: 300,
+            background: "var(--color-secondary)",
+            position: "relative",
           }}
-        />
-      </Card>
+        >
+          <Meta
+            title={alt}
+            style={{
+              color: "white",
+              fontFamily: "Primary-Regular-fr",
+              fontWeight: "700",
+            }}
+          />{" "}
+        </Card>
+      </Badge.Ribbon>
     </ConfigProvider>
   );
 };

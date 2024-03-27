@@ -10,7 +10,7 @@ import { Spin } from "antd";
 const LazyOurPartnersCard = React.lazy(() => import("../OurPartnersCard/"));
 
 const LazyLoadedOurPartnersCard = forwardRef(
-  ({ font, lowQualitySrc, alt, highQualitySrc }, ref) => {
+  ({ font, lowQualitySrc, alt, highQualitySrc, badge }, ref) => {
     const [isVisible, setIsVisible] = useState(false);
     const intersectionObserverRef = useRef(null);
 
@@ -46,6 +46,7 @@ const LazyLoadedOurPartnersCard = forwardRef(
               lowQualitySrc={lowQualitySrc}
               highQualitySrc={highQualitySrc}
               alt={alt}
+              badge={badge}
             />
           </Suspense>
         )}

@@ -103,9 +103,7 @@ const SecondPage = forwardRef(
               </>
             )}
           </HeaderHero>
-          <ActionButton font={primaryRegularFont}>
-            Commande de livraison
-          </ActionButton>
+          <ActionButton font={primaryRegularFont}>livraison</ActionButton>
 
           <Button
             type="Link"
