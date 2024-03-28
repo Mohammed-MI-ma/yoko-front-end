@@ -87,7 +87,6 @@ const ImageCardWithDescriptionFooter = ({
     color: "white", // Example text color
     textAlign: "center",
     display: "flex",
-
     justifyContent: "center",
     alignItems: "center",
     transform: "translateY(100%)",

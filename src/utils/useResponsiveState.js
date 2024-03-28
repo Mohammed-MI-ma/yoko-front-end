@@ -23,7 +23,13 @@ const useResponsiveState = () => {
   const [fixedBorderRadius_ProductCard, setFixedBorderRadius_ProductCard] =
     useState("3.563rem"); // 57px / 16px = 3.563rem
   const [fixedFontSize_ProductCard, setFixedFontSize_ProductCard] =
-    useState("1.125 rem"); // Ne nécessite pas de conversion
+    useState("1.125rem"); // Ne nécessite pas de conversion
+
+  //__Product__MONTH__CARD
+  const [fixedWidthProductMonth, setFixedWidthProductMonth] =
+    useState("30.5rem"); // 280px / 16px = 17.5rem
+  const [fixedHeightProductMonth, setFixedHeightProductMonth] =
+    useState("399px"); // Ne nécessite pas de conversion
 
   const [isMobile, setIsMobile] = useState(isMobileInitial);
   const [isSmallDevice, setIsSmallDevice] = useState(isSmallDeviceInitial);
@@ -63,11 +69,14 @@ const useResponsiveState = () => {
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("2rem");
+
+      setFixedWidthProductMonth("280px");
     } else if (isSmallDevice) {
       setFixedWidth("333px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("2rem");
+      setFixedWidthProductMonth("333px");
     } else if (
       isMediumDevice ||
       isLargeDevice ||
@@ -80,6 +89,7 @@ const useResponsiveState = () => {
       setFixedBorderRadius(Math.floor(parseInt("57px") * aspectRatio));
       setFixedFontSize("1.125rem");
       setFixedFontSize_ProductCard("0.7125rem");
+      setFixedWidthProductMonth("300px");
     }
   }, [
     isMobile,
@@ -90,13 +100,20 @@ const useResponsiveState = () => {
     isExtraExtraLargeDevice,
     fixedBorderRadius,
     fixedFontSize_ProductCard,
+    fixedWidthProductMonth,
   ]);
 
   useEffect(() => {
     const aspectRatio = 309 / 270; // Width / Height ratio
+
     const calculatedHeight = Math.floor(parseInt(fixedWidth) * aspectRatio);
+    const calculatedHeightProductMonth = Math.floor(
+      parseInt(fixedWidthProductMonth) * aspectRatio
+    );
+
     setFixedHeight(`${calculatedHeight}px`);
-  }, [fixedWidth]);
+    setFixedHeightProductMonth(`${calculatedHeightProductMonth}px`);
+  }, [fixedHeightProductMonth, fixedWidth, fixedWidthProductMonth]);
   return {
     isMobile,
     isSmallDevice,
@@ -116,6 +133,8 @@ const useResponsiveState = () => {
     fixedGap,
     fixedFontSize,
     fixedFontSize_ProductCard,
+    fixedHeightProductMonth,
+    fixedWidthProductMonth,
   };
 };
 

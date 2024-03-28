@@ -8,9 +8,8 @@ const initialState = {
   sitePrimaryFontRegular: "Primary-Regular-ar",
   siteDirection: "rtl",
   promoVideoOpened: false,
-  firstPageOn: true,
-  secondPageOn: false,
-  thirdPageOn: false,
+
+  dynamicWidth: null,
 };
 
 // Define slice for language
@@ -18,20 +17,6 @@ const applicationSlice = createSlice({
   name: "application",
   initialState,
   reducers: {
-    setFirstPageOn: (state, action) => {
-      return {
-        ...state,
-        firstPageOn: true,
-        secondPageOn: false,
-      };
-    },
-    setSecondPageOn: (state, action) => {
-      return {
-        ...state,
-        firstPageOn: false,
-        secondPageOn: true,
-      };
-    },
     setLanguage: (state, action) => {
       state.language = action.payload;
     },
@@ -51,6 +36,9 @@ const applicationSlice = createSlice({
     setSiteDirection: (state, action) => {
       state.siteDirection = action.payload;
     },
+    setDynamicWidth: (state, action) => {
+      state.dynamicWidth = action.payload;
+    },
   },
 });
 
@@ -61,9 +49,7 @@ export const {
   setPrimaryRegularFont,
   setSiteDirection,
   setPromoVideoOpened,
-  setFirstPageOn,
-  setSecondPageOn,
-  setThirdPageOn,
+  setDynamicWidth,
 } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

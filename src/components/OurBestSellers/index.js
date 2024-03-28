@@ -27,23 +27,22 @@ const OurBestSellers = () => {
   const sectionStyle = {
     dir: language === "ar" ? "rtl" : "ltr",
     fontFamily: primaryRegularFont,
-    fontSize: "2rem",
+    fontSize: responsiveState.fixedFontSize,
+    textTransform: "uppercase",
     color: "var(--color-secondary)",
-    paddingTop: "70px",
+    marginBottom: "1.4375rem",
   };
 
   return (
     <section
       className={`w-full flex flex-col items-center `}
       style={{
-        marginBottom: "70px",
-        maxWidth: "fitContent",
+        maxWidth: "75rem",
+        marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
       }}
     >
       <div>
-        <h1 className={`text-left `} style={sectionStyle}>
-          Our best sellers
-        </h1>
+        <h1 style={sectionStyle}>{t("Our best sellers")}</h1>
         <div
           className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
           style={{

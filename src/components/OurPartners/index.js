@@ -11,32 +11,38 @@ import {
 } from "../../images";
 import ImageCardWithDescriptionFooter from "../ImageCardWithDescriptionFooter";
 import useResponsiveState from "../../utils/useResponsiveState";
+import { setDynamicWidth } from "../../reducers/applicationService/applicationSlice";
 
 const OurPartners = () => {
   const dispatch = useDispatch();
 
   const responsiveState = useResponsiveState();
   const divRef = useRef(null);
-  const [divWidth, setDivWidth] = useState(0);
   useEffect(() => {
+    // Define a function to update the width
     const updateWidth = () => {
+      // Check if the ref to the div is available
       if (divRef.current) {
+        // Get the width of the div
         const width = divRef.current.offsetWidth;
-        setDivWidth(width);
+        // Log the width for debugging
+        console.log("width,width", width);
+        // Dispatch an action to update the width in the Redux store
+        dispatch(setDynamicWidth(width));
       }
     };
 
-    // Initial width calculation
+    // Call updateWidth to get the initial width
     updateWidth();
 
-    // Add event listener for window resize
+    // Add an event listener to the window object for the resize event
     window.addEventListener("resize", updateWidth);
 
-    // Clean up event listener on component unmount
+    // Cleanup function to remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", updateWidth);
     };
-  }, []);
+  }, [dispatch]);
   const language = useSelector((state) => state.application.language);
   const primaryRegularFont = useMemo(
     () => `Primary-Bold-${language}`,
@@ -48,32 +54,22 @@ const OurPartners = () => {
   const sectionStyle = {
     dir: language === "ar" ? "rtl" : "ltr",
     fontFamily: primaryRegularFont,
-    fontSize: "2rem",
+    fontSize: responsiveState.fixedFontSize,
+    textTransform: "uppercase",
     color: "var(--color-secondary)",
-    paddingTop: "70px",
+    marginBottom: "1.4375rem",
   };
 
   return (
     <section
       className={`w-full flex flex-col items-center `}
       style={{
-        marginBottom: "70px",
-        maxWidth: "1200px",
+        maxWidth: "75rem",
+        marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
       }}
     >
-      <h1 className={`text-center `} style={sectionStyle}>
-        {t("Discover our yoko")}
-      </h1>
-      <p
-        style={{ textAlign: "center", maxWidth: "400px" }}
-        className={`mb-10 `}
-      >
-        {divWidth}
-        Chez Yoko, notre engagement est de vous procurer une expérience
-        inoubliable, alliant fast-food, livraison, marché en ligne et cuisine
-        traditionnelle marocaine.
-      </p>
       <div ref={divRef}>
+        <h1 style={sectionStyle}>{t("Discover our yoko")}</h1>
         <div
           className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
           style={{ margin: "0 auto", gap: responsiveState.fixedGap }}
