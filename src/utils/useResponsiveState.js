@@ -12,6 +12,19 @@ const useResponsiveState = () => {
   });
   const isExtraExtraLargeDeviceInitial = useMediaQuery({ minWidth: 1200 });
 
+  //__YOKO_Specialities__CARD
+  const [fixedWidth, setFixedWidth] = useState("17.5rem"); // 280px / 16px = 17.5rem
+  const [fixedHeight, setFixedHeight] = useState("auto"); // Ne nécessite pas de conversion
+  const [fixedBorderRadius, setFixedBorderRadius] = useState("3.563rem"); // 57px / 16px = 3.563rem
+  const [fixedGap, setFixedGap] = useState("2rem"); // Ne nécessite pas de conversion
+  const [fixedFontSize, setFixedFontSize] = useState("1.125 rem"); // Ne nécessite pas de conversion
+
+  //__YOKO_Product__CARD
+  const [fixedBorderRadius_ProductCard, setFixedBorderRadius_ProductCard] =
+    useState("3.563rem"); // 57px / 16px = 3.563rem
+  const [fixedFontSize_ProductCard, setFixedFontSize_ProductCard] =
+    useState("1.125 rem"); // Ne nécessite pas de conversion
+
   const [isMobile, setIsMobile] = useState(isMobileInitial);
   const [isSmallDevice, setIsSmallDevice] = useState(isSmallDeviceInitial);
   const [isMediumDevice, setIsMediumDevice] = useState(isMediumDeviceInitial);
@@ -25,8 +38,8 @@ const useResponsiveState = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 390);
-      setIsSmallDevice(window.innerWidth > 391 && window.innerWidth <= 575);
+      setIsMobile(window.innerWidth <= 388);
+      setIsSmallDevice(window.innerWidth > 389 && window.innerWidth <= 575);
       setIsMediumDevice(window.innerWidth >= 576 && window.innerWidth <= 767);
       setIsLargeDevice(window.innerWidth >= 768 && window.innerWidth <= 991);
       setIsExtraLargeDevice(
@@ -41,7 +54,49 @@ const useResponsiveState = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  // Define fixed width and height based on device size
+  // Calculate fixed width and height based on screen size
+  // Calculate fixed width and height based on screen size
+  useEffect(() => {
+    if (isMobile) {
+      setFixedWidth("280px");
+      setFixedBorderRadius("57px");
+      setFixedGap("10rem");
+      setFixedFontSize("2rem");
+    } else if (isSmallDevice) {
+      setFixedWidth("333px");
+      setFixedBorderRadius("57px");
+      setFixedGap("10rem");
+      setFixedFontSize("2rem");
+    } else if (
+      isMediumDevice ||
+      isLargeDevice ||
+      isExtraLargeDevice ||
+      isExtraExtraLargeDevice
+    ) {
+      setFixedWidth("180px");
+      const aspectRatio = 1 / 2; // Width / Height ratio
+      setFixedGap("1rem");
+      setFixedBorderRadius(Math.floor(parseInt("57px") * aspectRatio));
+      setFixedFontSize("1.125rem");
+      setFixedFontSize_ProductCard("0.7125rem");
+    }
+  }, [
+    isMobile,
+    isSmallDevice,
+    isMediumDevice,
+    isLargeDevice,
+    isExtraLargeDevice,
+    isExtraExtraLargeDevice,
+    fixedBorderRadius,
+    fixedFontSize_ProductCard,
+  ]);
 
+  useEffect(() => {
+    const aspectRatio = 309 / 270; // Width / Height ratio
+    const calculatedHeight = Math.floor(parseInt(fixedWidth) * aspectRatio);
+    setFixedHeight(`${calculatedHeight}px`);
+  }, [fixedWidth]);
   return {
     isMobile,
     isSmallDevice,
@@ -55,6 +110,12 @@ const useResponsiveState = () => {
     setIsExtraLargeDevice,
     setIsMediumDevice,
     setIsExtraExtraLargeDevice,
+    fixedWidth,
+    fixedHeight,
+    fixedBorderRadius,
+    fixedGap,
+    fixedFontSize,
+    fixedFontSize_ProductCard,
   };
 };
 

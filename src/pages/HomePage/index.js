@@ -1,12 +1,14 @@
 import React from "react";
 import HeroSection from "../../components/HeroSection";
 import OurPartners from "../../components/OurPartners";
+import OurBestSellers from "../../components/OurBestSellers";
 
 //__REACT_HELMET
 import { Helmet } from "react-helmet";
 
 //__REACT_i18N
 import { useTranslation } from "react-i18next";
+import ProductOfTheWeek from "../../components/ProductOfTheWeek";
 
 const HomePage = ({ language }) => {
   // Retrieve the translation function from the useTranslation hook
@@ -38,9 +40,11 @@ const HomePage = ({ language }) => {
         {/* Add other meta tags as needed */}
       </Helmet>
       <section style={{ flex: "1 1 auto" }} className="mb-10">
-        <section id={"main-content"}>
+        <section id={"main-content"} className="flex items-center flex-col">
           <HeroSection />
           <OurPartners />
+          <OurBestSellers />
+          <ProductOfTheWeek />
         </section>
       </section>
     </>

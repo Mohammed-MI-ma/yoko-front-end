@@ -12,6 +12,7 @@ import {
   YOKOMarket_low,
   Tagine_low,
   Delivery_low,
+  Error404,
 } from "./images.js";
 
 const ImageConfig = [
@@ -28,6 +29,7 @@ const ImageConfig = [
   { uri: YOKOMarket_low },
   { uri: Tagine_low },
   { uri: Delivery_low },
+  { uri: Error404 },
 ];
 
 export default ImageConfig;

@@ -6,4 +6,7 @@ export const FontsConfig = {
   "Primary-Regular-fr": require("./assets/fonts/Montserrat-Regular.ttf"),
   "Primary-Bold-fr": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
   "Special-fr": require("./assets/fonts/LondrinaSolid-Regular.ttf"),
+
+  //
+  "Neue_Power-fr": require("./assets/fonts/NeuePower-Ultra.ttf"),
 };

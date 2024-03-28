@@ -25,6 +25,8 @@ export const basket =
 
 export const YokoEat_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YokoEat_low.jpg";
+export const YokoEat =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YokoEat.jpg";
 
 export const YOKOMarket_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YOKOMarket_low.jpg";
@@ -34,3 +36,8 @@ export const Tagine_low =
 
 export const Delivery_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Delivery-low.jpg";
+
+//____ TODO: GENERAL
+//____ ERROR:
+export const Error404 =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/AssetsClients/main/404%20bird.jpg";

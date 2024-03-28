@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import { useTranslation } from "react-i18next";
+import { Button } from "antd";
 
 import {
   Delivery_low,
@@ -9,10 +10,10 @@ import {
   YOKOMarket_low,
   YokoEat_low,
 } from "../../images";
-import ImageCardWithDescriptionFooter from "../ImageCardWithDescriptionFooter";
 import useResponsiveState from "../../utils/useResponsiveState";
+import ProductCardWithDescriptionFooter from "../ProductCardWithDescriptionFooter";
 
-const OurPartners = () => {
+const OurBestSellers = () => {
   const responsiveState = useResponsiveState();
 
   const language = useSelector((state) => state.application.language);
@@ -36,26 +37,27 @@ const OurPartners = () => {
       className={`w-full flex flex-col items-center `}
       style={{
         marginBottom: "70px",
-        maxWidth: "1200px",
+        maxWidth: "fitContent",
       }}
     >
       <h1 className={`text-center `} style={sectionStyle}>
-        {t("Discover our yoko")}
+        Our best sellers
       </h1>
-      <p
-        style={{ textAlign: "center", maxWidth: "400px" }}
-        className={`mb-10 `}
-      >
-        Chez Yoko, notre engagement est de vous procurer une expérience
-        inoubliable, alliant fast-food, livraison, marché en ligne et cuisine
-        traditionnelle marocaine.
+      <p style={{ textAlign: "center", maxWidth: "400px" }} className={`mb-2 `}>
+        Explore Yoko's essence with our curated best sellers, showcasing
+        tantalizing fast-food, convenient delivery, and authentic Moroccan
+        flavors at the heart of our culinary experience.
       </p>
       <div
         className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
-        style={{ margin: "0 auto", gap: responsiveState.fixedGap }}
+        style={{
+          margin: "0 auto",
+          gap: responsiveState.fixedGap,
+          marginBottom: `calc(${responsiveState.fixedHeight} / 2)`,
+        }}
       >
         {[1, 2, 3, 4].map((id) => (
-          <ImageCardWithDescriptionFooter
+          <ProductCardWithDescriptionFooter
             fixedWidth={responsiveState.fixedWidth} // Set fixed width
             fixedHeight={responsiveState.fixedHeight} // Set fixed height
             highDefinitionImgUrl={getImageHighQualitySrc(id)}
@@ -63,6 +65,21 @@ const OurPartners = () => {
             descriptionContent={getImageAlt(id)}
           />
         ))}
+      </div>
+      <div className="">
+        <Button
+          style={{
+            width: "217.64px",
+            height: "58.55px",
+            borderRadius: "50px",
+            fontSize: "16px",
+            background: "var(--color-primary)",
+            color: "white",
+            fontFamily: "Primary-Bold-fr",
+          }}
+        >
+          SEE MORE
+        </Button>
       </div>
     </section>
   );
@@ -101,19 +118,19 @@ const getImageHighQualitySrc = (id) => {
 const getImageAlt = (id) => {
   switch (id) {
     case 1:
-      return "YOKO livraison";
+      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
 
     case 2:
-      return "YOKO Marché";
+      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
 
     case 3:
-      return "YOKO Mangez";
+      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
 
     case 4:
-      return "YOKO Traditional";
+      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
     default:
       return "";
   }
 };
 
-export default OurPartners;
+export default OurBestSellers;
