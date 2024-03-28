@@ -40,46 +40,43 @@ const OurBestSellers = () => {
         maxWidth: "fitContent",
       }}
     >
-      <h1 className={`text-center `} style={sectionStyle}>
-        Our best sellers
-      </h1>
-      <p style={{ textAlign: "center", maxWidth: "400px" }} className={`mb-2 `}>
-        Explore Yoko's essence with our curated best sellers, showcasing
-        tantalizing fast-food, convenient delivery, and authentic Moroccan
-        flavors at the heart of our culinary experience.
-      </p>
-      <div
-        className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
-        style={{
-          margin: "0 auto",
-          gap: responsiveState.fixedGap,
-          marginBottom: `calc(${responsiveState.fixedHeight} / 2)`,
-        }}
-      >
-        {[1, 2, 3, 4].map((id) => (
-          <ProductCardWithDescriptionFooter
-            fixedWidth={responsiveState.fixedWidth} // Set fixed width
-            fixedHeight={responsiveState.fixedHeight} // Set fixed height
-            highDefinitionImgUrl={getImageHighQualitySrc(id)}
-            backgroundImageUrl={getImageLowQualitySrc(id)}
-            descriptionContent={getImageAlt(id)}
-          />
-        ))}
-      </div>
-      <div className="">
-        <Button
+      <div>
+        <h1 className={`text-left `} style={sectionStyle}>
+          Our best sellers
+        </h1>
+        <div
+          className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
           style={{
-            width: "217.64px",
-            height: "58.55px",
-            borderRadius: "50px",
-            fontSize: "16px",
-            background: "var(--color-primary)",
-            color: "white",
-            fontFamily: "Primary-Bold-fr",
+            margin: "0 auto",
+            gap: responsiveState.fixedGap,
+            marginBottom: `calc(${responsiveState.fixedHeight} / 2)`,
           }}
         >
-          SEE MORE
-        </Button>
+          {[1, 2, 3, 4].map((id) => (
+            <ProductCardWithDescriptionFooter
+              fixedWidth={responsiveState.fixedWidth} // Set fixed width
+              fixedHeight={responsiveState.fixedHeight} // Set fixed height
+              highDefinitionImgUrl={getImageHighQualitySrc(id)}
+              backgroundImageUrl={getImageLowQualitySrc(id)}
+              descriptionContent={getImageAlt(id)}
+            />
+          ))}
+        </div>{" "}
+        <div className="flex flex-row-reverse">
+          <Button
+            style={{
+              width: "217.64px",
+              height: "58.55px",
+              borderRadius: "50px",
+              fontSize: "16px",
+              background: "var(--color-primary)",
+              color: "white",
+              fontFamily: "Primary-Bold-fr",
+            }}
+          >
+            SEE MORE
+          </Button>
+        </div>
       </div>
     </section>
   );
@@ -118,16 +115,16 @@ const getImageHighQualitySrc = (id) => {
 const getImageAlt = (id) => {
   switch (id) {
     case 1:
-      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
+      return "Tide Détergent Lessive en Poudre .....";
 
     case 2:
-      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
+      return "Tide Détergent Lessive en Poudre ....";
 
     case 3:
-      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
+      return "Tide Détergent Lessive en Poudre.....";
 
     case 4:
-      return "Tide Détergent Lessive en Poudre Semi-automatique et Main Fraicheur Downy 400G";
+      return "Tide Détergent Lessive en Poudre ....";
     default:
       return "";
   }

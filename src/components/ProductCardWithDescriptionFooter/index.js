@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import style from "./ProductCardWithDescriptionFooter.module.css";
 import useResponsiveState from "../../utils/useResponsiveState";
 import { Error404 } from "../../images";
-import { Button, Flex, Tooltip } from "antd";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { Button } from "antd";
+import { AiOutlineLike } from "react-icons/ai";
+
 import { CiShoppingCart } from "react-icons/ci";
 
 const ProductCardWithDescriptionFooter = ({
@@ -87,11 +88,14 @@ const ProductCardWithDescriptionFooter = ({
     justifyContent: " center",
   };
   const descriptionStyles = {
+    border: ".25px solid #D9D9D9",
+    padding: "5px",
+    borderTop: "0px",
     position: "absolute",
     flexDirection: "column",
     bottom: 0,
     height: `calc(${responsiveState.fixedHeight} / 3)`,
-    width: "100%",
+    width: "101%",
     textAlign: "center",
     display: "flex",
     justifyContent: "center",
@@ -131,17 +135,33 @@ const ProductCardWithDescriptionFooter = ({
         {/* Render description div */}
         <div style={descriptionStyles}>
           {/* Add your description content here */}
-          <p style={paragraphStyles}>
-            {descriptionContent || "Description Content"}
-          </p>
-          <footer style={footerStyles}>
-            <bold>10.64 MAD</bold>{" "}
-            <div>
-              <Button shape="circle" icon={<FaFacebookF />} />
-              &nbsp;
-              <Button shape="circle" icon={<CiShoppingCart />} />
-            </div>
-          </footer>
+          <div style={{ transform: "translateY(-12%)" }}>
+            <p style={paragraphStyles}>
+              {descriptionContent || "Description Content"}
+            </p>
+            <footer style={footerStyles}>
+              <bold
+                style={{
+                  fontSize: responsiveState.fixedFontSize_ProductCard,
+                  fontWeight: "700",
+                  color: "var(--color-primary)",
+                  fontFamily: "Primary-Bold-fr",
+                }}
+              >
+                10.64 MAD
+              </bold>{" "}
+              <div>
+                <Button shape="circle" size="small" icon={<AiOutlineLike />} />
+                &nbsp;
+                <Button
+                  shape="circle"
+                  size="small"
+                  style={{ background: "var(--color-primary)", color: "white" }}
+                  icon={<CiShoppingCart />}
+                />
+              </div>
+            </footer>
+          </div>
         </div>
       </div>
     </div>
