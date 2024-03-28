@@ -17,7 +17,7 @@ const useResponsiveState = () => {
   const [fixedHeight, setFixedHeight] = useState("auto"); // Ne nécessite pas de conversion
   const [fixedBorderRadius, setFixedBorderRadius] = useState("3.563rem"); // 57px / 16px = 3.563rem
   const [fixedGap, setFixedGap] = useState("2rem"); // Ne nécessite pas de conversion
-  const [fixedFontSize, setFixedFontSize] = useState("1.125 rem"); // Ne nécessite pas de conversion
+  const [fixedFontSize, setFixedFontSize] = useState("1.125rem"); // Ne nécessite pas de conversion
 
   //__YOKO_Product__CARD
   const [fixedBorderRadius_ProductCard, setFixedBorderRadius_ProductCard] =
@@ -31,6 +31,29 @@ const useResponsiveState = () => {
   const [fixedHeightProductMonth, setFixedHeightProductMonth] =
     useState("399px"); // Ne nécessite pas de conversion
 
+  //__FOOTER
+  //__FOOTER__LOGO
+
+  //**width
+  const [fixedWidthLogo, setFixedWidthLogo] = useState("");
+  //**gap
+  const [fixedGapFooter, setFixedGapFooter] = useState("");
+  //**padding
+  const [fixedPaddingFooter, setFixedPaddingFooter] = useState("");
+  //**fontSize
+  const [fixedFontSize_Footer__Header, setFixedFontSize_Footer__Header] =
+    useState("var(--font-extra-large-size)");
+  //**fontSize__Li
+  const [fixedFontSize_Footer__Li, setFixedFontSize_Footer__Li] = useState(
+    "var(--font-medium-size)"
+  );
+  //**alignements
+  const [
+    fixedFontSize_Footer__alignements,
+    setFixedFontSize_Footer__alignements,
+  ] = useState("center");
+
+  //
   const [isMobile, setIsMobile] = useState(isMobileInitial);
   const [isSmallDevice, setIsSmallDevice] = useState(isSmallDeviceInitial);
   const [isMediumDevice, setIsMediumDevice] = useState(isMediumDeviceInitial);
@@ -69,14 +92,25 @@ const useResponsiveState = () => {
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("2rem");
-
       setFixedWidthProductMonth("280px");
+
+      //__FOOTER_MOBILE
+      setFixedWidthLogo("60%");
+      setFixedGapFooter("0.3125rem");
+      setFixedPaddingFooter("2.5rem");
+
+      //
     } else if (isSmallDevice) {
       setFixedWidth("333px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("2rem");
       setFixedWidthProductMonth("333px");
+
+      //__FOOTER_SMALL
+      setFixedWidthLogo("60%");
+      setFixedGapFooter("1rem");
+      setFixedPaddingFooter("2.5rem");
     } else if (
       isMediumDevice ||
       isLargeDevice ||
@@ -86,10 +120,19 @@ const useResponsiveState = () => {
       setFixedWidth("180px");
       const aspectRatio = 1 / 2; // Width / Height ratio
       setFixedGap("1rem");
+
       setFixedBorderRadius(Math.floor(parseInt("57px") * aspectRatio));
       setFixedFontSize("1.125rem");
       setFixedFontSize_ProductCard("0.7125rem");
       setFixedWidthProductMonth("300px");
+
+      //__FOOTER__LARGE
+      setFixedWidthLogo("80%");
+      setFixedGapFooter("1rem");
+      setFixedPaddingFooter("0rem");
+      setFixedFontSize_Footer__Header("var(--font-small-size)");
+      setFixedFontSize_Footer__alignements("left");
+      setFixedFontSize_Footer__Li("var(--font-small-size)");
     }
   }, [
     isMobile,
@@ -98,9 +141,6 @@ const useResponsiveState = () => {
     isLargeDevice,
     isExtraLargeDevice,
     isExtraExtraLargeDevice,
-    fixedBorderRadius,
-    fixedFontSize_ProductCard,
-    fixedWidthProductMonth,
   ]);
 
   useEffect(() => {
@@ -135,6 +175,14 @@ const useResponsiveState = () => {
     fixedFontSize_ProductCard,
     fixedHeightProductMonth,
     fixedWidthProductMonth,
+
+    //FOOTER_EXPORTS
+    fixedWidthLogo,
+    fixedGapFooter,
+    fixedPaddingFooter,
+    fixedFontSize_Footer__Header,
+    fixedFontSize_Footer__Li,
+    fixedFontSize_Footer__alignements,
   };
 };
 

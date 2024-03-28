@@ -13,6 +13,7 @@
   --font-small-size: 0.875rem; /* 14px converted to rem */
   --font-medium-size: 1rem; /* 16px converted to rem */
   --font-large-size: 1.125rem; /* 18px converted to rem */
+  --font-extra-large-size: 1.5rem; /* 24px converted to rem */
 }
 
 /* Colors */
@@ -99,4 +100,7 @@ header {
 }
 .sortable-handler {
   touch-action: none;
+}
+:where(.css-dev-only-do-not-override-17ybr9m).ant-select .ant-select-arrow {
+  color: white;
 }

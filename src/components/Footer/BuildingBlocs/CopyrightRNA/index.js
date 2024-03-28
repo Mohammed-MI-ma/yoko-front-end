@@ -8,7 +8,13 @@ const CopyrightRNA = () => {
 
   const { t } = useTranslation();
   return (
-    <section style={{ fontFamily: primaryRegularFont }}>
+    <section
+      style={{
+        fontFamily: primaryRegularFont,
+        paddingBottom: "20px",
+        color: "white",
+      }}
+    >
       {t("Copyright")}
     </section>
   );

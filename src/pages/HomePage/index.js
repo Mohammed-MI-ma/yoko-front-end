@@ -39,7 +39,7 @@ const HomePage = ({ language }) => {
         <meta name="twitter:card" content="summary_large_image" />
         {/* Add other meta tags as needed */}
       </Helmet>
-      <section style={{ flex: "1 1 auto" }} className="mb-10">
+      <section style={{ flex: "1 1 auto" }}>
         <section id={"main-content"} className="flex items-center flex-col">
           <HeroSection />
           <OurPartners />
