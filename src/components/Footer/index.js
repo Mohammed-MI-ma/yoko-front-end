@@ -10,8 +10,13 @@ import SocialMediaButtons from "../SocialMedia";
 import ContactContainer from "../contactContainer";
 import { FaPhone } from "react-icons/fa6";
 import CopyrightRNA from "./BuildingBlocs/CopyrightRNA";
-
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    // Navigate to the login page when the button is clicked
+    navigate(`/${language}/web/guest/traditional`);
+  };
   const getHeader = (id) => {
     switch (id) {
       case 2:
@@ -69,7 +74,7 @@ const Footer = () => {
               <li>{t("YOKO Eat")}</li>
               <li>{t("YOKO Market")}</li>
               <li>{t("Dilevery Boy")}</li>
-              <li>{t("Traditional Food")}</li>
+              <li onClick={handleClick}>{t("Traditional Food")}</li>
             </ul>
           </nav>
         );
