@@ -41,3 +41,9 @@ export const Delivery_low =
 //____ ERROR:
 export const Error404 =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/AssetsClients/main/404%20bird.jpg";
+
+export const Traditional_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/traditional-low.jpg";
+
+export const Traditional =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/se-nourrir-au-maroc.jpg";

@@ -161,8 +161,6 @@ const Footer = () => {
   //__PAGE FOOTER STYLE
   const pageFooterStyle = {
     backgroundColor: "var(--color-secondary)",
-    bottom: 0,
-    position: "absolute",
   };
   return (
     <footer

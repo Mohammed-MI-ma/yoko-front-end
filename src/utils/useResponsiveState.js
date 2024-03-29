@@ -31,6 +31,7 @@ const useResponsiveState = () => {
   const [fixedHeightProductMonth, setFixedHeightProductMonth] =
     useState("399px"); // Ne nécessite pas de conversion
 
+  // TODO:
   //__FOOTER
   //__FOOTER__LOGO
 
@@ -53,7 +54,14 @@ const useResponsiveState = () => {
     setFixedFontSize_Footer__alignements,
   ] = useState("center");
 
-  //
+  // FIXME: Implement ComingSoonCard component
+  const [fixedFontSizeTitleComingSoon, setFixedFontSizeTitleComingSoon] =
+    useState("10vw");
+  const [fixedPaddingTitleComingSoon, setFixedPaddingTitleComingSoon] =
+    useState("1.25rem");
+  const [fixedBorderRadiusComingSoon, setFixedBorderRadiusComingSoon] =
+    useState("1.6875rem");
+
   const [isMobile, setIsMobile] = useState(isMobileInitial);
   const [isSmallDevice, setIsSmallDevice] = useState(isSmallDeviceInitial);
   const [isMediumDevice, setIsMediumDevice] = useState(isMediumDeviceInitial);
@@ -117,7 +125,7 @@ const useResponsiveState = () => {
       isExtraLargeDevice ||
       isExtraExtraLargeDevice
     ) {
-      setFixedWidth("180px");
+      setFixedWidth("11.25rem");
       const aspectRatio = 1 / 2; // Width / Height ratio
       setFixedGap("1rem");
 
@@ -133,6 +141,11 @@ const useResponsiveState = () => {
       setFixedFontSize_Footer__Header("var(--font-small-size)");
       setFixedFontSize_Footer__alignements("left");
       setFixedFontSize_Footer__Li("var(--font-small-size)");
+
+      // TODO: Implement Card component for large screens.
+      setFixedFontSizeTitleComingSoon("4rem");
+      setFixedPaddingTitleComingSoon("3.125rem");
+      setFixedBorderRadiusComingSoon("57px");
     }
   }, [
     isMobile,
@@ -183,6 +196,11 @@ const useResponsiveState = () => {
     fixedFontSize_Footer__Header,
     fixedFontSize_Footer__Li,
     fixedFontSize_Footer__alignements,
+
+    // TODO: ComingSoon Card.
+    fixedFontSizeTitleComingSoon,
+    fixedPaddingTitleComingSoon,
+    fixedBorderRadiusComingSoon,
   };
 };
 

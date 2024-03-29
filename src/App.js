@@ -24,7 +24,9 @@ import style from "./App.module.css";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
 import Footer from "./components/Footer";
+import { Traditional } from "./images";
 const HomePage = lazy(() => import("./pages/HomePage"));
+const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFood"));
 
 // Lazily load the component responsible for starting the simulation modal
 
@@ -96,6 +98,15 @@ function App() {
           <Route
             path={`/${language}/web/guest/acceuil`}
             element={<HomePage language={language} />}
+          />
+          <Route
+            path={`/${language}/web/guest/traditional`}
+            element={
+              <TraditionalFoodPage
+                language={language}
+                highDefinitionImgUrl={Traditional}
+              />
+            }
           />
         </Routes>
         <BackTop visibilityHeight={0} />
