@@ -20,8 +20,6 @@ const useResponsiveState = () => {
   const [fixedFontSize, setFixedFontSize] = useState("1.125rem"); // Ne nécessite pas de conversion
 
   //__YOKO_Product__CARD
-  const [fixedBorderRadius_ProductCard, setFixedBorderRadius_ProductCard] =
-    useState("3.563rem"); // 57px / 16px = 3.563rem
   const [fixedFontSize_ProductCard, setFixedFontSize_ProductCard] =
     useState("1.125rem"); // Ne nécessite pas de conversion
 
@@ -30,6 +28,11 @@ const useResponsiveState = () => {
     useState("30.5rem"); // 280px / 16px = 17.5rem
   const [fixedHeightProductMonth, setFixedHeightProductMonth] =
     useState("399px"); // Ne nécessite pas de conversion
+
+  const [fixedDirectionProductMonth, setFixedDirectionProductMonth] = useState({
+    dire: "column",
+    alig: "center",
+  }); // Ne nécessite pas de conversion
 
   // TODO:
   //__FOOTER
@@ -99,7 +102,7 @@ const useResponsiveState = () => {
       setFixedWidth("280px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
-      setFixedFontSize("2rem");
+      setFixedFontSize("1.5rem");
       setFixedWidthProductMonth("280px");
 
       //__FOOTER_MOBILE
@@ -112,7 +115,7 @@ const useResponsiveState = () => {
       setFixedWidth("333px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
-      setFixedFontSize("2rem");
+      setFixedFontSize("1.5rem");
       setFixedWidthProductMonth("333px");
 
       //__FOOTER_SMALL
@@ -125,7 +128,7 @@ const useResponsiveState = () => {
       isExtraLargeDevice ||
       isExtraExtraLargeDevice
     ) {
-      setFixedWidth("11.25rem");
+      setFixedWidth("180px");
       const aspectRatio = 1 / 2; // Width / Height ratio
       setFixedGap("1rem");
 
@@ -146,6 +149,11 @@ const useResponsiveState = () => {
       setFixedFontSizeTitleComingSoon("4rem");
       setFixedPaddingTitleComingSoon("3.125rem");
       setFixedBorderRadiusComingSoon("57px");
+
+      setFixedDirectionProductMonth({
+        dire: null,
+        alig: null,
+      });
     }
   }, [
     isMobile,
@@ -196,7 +204,7 @@ const useResponsiveState = () => {
     fixedFontSize_Footer__Header,
     fixedFontSize_Footer__Li,
     fixedFontSize_Footer__alignements,
-
+    fixedDirectionProductMonth,
     // TODO: ComingSoon Card.
     fixedFontSizeTitleComingSoon,
     fixedPaddingTitleComingSoon,

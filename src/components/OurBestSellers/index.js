@@ -38,7 +38,7 @@ const OurBestSellers = () => {
       className={`w-full flex flex-col items-center `}
       style={{
         maxWidth: "75rem",
-        marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
+        // marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
       }}
     >
       <div>

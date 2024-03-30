@@ -4,6 +4,7 @@ import useResponsiveState from "../../utils/useResponsiveState";
 import { Error404 } from "../../images";
 import { Button } from "antd";
 import { AiOutlineLike } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 import { CiShoppingCart } from "react-icons/ci";
 
@@ -120,7 +121,11 @@ const ProductCardWithDescriptionFooter = ({
   };
 
   return (
-    <div id={divId} style={{ cursor: "pointer" }}>
+    <motion.div
+      whileTap={{ scale: 0.98 }}
+      id={divId}
+      style={{ cursor: "pointer", margin: " 0 auto" }}
+    >
       <div
         className={`flex justify-center items-center ${style.container}`}
         style={containerStyles}
@@ -164,7 +169,7 @@ const ProductCardWithDescriptionFooter = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

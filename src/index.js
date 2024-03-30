@@ -54,4 +54,4 @@ root.render(
 );
 
 // Measure performance in the app
-reportWebVitals(console.log);
+//reportWebVitals(console.log);

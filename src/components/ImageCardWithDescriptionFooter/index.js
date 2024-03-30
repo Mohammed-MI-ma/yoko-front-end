@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import style from "./ImageCardWithDescriptionFooter.module.css";
 import useResponsiveState from "../../utils/useResponsiveState";
 import { Error404 } from "../../images";
-
+import { motion } from "framer-motion";
 const ImageCardWithDescriptionFooter = ({
   fixedWidth,
   highDefinitionImgUrl,
   fixedHeight,
   backgroundImageUrl,
   descriptionContent,
+  action,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -98,7 +99,17 @@ const ImageCardWithDescriptionFooter = ({
     fontSize: responsiveState.fixedFontSize,
   };
   return (
-    <div id={divId} style={{ cursor: "pointer" }}>
+    <motion.div
+      whileHover={{
+        scale: 1.09,
+        transition: { duration: 0.5 },
+      }}
+      transition={{ type: "spring", stiffness: 100 }}
+      whileTap={{ scale: 0.905 }}
+      id={divId}
+      style={{ cursor: "pointer", margin: "0 auto" }}
+      onClick={action}
+    >
       <div
         className={`flex justify-center items-center ${style.container}`}
         style={containerStyles}
@@ -111,7 +122,7 @@ const ImageCardWithDescriptionFooter = ({
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

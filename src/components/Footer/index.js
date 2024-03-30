@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import useResponsiveState from "../../utils/useResponsiveState";
@@ -8,14 +8,19 @@ import { ConfigProvider, Divider, Select } from "antd";
 import FooterItem from "../FooterItem";
 import SocialMediaButtons from "../SocialMedia";
 import ContactContainer from "../contactContainer";
-import { FaPhone } from "react-icons/fa6";
 import CopyrightRNA from "./BuildingBlocs/CopyrightRNA";
 import { useNavigate } from "react-router-dom";
+import { fetchContactInfo } from "../../actions/contactActions";
+import PhoneNumberContainer from "../PhoneNumberContainer";
 const Footer = () => {
   const navigate = useNavigate();
+  const [isPending, startTransition] = useTransition();
+
   const handleClick = () => {
     // Navigate to the login page when the button is clicked
-    navigate(`/${language}/web/guest/traditional`);
+    startTransition(() => {
+      navigate(`/${language}/web/guest/traditional`);
+    });
   };
   const getHeader = (id) => {
     switch (id) {
@@ -45,17 +50,7 @@ const Footer = () => {
                 <ContactContainer />
               </li>
               <li>
-                <span
-                  itemprop="telephone"
-                  className="flex items-center gap-1 "
-                  style={{
-                    justifyContent:
-                      responsiveState.fixedFontSize_Footer__alignements,
-                  }}
-                >
-                  <FaPhone />
-                  <p>+212 0 00 00 00 00</p>
-                </span>
+                <PhoneNumberContainer />
               </li>
             </ul>
           </nav>
@@ -138,6 +133,7 @@ const Footer = () => {
   };
   //__DISPATCH
   const d = useDispatch();
+
   //USE_TRANSLATION
   const { t } = useTranslation();
   //__DYNAMIC WIDTH
@@ -146,16 +142,11 @@ const Footer = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       window.dispatchEvent(new Event("resize"));
-    }, 10);
+    }, 3);
 
     return () => clearTimeout(timeoutId);
   }, []);
-  // Dispatch an action to set the initial value of dynamicWidth
-  useEffect(() => {
-    if (!dynamicWidth) {
-      d(setDynamicWidth(dynamicWidth));
-    }
-  }, [d, dynamicWidth]);
+
   //__INTERN
   const language = useSelector((state) => state.application.language);
   const primaryBoldFont = useMemo(() => `Primary-Bold-${language}`, [language]);
@@ -207,6 +198,7 @@ const Footer = () => {
               fixedHeight={responsiveState.fixedHeight}
               header={getHeader(id)}
               descriptionContent={getContent(id)}
+              key={id}
             />
           ))}
         </div>

@@ -12,10 +12,26 @@ import {
 import ImageCardWithDescriptionFooter from "../ImageCardWithDescriptionFooter";
 import useResponsiveState from "../../utils/useResponsiveState";
 import { setDynamicWidth } from "../../reducers/applicationService/applicationSlice";
+import { useNavigate } from "react-router-dom";
 
-const OurPartners = () => {
+const OurPartners = ({ vierge }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const getAction = (id) => {
+    switch (id) {
+      case 3:
+        return navigate(`/${language}/web/guest/eat`);
+      case 2:
+        return YOKOMarket_low;
+      case 1:
+        return Delivery_low;
+      case 4:
+        return navigate(`/${language}/web/guest/traditional`);
+      default:
+        return "";
+    }
+  };
   const responsiveState = useResponsiveState();
   const divRef = useRef(null);
   useEffect(() => {
@@ -78,9 +94,11 @@ const OurPartners = () => {
             <ImageCardWithDescriptionFooter
               fixedWidth={responsiveState.fixedWidth} // Set fixed width
               fixedHeight={responsiveState.fixedHeight} // Set fixed height
-              highDefinitionImgUrl={getImageHighQualitySrc(id)}
-              backgroundImageUrl={getImageLowQualitySrc(id)}
-              descriptionContent={getImageAlt(id)}
+              highDefinitionImgUrl={vierge ? null : getImageHighQualitySrc(id)}
+              backgroundImageUrl={vierge ? null : getImageLowQualitySrc(id)}
+              descriptionContent={vierge ? null : getImageAlt(id)}
+              key={id}
+              action={vierge ? null : () => getAction(id)}
             />
           ))}
         </div>

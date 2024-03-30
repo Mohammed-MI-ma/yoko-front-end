@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Traditional_low } from "../../images";
+import { Traditional, Traditional_low } from "../../images";
 import ComingSoon from "../../components/ComingSoon";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
 
 const TraditionalFoodPage = ({
   fixedWidth,
-  highDefinitionImgUrl,
+  highDefinitionImgUrl = Traditional,
   fixedHeight,
 }) => {
   const { t } = useTranslation();
   const [imageUrl, setImageUrl] = useState(Traditional_low); // Set your initial lightweight image URL here
   const [imageLoaded, setImageLoaded] = useState(false);
+  // Retrieve the currently selected language from the application state
+  const language = useSelector((state) => state.application.language);
 
   useEffect(() => {
     if (!imageLoaded) {
@@ -50,14 +54,42 @@ const TraditionalFoodPage = ({
     minHeight: "75vh",
   };
   return (
-    <div className="w-full">
-      <div
-        className={`flex justify-center items-center `}
-        style={containerStyles}
-      >
-        <ComingSoon title={t("Traditional Food")} />
+    <>
+      <Helmet>
+        <html lang={language} />
+        <title>{t("Traditional Food")}</title>
+        <meta charSet="UTF-8" />
+        <meta
+          name="description"
+          content={t("Description of Traditional Food")}
+        />
+        <meta
+          name="keywords"
+          content={t("traditional food, cuisine, recipe")}
+        />
+        <meta name="author" content={t("Your Company Name")} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={t("Traditional Food")} />
+        <meta
+          property="og:description"
+          content={t("Description of Traditional Food")}
+        />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={imageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        {/* Add other meta tags as needed */}
+      </Helmet>
+      <div className="w-full">
+        <div
+          className={`flex justify-center items-center `}
+          style={containerStyles}
+        >
+          <ComingSoon title={t("Traditional Food")} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

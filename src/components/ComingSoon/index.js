@@ -2,7 +2,7 @@ import React from "react";
 import useResponsiveState from "../../utils/useResponsiveState";
 import { useTranslation } from "react-i18next";
 
-const ComingSoon = ({ title }) => {
+const ComingSoon = ({ title, style }) => {
   const responsiveState = useResponsiveState();
   const { t } = useTranslation();
   return (
@@ -10,6 +10,7 @@ const ComingSoon = ({ title }) => {
       className="shadow-lg"
       style={{
         color: "white",
+        position: "absolute",
         background: "var(--color-primary)",
         display: "flex",
         justifyContent: "center",
@@ -19,6 +20,7 @@ const ComingSoon = ({ title }) => {
         paddingLeft: responsiveState.fixedPaddingTitleComingSoon,
         paddingRight: responsiveState.fixedPaddingTitleComingSoon,
         borderRadius: responsiveState.fixedBorderRadiusComingSoon,
+        ...style,
       }}
     >
       <h1

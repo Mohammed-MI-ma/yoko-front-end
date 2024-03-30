@@ -36,7 +36,7 @@
   "///////_": "***_PiedDePage",
   "contact us": "Nous contacter",
   "Discover our yoko": "Découvrez le yoko",
-  "Our best sellers": "Our best sellers",
+  "Our best sellers": "Nos Meilleures Ventes",
   "follow us": "Suivez-nous",
   "YOKO Eat": "YOKO Mangez",
   "YOKO Market": "YOKO SuperMarché",
@@ -44,5 +44,8 @@
   "Traditional Food": "Plat traditionnel",
   "Copyright": "© 2024 - YOKO - Tous droits réservés.",
   "logoText": "Yoko logo - Providing fast-food, delivery, and traditional Moroccan cuisine",
-  "Coming Soon": "Prochainement"
+  "Coming Soon": "Prochainement",
+  "Oops!!": "Oops!!",
+  "Échec du chargement des informations de contact": "Échec du chargement des informations de contact. Veuillez réessayer ultérieurement.",
+  "Produit de la semaine": "Produit de la semaine"
 }
