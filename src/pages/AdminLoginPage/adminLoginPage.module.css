@@ -1,0 +1,60 @@
+.containerExtend {
+  /* Your styles here */
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+.gridExtend {
+  gap: 1rem;
+  overflow: hidden;
+}
+/* Mobile devices (up to 388px) */
+@media only screen and (max-width: 388px) {
+  .containerExtend {
+    /* Your styles here */
+    margin-bottom: 20vh !important;
+    margin-top: 10vh !important;
+  }
+  .gridExtend {
+    gap: 5rem;
+  }
+}
+
+/* Small devices (389px to 575px) */
+@media only screen and (min-width: 389px) and (max-width: 575px) {
+  .containerExtend {
+    /* Your styles here */
+    margin-bottom: 20vh !important;
+    margin-top: 10vh !important;
+  }
+  .gridExtend {
+    gap: 5rem;
+  }
+}
+
+/* Medium devices (576px to 767px) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* Your styles here */
+  .containerExtend {
+    /* Your styles here */
+    margin-bottom: 20vh !important;
+    margin-top: 10vh !important;
+  }
+  .gridExtend {
+    gap: 5rem;
+  }
+}
+
+/* Large devices (768px to 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Your styles here */
+}
+
+/* Extra large devices (992px to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles here */
+}
+
+/* Extra extra large devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles here */
+}

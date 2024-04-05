@@ -1,50 +1,52 @@
-import { Skeleton, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Skeleton } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoMdMail } from "react-icons/io";
 import { useSelector } from "react-redux";
-import useResponsiveState from "../../utils/useResponsiveState";
+import useDirection from "../../utils/useDirection";
 
 const ContactContainer = () => {
-  const [errorDisplayed, setErrorDisplayed] = useState(false); // Local state to track if error message has been displayed
-  const { t } = useTranslation();
+  const [errorDisplayed, setErrorDisplayed] = useState(false);
+  const { t, i18n } = useTranslation();
+  const direction = useDirection(i18n.language);
 
   const contactInfo = useSelector((state) => state.contact.contactInfo);
   const loading = useSelector((state) => state.contact.loading);
   const error = useSelector((state) => state.contact.error);
-  // Handle error message display
+
   useEffect(() => {
-    // Check if error occurred and error message has not been displayed
     if (error && !errorDisplayed) {
-      // Display error message using Ant Design's message component
-      message.error(t("Échec du chargement des informations de contact"));
-      setErrorDisplayed(true); // Set errorDisplayed to true to prevent duplicate error messages
+      setErrorDisplayed(true);
     }
-  }, [error, errorDisplayed, t]);
-  const handleEmailClick = () => {
-    window.location.href = `mailto:${contactInfo?.email}`;
-  };
-  const responsiveState = useResponsiveState();
+  }, [error, errorDisplayed]);
+
+  const handleEmailClick = useCallback(() => {
+    if (!loading && !error && !errorDisplayed) {
+      window.location.href = `mailto:${contactInfo?.email}`;
+    }
+  }, [contactInfo, loading, error, errorDisplayed]);
 
   return (
     <span
-      onClick={loading || error || errorDisplayed ? null : handleEmailClick}
-      className="flex items-center gap-1 justify-center"
+      onClick={handleEmailClick}
+      className="flex items-center gap-1"
       style={{
-        cursor: "pointer",
-        justifyContent: responsiveState.fixedFontSize_Footer__alignements,
+        cursor: loading || error || errorDisplayed ? "default" : "pointer",
+        direction: direction,
       }}
-      tabIndex={0} // Ensure keyboard accessibility
-      role="link" // Indicate the role of the element
-      aria-label="Contact Yoko via email" // Provide a descriptive label for accessibility
+      tabIndex={0}
+      role="link"
+      aria-label={t("Contact Yoko via email")}
     >
       <IoMdMail />
       {loading ? (
-        <Skeleton.Input active size={"small"} />
+        <Skeleton.Input active size="small" />
       ) : error || errorDisplayed ? (
-        "Oops!!"
+        <small>
+          <i>{t("Réessayer")}</i>
+        </small>
       ) : (
-        contactInfo?.email
+        <small>{contactInfo?.email}</small>
       )}
     </span>
   );

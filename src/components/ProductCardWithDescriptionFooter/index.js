@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import style from "./ProductCardWithDescriptionFooter.module.css";
 import useResponsiveState from "../../utils/useResponsiveState";
-import { Error404 } from "../../images";
+//import { Error404 } from "../../images";
 import { Button } from "antd";
 import { AiOutlineLike } from "react-icons/ai";
 import { motion } from "framer-motion";
@@ -17,7 +17,7 @@ const ProductCardWithDescriptionFooter = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState(backgroundImageUrl || Error404); // Set your initial lightweight image URL here
+  const [imageUrl, setImageUrl] = useState(backgroundImageUrl); // Set your initial lightweight image URL here
 
   const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`); // Generate a random ID for the div
 
@@ -63,7 +63,7 @@ const ProductCardWithDescriptionFooter = ({
       // Set a timeout to handle slow network conditions
       const timeoutId = setTimeout(() => {
         // Fallback to default image or display placeholder
-        setImageUrl(Error404); // Set your default image URL here
+        // setImageUrl(Error404); // Set your default image URL here
         setImageLoaded(true);
       }, 5000); // Set the timeout duration (in milliseconds) as needed
     }

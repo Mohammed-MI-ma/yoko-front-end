@@ -1,18 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Button, Space, Tooltip } from "antd";
 import { useTranslation } from "react-i18next";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import useFontFamily from "../../utils/useFontFamily";
 
-const SocialMediaButton = ({ platform, color, icon, tooltip }) => {
-  const { t } = useTranslation();
+const SocialMediaButton = ({ color, icon, tooltip }) => {
+  const { t, i18n } = useTranslation();
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
-  // Handle missing translations
-  const title = t(tooltip) || tooltip;
-
-  // Render button
+  const title = t(tooltip);
   return (
-    <Tooltip title={title}>
+    <Tooltip title={<p style={{ fontFamily: fontFamilyLight }}>{title}</p>}>
       <Button
         shape="circle"
         className="flex items-center justify-center border-none"
@@ -24,36 +22,26 @@ const SocialMediaButton = ({ platform, color, icon, tooltip }) => {
   );
 };
 
-const SocialMediaButtons = () => {
+const SocialMediaButtons = ({ color, size = "large" }) => {
   return (
     <Space>
       <SocialMediaButton
-        platform="facebook"
-        color="var(--color-primary)"
-        icon={<FaFacebookF size={"large"} className="shadow-lg" />}
-        tooltip="facebook"
+        color={color}
+        icon={<FaFacebookF size={size} />}
+        tooltip={"facebook"}
       />
       <SocialMediaButton
-        platform="twitter"
-        color="var(--color-primary)"
-        icon={<FaTwitter size={"large"} className="shadow-lg" />}
+        color={color}
+        icon={<FaTwitter size={size} />}
         tooltip="twitter"
       />
       <SocialMediaButton
-        platform="instagram"
-        color="var(--color-primary)"
-        icon={<FaInstagram size={"large"} className="shadow-lg" />}
-        tooltip="instagram"
+        color={color}
+        icon={<FaInstagram size={size} />}
+        tooltip="Instagram"
       />
     </Space>
   );
-};
-
-SocialMediaButton.propTypes = {
-  platform: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  tooltip: PropTypes.string.isRequired,
 };
 
 export default SocialMediaButtons;

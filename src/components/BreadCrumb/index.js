@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-const BreadCrumb = ({ children }) => {
+const BreadCrumb = ({ children, language }) => {
   //__DISPATCH
   const d = useDispatch();
 
@@ -27,6 +27,7 @@ const BreadCrumb = ({ children }) => {
     <div
       style={{
         ...pageFooterStyle,
+        direction: language === "ar" ? "rtl" : "ltr",
       }}
       className={`w-full flex flex-col items-center`}
     >

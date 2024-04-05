@@ -42,7 +42,7 @@ const HomePage = ({ language }) => {
       <section style={{ flex: "1 1 auto" }}>
         <section id={"main-content"} className="flex items-center flex-col">
           <HeroSection />
-          <OurPartners />
+          <OurPartners vierge={false} />
           <OurBestSellers />
           <ProductOfTheWeek />
         </section>

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Traditional, Traditional_low } from "../../images";
 import ComingSoon from "../../components/ComingSoon";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
+import { setLanguage } from "../../reducers/applicationService/applicationSlice";
+import { AnimatePresence } from "framer-motion";
+import useResponsiveState from "../../utils/useResponsiveState";
 
 const TraditionalFoodPage = ({
   fixedWidth,
@@ -11,11 +14,15 @@ const TraditionalFoodPage = ({
   fixedHeight,
 }) => {
   const { t } = useTranslation();
+  const responsiveState = useResponsiveState();
+
   const [imageUrl, setImageUrl] = useState(Traditional_low); // Set your initial lightweight image URL here
   const [imageLoaded, setImageLoaded] = useState(false);
-  // Retrieve the currently selected language from the application state
   const language = useSelector((state) => state.application.language);
-
+  const primaryRegularFont = useMemo(
+    () => `Primary-regular-${language}`,
+    [language]
+  );
   useEffect(() => {
     if (!imageLoaded) {
       // Load your high definition image here
@@ -53,6 +60,7 @@ const TraditionalFoodPage = ({
     backgroundColor: "white",
     minHeight: "75vh",
   };
+
   return (
     <>
       <Helmet>
@@ -86,7 +94,18 @@ const TraditionalFoodPage = ({
           className={`flex justify-center items-center `}
           style={containerStyles}
         >
-          <ComingSoon title={t("Traditional Food")} />
+          <ComingSoon
+            font={language === "ar" ? primaryRegularFont : "Neue_Power-fr"}
+            title={
+              <h1
+                style={{
+                  fontSize: responsiveState.fixedFontSizeTitleComingSoon,
+                }}
+              >
+                {t("Traditional Food")}
+              </h1>
+            }
+          />
         </div>
       </div>
     </>

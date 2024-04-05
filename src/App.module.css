@@ -1,10 +1,8 @@
 .bgHeader {
-  background-repeat: no-repeat;
-  background-position: 71% -124px;
-  min-height: 126px;
+  min-height: 100px;
 }
 .wrapper {
-  max-width: 1920px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   position: relative;

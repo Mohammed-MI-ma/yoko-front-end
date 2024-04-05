@@ -1,129 +1,177 @@
-import React, { useEffect, useMemo, useTransition } from "react";
-import { useTranslation } from "react-i18next";
+//__React
+import React, { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { useTranslation } from "react-i18next";
 import useResponsiveState from "../../utils/useResponsiveState";
-import { setDynamicWidth } from "../../reducers/applicationService/applicationSlice";
+
+import {
+  setLanguage,
+  setSiteDirection,
+} from "../../reducers/applicationService/applicationSlice";
+
+//31kb
 import { LogoB } from "../../images";
-import { ConfigProvider, Divider, Select } from "antd";
+
+import { ConfigProvider, Select } from "antd";
+
 import FooterItem from "../FooterItem";
 import SocialMediaButtons from "../SocialMedia";
 import ContactContainer from "../contactContainer";
 import CopyrightRNA from "./BuildingBlocs/CopyrightRNA";
-import { useNavigate } from "react-router-dom";
-import { fetchContactInfo } from "../../actions/contactActions";
 import PhoneNumberContainer from "../PhoneNumberContainer";
-const Footer = () => {
-  const navigate = useNavigate();
-  const [isPending, startTransition] = useTransition();
 
-  const handleClick = () => {
-    // Navigate to the login page when the button is clicked
-    startTransition(() => {
-      navigate(`/${language}/web/guest/traditional`);
-    });
-  };
-  const getHeader = (id) => {
-    switch (id) {
-      case 2:
-        return t("contact us");
-      case 3:
-        return t("Discover our yoko");
-      case 4:
-        return t("follow us");
+import useFontFamily from "../../utils/useFontFamily";
+
+//_utils
+import { getHeader } from "../../utils/footerUtils";
+
+import useDirection from "../../utils/useDirection";
+import { CustomDivider } from "../../pages/DashboardPage";
+
+//_styling
+import style from "./Footer.module.css";
+
+const RIGHT = "right";
+const LEFT = "left";
+const AR = "ar";
+
+const Footer = ({ language }) => {
+  const { t, i18n } = useTranslation();
+  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
+  const responsiveState = useResponsiveState();
+
+  const direction = useDirection(i18n.language);
+
+  const handleChange = (value) => {
+    switch (value) {
+      case "Francais":
+        changeLanguage("fr");
+        break;
+      case "Arabe":
+        changeLanguage("ar");
+        break;
+      case "Anglais":
+        changeLanguage("en");
+        break;
       default:
-        return "";
+        changeLanguage("fr");
+        break;
     }
+  };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    dispatch(setLanguage(lng));
+    dispatch(setSiteDirection(direction));
+    if (lng === "ar") {
+      navigate(window.location.pathname.replace(/^\/(fr|en)/, "/ar"));
+    } else {
+      navigate(window.location.pathname.replace(/^\/(ar|en)/, "/fr"));
+    }
+  };
+  // Memoize the pages array creation
+  const memoizedContactUsBloc = useMemo(() => {
+    try {
+      if (!language || !t) return [];
+      return [
+        {
+          id: "email",
+          component: <ContactContainer />,
+        },
+        {
+          id: "phone",
+          component: <PhoneNumberContainer />,
+        },
+      ];
+    } catch (error) {
+      console.error("Error occurred while memoizing ContactUsBloc:", error);
+      return [];
+    }
+  }, [language, t]);
+  const memoizedExploreYokoBloc = useMemo(() => {
+    try {
+      if (!language || !t) return [];
+      return [
+        {
+          id: "YOKO Eat",
+          component: <>{t("YOKO Eat")}</>,
+        },
+        {
+          id: "YOKO Market",
+          component: <> {t("YOKO Market")}</>,
+        },
+        {
+          id: "Dilevery Boy",
+          component: <> {t("Dilevery Boy")}</>,
+        },
+        {
+          id: "Traditional Food",
+          component: <>{t("Traditional Food")}</>,
+        },
+      ];
+    } catch (error) {
+      console.error("Error occurred while memoizing ContactUsBloc:", error);
+      return [];
+    }
+  }, [language, t]);
+
+  const textStyle = {
+    textAlign: language === AR ? RIGHT : LEFT,
+    fontFamily: fontFamilyLight,
+    fontSize: responsiveState.fixedFontSize_Footer__Li,
   };
   const getContent = (id) => {
     switch (id) {
       case 2:
         return (
-          <nav>
-            <ul
-              style={{
-                color: "white",
-                fontWeight: "200",
-                fontSize: responsiveState.fixedFontSize_Footer__Li,
-              }}
-            >
-              <li>
-                <ContactContainer />
-              </li>
-              <li>
-                <PhoneNumberContainer />
-              </li>
-            </ul>
-          </nav>
+          <ListItemsBloc
+            language={language}
+            memoizedBloc={memoizedContactUsBloc}
+          />
         );
-
       case 3:
         return (
-          <nav>
-            <ul
-              style={{
-                color: "white",
-                fontWeight: "200",
-                fontSize: responsiveState.fixedFontSize_Footer__Li,
-              }}
-            >
-              <li>{t("YOKO Eat")}</li>
-              <li>{t("YOKO Market")}</li>
-              <li>{t("Dilevery Boy")}</li>
-              <li onClick={handleClick}>{t("Traditional Food")}</li>
-            </ul>
-          </nav>
+          <ListItemsBloc
+            language={language}
+            myStyle={textStyle}
+            memoizedBloc={memoizedExploreYokoBloc}
+          />
         );
 
       case 4:
         return (
           <div>
             <div className="flex flex-row items-center gap-2">
-              <div style={{ width: "51px" }}>
-                <Divider style={{ background: "var(--color-primary)" }} />
-              </div>
-              <SocialMediaButtons />
+              <CustomDivider width={"3.1875rem"} />
+              <SocialMediaButtons color={"white"} />
             </div>
             <div>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Select: {
-                      optionSelectedColor: "var(--color-text)",
-                    },
-                  },
-                  token: {
-                    colorBgContainer: "none",
-                    colorBorder: "white",
-                    colorPrimary: "white",
-                    colorText: "white",
-                    borderRadius: "15px",
-                  },
+              <Select
+                onChange={handleChange}
+                Placement="bottomLeft"
+                defaultValue="Francais"
+                style={{
+                  width: 146,
+                  height: 47,
+                  fontFamily: fontFamilyBold,
                 }}
-              >
-                <Select
-                  Placement="bottomLeft"
-                  defaultValue="Francais"
-                  style={{
-                    width: 146,
-                    height: 47,
-                    fontFamily: primaryBoldFont,
-                  }}
-                  options={[
-                    {
-                      value: "Francais",
-                      label: "Francais",
-                    },
-                    {
-                      value: "Francais",
-                      label: "Francais",
-                    },
-                    {
-                      value: "Francais",
-                      label: "Francais",
-                    },
-                  ]}
-                />
-              </ConfigProvider>
+                options={[
+                  {
+                    value: "Francais",
+                    label: t("french"),
+                  },
+                  {
+                    value: "Arabe",
+                    label: t("arabic"),
+                  },
+                ]}
+              />
             </div>
           </div>
         );
@@ -131,14 +179,7 @@ const Footer = () => {
         return "";
     }
   };
-  //__DISPATCH
-  const d = useDispatch();
 
-  //USE_TRANSLATION
-  const { t } = useTranslation();
-  //__DYNAMIC WIDTH
-  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  // Simulate a window resize event after 0.01 second
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       window.dispatchEvent(new Event("resize"));
@@ -146,69 +187,69 @@ const Footer = () => {
 
     return () => clearTimeout(timeoutId);
   }, []);
-
-  //__INTERN
-  const language = useSelector((state) => state.application.language);
-  const primaryBoldFont = useMemo(() => `Primary-Bold-${language}`, [language]);
-
-  // RESPONSIVENESS
-  const responsiveState = useResponsiveState();
-
-  //__PAGE FOOTER STYLE
-  const pageFooterStyle = {
-    backgroundColor: "var(--color-secondary)",
-  };
   return (
-    <footer
-      style={{
-        ...pageFooterStyle,
+    <ConfigProvider
+      theme={{
+        components: {
+          Select: {
+            optionSelectedColor: "var(--color-text)",
+          },
+        },
+        token: {
+          colorBgContainer: "none",
+          colorBorder: "white",
+          colorPrimary: "white",
+          colorText: "gray",
+          borderRadius: "15px",
+        },
       }}
-      className={`w-full flex flex-col items-center`}
     >
-      <div
-        className="flex flex-col items-center"
-        style={{
-          margin: "0 auto",
-          width: dynamicWidth,
-        }}
+      <footer
+        className={`w-full flex flex-col items-center ${style.pageFooter}`}
       >
         <div
-          className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 "
+          className="flex flex-col items-center"
           style={{
-            margin: "0 auto",
-            paddingTop: "80px",
-            paddingBottom: "20px",
-            gap: responsiveState.fixedGapFooter,
+            width: dynamicWidth,
+            fontFamily: fontFamilyBold,
           }}
         >
           <div
-            style={{ width: responsiveState.fixedWidth, height: "max-content" }}
-            className="flex justify-center"
+            className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 ${style.grid}`}
           >
-            <img
-              src={LogoB}
-              style={{ width: responsiveState.fixedWidthLogo }}
-              alt={t("logoText")}
-            />
-          </div>
+            <img src={LogoB} alt="Company Logo" />
 
-          {[2, 3, 4].map((id) => (
-            <FooterItem
-              fixedWidth={responsiveState.fixedWidth}
-              fixedHeight={responsiveState.fixedHeight}
-              header={getHeader(id)}
-              descriptionContent={getContent(id)}
-              key={id}
-            />
-          ))}
+            {[2, 3, 4].map((id) => (
+              <FooterItem
+                fixedWidth={responsiveState.fixedWidth}
+                fixedHeight={responsiveState.fixedHeight}
+                header={getHeader(id, t)}
+                descriptionContent={getContent(id)}
+                key={id}
+                language={language}
+              />
+            ))}
+          </div>
+          <CustomDivider width={"20.8rem"} height={"3px"} />
+          <CopyrightRNA />
         </div>
-        <div style={{ maxWidth: "333px", width: "100%" }}>
-          <Divider style={{ backgroundColor: "var(--color-primary)" }} />
-        </div>
-        <CopyrightRNA />
-      </div>
-    </footer>
+      </footer>
+    </ConfigProvider>
   );
 };
+
+const ListItemsBloc = React.memo(({ memoizedBloc, myStyle }) => {
+  return (
+    <nav>
+      <ul className={style.listItemsBloc}>
+        {memoizedBloc.map((blocItem) => (
+          <li key={blocItem.id} style={myStyle}>
+            {blocItem.component}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+});
 
 export default Footer;

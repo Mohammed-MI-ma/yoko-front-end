@@ -1,25 +1,59 @@
 .basketAr {
   transform: translateX(-40%);
 }
-/* Styles for extra small devices (phones) */
-@media (max-width: 576px) {
+.smallScreens {
+  display: none;
 }
-
-/* Styles for small devices (tablets) */
-@media (min-width: 577px) and (max-width: 768px) {
+.largeScreens {
+  display: flex;
 }
-
-/* Styles for medium devices (laptops and desktops) */
-@media (min-width: 769px) and (max-width: 992px) {
+.smallScreenHeight {
+  height: 50%;
 }
-
-/* Styles for large devices (desktops) */
-@media (min-width: 993px) and (max-width: 1200px) {
-}
-
-/* Styles for extra large devices (large desktops and TVs) */
-@media (min-width: 1201px) {
-  .basket {
-    transform: translateX(-40%);
+/* Mobile devices (up to 388px) */
+@media only screen and (max-width: 388px) {
+  .smallScreens {
+    display: flex;
   }
+  .largeScreens {
+    display: none;
+  }
+  .smallScreenHeight {
+    height: 50%;
+  }
+}
+
+/* Small devices (389px to 575px) */
+@media only screen and (min-width: 389px) and (max-width: 575px) {
+  .smallScreens {
+    display: flex;
+  }
+  .largeScreens {
+    display: none;
+  }
+}
+
+/* Medium devices (576px to 767px) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .smallScreens {
+    display: flex;
+  }
+  .largeScreens {
+    display: none;
+  }
+}
+
+/* Large devices (768px to 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Your styles here */
+}
+
+/* Extra large devices (992px to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles here */
+}
+
+/* Extra extra large devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles here */
 }

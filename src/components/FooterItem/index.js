@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import useResponsiveState from "../../utils/useResponsiveState";
-import { Divider } from "antd";
 
-const FooterItem = ({ fixedWidth, descriptionContent, header }) => {
+const FooterItem = ({ fixedWidth, descriptionContent, header, language }) => {
+  const primaryBoldFont = useMemo(() => `Primary-Bold-${language}`, [language]);
+
   // Get responsive state
   let responsiveState;
   try {
@@ -25,18 +26,20 @@ const FooterItem = ({ fixedWidth, descriptionContent, header }) => {
 
   // Define header styles
   const headerStyles = {
-    fontFamily: "Primary-Bold-fr",
+    fontFamily: primaryBoldFont,
     fontSize: responsiveState.fixedFontSize_Footer__Header,
     color: "var(--color-primary)",
     textTransform: "uppercase",
     marginBottom: "1rem",
+    textAlign: language === "ar" ? "right" : "left",
   };
   return (
-    <div style={{ paddingTop: responsiveState.fixedPaddingFooter }}>
-      <div
-        className={`flex justify-start items-center `}
-        style={containerStyles}
-      >
+    <div
+      style={{
+        paddingTop: responsiveState.fixedPaddingFooter,
+      }}
+    >
+      <div className={`flex justify-start  `} style={containerStyles}>
         <div>
           <h1 style={headerStyles}>{header}</h1>
           {descriptionContent}

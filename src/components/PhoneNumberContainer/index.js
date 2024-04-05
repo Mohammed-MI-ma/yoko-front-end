@@ -1,36 +1,35 @@
-import { Skeleton, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Skeleton } from "antd";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaPhone } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import useResponsiveState from "../../utils/useResponsiveState";
+import useDirection from "../../utils/useDirection";
 
 const PhoneNumberContainer = () => {
-  const [errorDisplayed, setErrorDisplayed] = useState(false); // Local state to track if error message has been displayed
-  const { t } = useTranslation();
+  const [errorDisplayed] = useState(false); // Local state to track if error message has been displayed
+  const { t, i18n } = useTranslation();
+  const direction = useDirection(i18n.language);
 
   const contactInfo = useSelector((state) => state.contact.contactInfo);
   const loading = useSelector((state) => state.contact.loading);
   const error = useSelector((state) => state.contact.error);
-
-  const responsiveState = useResponsiveState();
 
   return (
     <span
       itemprop="telephone"
       className="flex items-center gap-1 "
       style={{
-        justifyContent: responsiveState.fixedFontSize_Footer__alignements,
+        direction: direction,
       }}
-      tabIndex={0} // Ensure keyboard accessibility
+      tabIndex={0}
     >
       <FaPhone />
       {loading ? (
         <Skeleton.Input active size={"small"} />
       ) : error || errorDisplayed ? (
-        t("Oops!!")
+        <small>{t("Réessayer")}</small>
       ) : (
-        contactInfo?.phone
+        <p style={{ direction: "ltr" }}>{contactInfo?.phone}</p>
       )}
     </span>
   );

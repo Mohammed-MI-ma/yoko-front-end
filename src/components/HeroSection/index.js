@@ -1,61 +1,61 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Carousel } from "antd";
-import style from "./heroSection.module.css"; // Make sure this import is necessary
 import { useTranslation } from "react-i18next";
+import { Carousel } from "antd";
+
 import FirstPage from "./FirstPage";
-import SecondPage from "./SecondPage";
-import ThirdPage from "./ThirdPage";
+import CeravePage from "./CeravePage";
+import PhilipsPage from "./PHILIPSPage";
+
+import styles from "./heroSection.module.css";
 
 const HeroSection = () => {
   const language = useSelector((state) => state.application.language);
   const { t } = useTranslation();
-  //__CONTROLS
-  const primaryRegularFont = useMemo(
-    () => `Primary-Bold-${language}`,
-    [language]
-  );
-  const [index, setIndex] = useState();
-  const afterChange = (e) => {
-    console.log(e);
-    setIndex(e);
-  };
-  return (
-    <section id="hero-section">
-      <Carousel
-        afterChange={afterChange}
-        infinite
-        autoplay
-        autoplaySpeed={3000}
-        dotPosition="right"
-        easing="linear" // Example easing function, replace with your desired easing function
-        className={`${
-          style.heroSection
-        } flex flex-col-reverse lg:flex-row items-center ${
-          language === "fr" ? "lg:flex-row-reverse" : ""
-        }`}
-      >
-        <FirstPage
-          index={index}
-          language={language}
-          primaryRegularFont={primaryRegularFont}
-          t={t}
-        />
-        <SecondPage
-          index={index}
-          language={language}
-          primaryRegularFont={primaryRegularFont}
-          t={t}
-        />
 
-        <ThirdPage
-          index={index}
-          language={language}
-          primaryRegularFont={primaryRegularFont}
-          t={t}
-        />
+  // Memoize the pages array creation
+  const memoizedPages = useMemo(() => {
+    try {
+      // Ensure language and t are available
+      if (!language || !t) return [];
+
+      // Return the array of page components
+      return [
+        {
+          id: "firstPage",
+          component: <FirstPage language={language} t={t} />,
+        },
+        {
+          id: "ceravePage",
+          component: <CeravePage language={language} t={t} />,
+        },
+        {
+          id: "philipsPage",
+          component: <PhilipsPage language={language} t={t} />,
+        },
+      ];
+    } catch (error) {
+      console.error("Error occurred while memoizing pages:", error);
+      return [];
+    }
+  }, [language, t]); // Update memoization when language or t changes
+
+  return (
+    <section className="w-full shadow-lg">
+      <Carousel autoplay infinite>
+        {memoizedPages.map((page) => (
+          <CarouselPage key={page.id}>{page.component}</CarouselPage>
+        ))}
       </Carousel>
     </section>
+  );
+};
+
+const CarouselPage = ({ children }) => {
+  return (
+    <div>
+      <div className={styles.container}>{children}</div>
+    </div>
   );
 };
 

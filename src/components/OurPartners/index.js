@@ -1,75 +1,29 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import { useTranslation } from "react-i18next";
-
-import {
-  Delivery_low,
-  Tagine_low,
-  YOKOMarket_low,
-  YokoEat_low,
-} from "../../images";
 import ImageCardWithDescriptionFooter from "../ImageCardWithDescriptionFooter";
 import useResponsiveState from "../../utils/useResponsiveState";
-import { setDynamicWidth } from "../../reducers/applicationService/applicationSlice";
-import { useNavigate } from "react-router-dom";
+import useFontFamily from "../../utils/useFontFamily";
+import useDirection from "../../utils/useDirection";
+import {
+  getAction,
+  getImageAlt,
+  getImageHighQualitySrc,
+  getImageLowQualitySrc,
+} from "../../utils/imageUtils";
+import useDynamicWidth from "../../utilities/useDynamicWidth";
 
 const OurPartners = ({ vierge }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const divRef = useDynamicWidth(); // Use the custom hook
 
-  const getAction = (id) => {
-    switch (id) {
-      case 3:
-        return navigate(`/${language}/web/guest/eat`);
-      case 2:
-        return YOKOMarket_low;
-      case 1:
-        return Delivery_low;
-      case 4:
-        return navigate(`/${language}/web/guest/traditional`);
-      default:
-        return "";
-    }
-  };
+  const { t, i18n } = useTranslation();
   const responsiveState = useResponsiveState();
-  const divRef = useRef(null);
-  useEffect(() => {
-    // Define a function to update the width
-    const updateWidth = () => {
-      // Check if the ref to the div is available
-      if (divRef.current) {
-        // Get the width of the div
-        const width = divRef.current.offsetWidth;
-        // Log the width for debugging
-        console.log("width,width", width);
-        // Dispatch an action to update the width in the Redux store
-        dispatch(setDynamicWidth(width));
-      }
-    };
-
-    // Call updateWidth to get the initial width
-    updateWidth();
-
-    // Add an event listener to the window object for the resize event
-    window.addEventListener("resize", updateWidth);
-
-    // Cleanup function to remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", updateWidth);
-    };
-  }, [dispatch]);
-  const language = useSelector((state) => state.application.language);
-  const primaryRegularFont = useMemo(
-    () => `Primary-Bold-${language}`,
-    [language]
-  );
-
-  const { t } = useTranslation();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const direction = useDirection(i18n.language);
 
   const sectionStyle = {
-    dir: language === "ar" ? "rtl" : "ltr",
-    fontFamily: primaryRegularFont,
+    dir: direction,
+    fontFamily: fontFamilyBold,
     fontSize: responsiveState.fixedFontSize,
     textTransform: "uppercase",
     color: "var(--color-secondary)",
@@ -98,61 +52,13 @@ const OurPartners = ({ vierge }) => {
               backgroundImageUrl={vierge ? null : getImageLowQualitySrc(id)}
               descriptionContent={vierge ? null : getImageAlt(id)}
               key={id}
-              action={vierge ? null : () => getAction(id)}
+              action={vierge ? null : getAction(id)}
             />
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-const getImageLowQualitySrc = (id) => {
-  switch (id) {
-    case 3:
-      return YokoEat_low;
-    case 2:
-      return YOKOMarket_low;
-    case 1:
-      return Delivery_low;
-    case 4:
-      return Tagine_low;
-    default:
-      return "";
-  }
-};
-
-const getImageHighQualitySrc = (id) => {
-  switch (id) {
-    case 3:
-      return "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YokoEat.jpg";
-    case 2:
-      return "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/YOKOMarket.jpg";
-    case 1:
-      return "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Delivery.jpg";
-    case 4:
-      return "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Le-tajine.jpg";
-    default:
-      return "";
-  }
-};
-
-const getImageAlt = (id) => {
-  switch (id) {
-    case 1:
-      return "YOKO livraison";
-
-    case 2:
-      return "YOKO Marché";
-
-    case 3:
-      return "YOKO Mangez";
-
-    case 4:
-      return "YOKO Traditional";
-    default:
-      return "";
-  }
 };
 
 export default OurPartners;

@@ -7,7 +7,19 @@ export const LogoB =
 export const LogoMobile =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/logophoneversion.png";
 export const glow =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/glow1.png";
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/glow.png";
+
+export const vectorObj =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/vectorObj.png";
+export const cerave =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave.png";
+export const cerave_logo =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave-logo-vector-removebg-preview.png";
+
+export const philips =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/philips.png";
+export const airfryer =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/airfryer.png";
 
 export const bucket =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/bucket.png";
@@ -39,11 +51,33 @@ export const Delivery_low =
 
 //____ TODO: GENERAL
 //____ ERROR:
-export const Error404 =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/AssetsClients/main/404%20bird.jpg";
 
 export const Traditional_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/traditional-low.jpg";
 
 export const Traditional =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/se-nourrir-au-maroc.jpg";
+
+export const YOKO_EAT_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/yokoEat-low.jpg";
+
+export const YOKO_EAT =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/yokoEat_high.jpg";
+
+export const YOKO_Rest_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Owamni-plating-low.jpg";
+
+export const YOKO_Rest =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Owamni-plating-high.jpg";
+
+export const Rue_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets/main/rueslow.png";
+
+export const Rue_high =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets/main/rues.png";
+
+export const Bike_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Bike-low.png";
+
+export const Bike =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Bike.png";

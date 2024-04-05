@@ -1,64 +1,49 @@
-import React, { useEffect, useState, forwardRef } from "react";
+import React from "react";
 
-//__IMAGES
 import { bucket, bucketMobile } from "../../../images";
 
-//__ANTD
-import { Button, Divider, Image } from "antd";
+import { Button, Image } from "antd";
 
-//__STYLE
 import style from "./firstpage.module.css";
 
-//__FRAMER_MOTION
-import { useAnimation } from "framer-motion";
-
-//__SOCIAL_MEDIA COMPONENT
 import SocialMediaButtons from "../../SocialMedia";
 
-//__HERO_CONATINER
 import HeroContainer from "../HeroContainer";
 import HeaderHero from "../HeaderHero";
-import { useInView } from "react-intersection-observer";
 
-import useResponsiveState from "../../../utils/useResponsiveState";
+import CenteredContainer from "../../CenteredContainer";
+import { useTranslation } from "react-i18next";
+import useFontFamily from "../../../utils/useFontFamily";
 
-const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
-  //__USE_IN_VIEW
-  const [refInView, inView] = useInView();
-
-  //__CONTROLS
-  const controls = useAnimation();
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    } else {
-      controls.start("hidden");
-    }
-  }, [controls, inView]);
-
-  const { isMobile, isSmallDevice, isMediumDevice } = useResponsiveState();
+const MarketPage = ({ language, t }) => {
+  const { i18n } = useTranslation();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
   return (
-    <HeroContainer language={language} ref={ref || refInView}>
-      <div className="lg:w-1/2 p-4 items-center flex gap-1 flex-col">
-        <HeaderHero primaryRegularFont={primaryRegularFont} language={language}>
-          {isMobile || isSmallDevice || isMediumDevice ? (
-            t("ForYou")
-          ) : (
-            <>
-              {t("basket")}
-              <br />
-              {t("Fresh")}
-              <br />
-              {t("ForYou")}
-            </>
-          )}
+    <HeroContainer
+      language={language}
+      bgColor={"var(--color-secondary)"}
+      isGlow
+    >
+      <main
+        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.smallScreenHeight}`}
+      >
+        <HeaderHero>
+          <h1 className={style.smallScreens} style={{ lineHeight: "35px" }}>
+            {t("ForYou")}
+          </h1>
+          <h1
+            className={style.largeScreens}
+            style={{ lineHeight: "35px", maxWidth: "400px" }}
+          >
+            {t("ForYou")}
+          </h1>
         </HeaderHero>
         <Button
-          className="text-white px-10 py-3 text-xl rounded-full"
+          className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3"
           style={{
             background: "var(--color-primary)",
-            fontFamily: primaryRegularFont,
+            fontFamily: fontFamilyBold,
             fontSize: "var(--font-large-size)",
             height: "auto",
             width: "fit-content",
@@ -67,56 +52,23 @@ const FirstPage = forwardRef(({ language, primaryRegularFont, t }, ref) => {
         >
           {t("takeAdvantage")}
         </Button>
-        <Button
-          type="Link"
-          className="text-white px-10 py-3 text-xl rounded-full mt-10"
-          style={{
-            fontFamily: primaryRegularFont,
-            fontSize: "var(--font-large-size)",
-            height: "auto",
-            width: "fit-content",
-            border: "none",
-          }}
-        >
-          {t("seeMore")}
-        </Button>
-        <SocialMediaButtons />
-      </div>
-      <div
-        className={`lg:w-1/2  p-4 flex items-center sm:m-10 h-full justify-center ${
+
+        <SocialMediaButtons color={"var(--color-primary)"} />
+      </main>
+      <CenteredContainer
+        className={` lg:w-1/2 p-4 sm:m-10  ${style.smallScreenHeight} ${
           language === "ar" ? style.basketAr : null
-        } `}
-        style={
-          isMobile
-            ? mobileStyles
-            : isSmallDevice
-            ? { padding: 0 }
-            : regularStyles
-        }
+        }`}
       >
-        <Image
-          src={
-            isMobile || isSmallDevice || isMediumDevice ? bucketMobile : bucket
-          }
-          style={
-            isMobile || isSmallDevice || isMediumDevice
-              ? mobileStyles
-              : regularStyles
-          }
-          preview={false}
-        />
-      </div>
+        <div className={style.largeScreens}>
+          <Image src={bucket} preview={false} />
+        </div>
+        <CenteredContainer className={style.smallScreens}>
+          <Image src={bucketMobile} preview={false} width={"65%"} />
+        </CenteredContainer>
+      </CenteredContainer>
     </HeroContainer>
   );
-});
-
-const regularStyles = {
-  /* Regular styles here */
 };
 
-const mobileStyles = {
-  /* Styles specific to mobile screens */
-  width: "45vw",
-};
-
-export default FirstPage;
+export default MarketPage;

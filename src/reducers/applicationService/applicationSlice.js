@@ -8,6 +8,7 @@ const initialState = {
   sitePrimaryFontRegular: "Primary-Regular-ar",
   siteDirection: "rtl",
   promoVideoOpened: false,
+  drawerOpenSettings: false,
 
   dynamicWidth: null,
 };
@@ -19,6 +20,9 @@ const applicationSlice = createSlice({
   reducers: {
     setLanguage: (state, action) => {
       state.language = action.payload;
+    },
+    setDrawerOpenSettings: (state, action) => {
+      state.drawerOpenSettings = action.payload;
     },
     setPromoVideoOpened: (state, action) => {
       state.promoVideoOpened = action.payload;
@@ -50,6 +54,7 @@ export const {
   setSiteDirection,
   setPromoVideoOpened,
   setDynamicWidth,
+  setDrawerOpenSettings,
 } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

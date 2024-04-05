@@ -99,7 +99,7 @@ const useResponsiveState = () => {
   // Calculate fixed width and height based on screen size
   useEffect(() => {
     if (isMobile) {
-      setFixedWidth("280px");
+      setFixedWidth("340px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("1.5rem");
@@ -112,7 +112,7 @@ const useResponsiveState = () => {
 
       //
     } else if (isSmallDevice) {
-      setFixedWidth("333px");
+      setFixedWidth("360px");
       setFixedBorderRadius("57px");
       setFixedGap("10rem");
       setFixedFontSize("1.5rem");

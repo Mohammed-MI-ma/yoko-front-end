@@ -1,0 +1,18 @@
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+.modalContent * {
+  font-family: "Primary-Regular-fr";
+}
+.modalContent > :nth-child(1) {
+  font-size: var(--font-small-size);
+}
+.modalContent > :nth-child(2) {
+  margin-bottom: var(--spacing-large);
+}
+.modalContent > :nth-child(3) {
+  color: var(--color-accent);
+  background-color: var(--color-secondary);
+}

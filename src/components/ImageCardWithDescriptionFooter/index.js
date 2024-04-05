@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import style from "./ImageCardWithDescriptionFooter.module.css";
 import useResponsiveState from "../../utils/useResponsiveState";
-import { Error404 } from "../../images";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ImageCardWithDescriptionFooter = ({
   fixedWidth,
   highDefinitionImgUrl,
@@ -13,9 +14,10 @@ const ImageCardWithDescriptionFooter = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState(backgroundImageUrl || Error404); // Set your initial lightweight image URL here
+  const [imageUrl, setImageUrl] = useState(backgroundImageUrl); // Set your initial lightweight image URL here
 
   const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`); // Generate a random ID for the div
+  const language = useSelector((state) => state.application.language);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +61,7 @@ const ImageCardWithDescriptionFooter = ({
       // Set a timeout to handle slow network conditions
       const timeoutId = setTimeout(() => {
         // Fallback to default image or display placeholder
-        setImageUrl(Error404); // Set your default image URL here
+        //setImageUrl(Error404); // Set your default image URL here
         setImageLoaded(true);
       }, 5000); // Set the timeout duration (in milliseconds) as needed
     }
@@ -108,20 +110,21 @@ const ImageCardWithDescriptionFooter = ({
       whileTap={{ scale: 0.905 }}
       id={divId}
       style={{ cursor: "pointer", margin: "0 auto" }}
-      onClick={action}
     >
-      <div
-        className={`flex justify-center items-center ${style.container}`}
-        style={containerStyles}
-      >
-        {/* Render description div */}
-        <div style={descriptionStyles}>
-          {/* Add your description content here */}
-          <p style={paragraphStyles}>
-            {descriptionContent || "Description Content"}
-          </p>
+      <Link to={`/${language}/${action}`}>
+        <div
+          className={`flex justify-center items-center ${style.container}`}
+          style={containerStyles}
+        >
+          {/* Render description div */}
+          <div style={descriptionStyles}>
+            {/* Add your description content here */}
+            <p style={paragraphStyles}>
+              {descriptionContent || "Description Content"}
+            </p>
+          </div>
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 };

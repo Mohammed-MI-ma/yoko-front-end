@@ -1,27 +1,40 @@
 import React from "react";
-import { Input } from "antd";
+import { ConfigProvider, Input } from "antd";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-
-const SearchInputField = () => {
-  // Hooks
-  const lang = useSelector((state) => state.application.language);
-  const { t } = useTranslation();
-
-  const onSearch = (value, _e, info) => {
-    console.log(info?.source, value);
-    // Add your search logic here
-  };
-
+import useFontFamily from "../../utils/useFontFamily";
+import useDirection from "../../utils/useDirection";
+import style from "./SearchInputField.module.css";
+const SearchInputField = ({ className }) => {
+  const { t, i18n } = useTranslation();
+  const fontFamilylight = useFontFamily(i18n.language, "normal");
+  const direction = useDirection(i18n.language);
   return (
-    <Input.Search
-      placeholder={t("Search")}
-      onSearch={onSearch}
-      style={{
-        width: 200,
-        direction: lang === "ar" ? "rtl" : "ltr", // Set direction based on language
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#65b44a",
+          fontSize: 10,
+          colorBorder: "#65b44a",
+          borderRadius: "50px",
+        },
+        components: {
+          Button: {
+            defaultActiveBorderColor: "var(--color-primary)",
+          },
+        },
       }}
-    />
+    >
+      <Input
+        allowClear
+        className={`${className} ${style.searchBox}`}
+        size="large"
+        placeholder={t("Search")}
+        style={{
+          fontFamily: fontFamilylight,
+          direction: direction,
+        }}
+      />
+    </ConfigProvider>
   );
 };
 

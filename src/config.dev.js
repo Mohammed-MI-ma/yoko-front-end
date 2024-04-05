@@ -13,13 +13,25 @@ import {
   Tagine_low,
   Delivery_low,
   Traditional_low,
-  Traditional,
+  YOKO_EAT_low,
+  YOKO_Rest_low,
+  Rue_low,
+  Bike_low,
+  cerave,
+  cerave_logo,
+  philips,
+  vectorObj,
+  airfryer,
 } from "./images.js";
 
 const ImageConfig = [
   { uri: Logo },
-  { uri: LogoMobile },
   { uri: glow },
+  { uri: cerave },
+  { uri: cerave_logo },
+  { uri: philips },
+  { uri: airfryer },
+
   { uri: bucket },
   { uri: LogoB },
   { uri: casablanca },
@@ -31,7 +43,14 @@ const ImageConfig = [
   { uri: Tagine_low },
   { uri: Delivery_low },
   { uri: Traditional_low },
-  { uri: Traditional },
+  { uri: Rue_low },
+  { uri: vectorObj },
+
+  { uri: YOKO_EAT_low },
+  { uri: YOKO_Rest_low },
+  { uri: Bike_low },
+
+  // { uri: Traditional },
 ];
 
 export default ImageConfig;
