@@ -1,5 +1,4 @@
 import {
-  LogoMobile,
   Logo,
   glow,
   bucket,
@@ -17,18 +16,19 @@ import {
   YOKO_Rest_low,
   Rue_low,
   Bike_low,
-  cerave,
-  cerave_logo,
   philips,
-  vectorObj,
   airfryer,
+  ceraveLogo_low,
+  cerave,
 } from "./images.js";
 
 const ImageConfig = [
   { uri: Logo },
+  //
   { uri: glow },
+  { uri: ceraveLogo_low },
   { uri: cerave },
-  { uri: cerave_logo },
+
   { uri: philips },
   { uri: airfryer },
 
@@ -44,7 +44,6 @@ const ImageConfig = [
   { uri: Delivery_low },
   { uri: Traditional_low },
   { uri: Rue_low },
-  { uri: vectorObj },
 
   { uri: YOKO_EAT_low },
   { uri: YOKO_Rest_low },

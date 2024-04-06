@@ -1,6 +1,6 @@
 import React from "react";
 
-import { airfryer, philips, vectorObj } from "../../../images";
+import { airfryer, philips } from "../../../images";
 
 import { Button, Image } from "antd";
 
@@ -13,61 +13,73 @@ import CenteredContainer from "../../CenteredContainer";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../../utils/useFontFamily";
 import SocialMediaButtons from "../../SocialMedia";
-
-const PhilipsPage = ({ language, t }) => {
-  const { i18n } = useTranslation();
+import motifBackground from "../../../assets/images/motifBackground.png";
+const PhilipsPage = ({ language }) => {
+  const { i18n, t } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   return (
-    <HeroContainer language={language} bgColor={"white"} isGlow={false}>
+    <HeroContainer
+      language={language}
+      bgColor={"var(--color-accent)"}
+      isGlow={false}
+    >
       <main
-        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col justify-center ${style.smallScreenHeight}`}
+        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer} ${style.smallScreenHeight}`}
       >
         <Image src={philips} preview={false} width={190} />
-        <HeaderHero>
-          <h1 className={style.smallScreens} style={{ lineHeight: "35px" }}>
-            {t("BestOffers")}
-          </h1>
-          <h1
-            className={style.largeScreens}
-            style={{ lineHeight: "35px", maxWidth: "400px" }}
-          >
-            {t("BestOffers")}
-          </h1>
+        <HeaderHero color={"var(--color-secondary)"}>
+          {t("Meilleures offres")}
         </HeaderHero>
-        <Button
-          className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3"
-          style={{
+        <HeroActionButton
+          myStyle={{
             background: "var(--color-secondary)",
             fontFamily: fontFamilyBold,
-            fontSize: "var(--font-large-size)",
-            height: "auto",
-            width: "fit-content",
-            border: "none",
             color: "var(--color-accent)",
           }}
         >
           {t("Discover")}
-        </Button>{" "}
+        </HeroActionButton>
         <SocialMediaButtons color={"var(--color-secondary)"} />
       </main>
       <CenteredContainer
         style={{
-          backgroundImage: `url(${vectorObj})`,
+          backgroundImage: `url(${motifBackground})`,
           backgroundRepeat: "round",
           backgroundPositionXx: "center",
         }}
-        className={` lg:w-1/2 p-4 sm:m-10  ${style.smallScreenHeight} ${
-          language === "ar" ? style.basketAr : null
-        }`}
+        className={` lg:w-1/2 p-4 sm:m-10  ${style.smallScreenHeight}`}
       >
-        <div className={style.largeScreens}>
-          <Image src={airfryer} preview={false} width={"50%"} />
+        <div className={` ${language === "ar" ? style.basketAr : null}`}>
+          <Image
+            src={airfryer}
+            preview={false}
+            width={"50%"}
+            className={style.airfryer}
+          />
         </div>
-        <CenteredContainer className={style.smallScreens}>
-          <Image src={airfryer} preview={false} width={"50%"} />
-        </CenteredContainer>
       </CenteredContainer>
     </HeroContainer>
+  );
+};
+
+export const HeroActionButton = ({ children, myStyle, action }) => {
+  return (
+    <Button
+      onClick={action}
+      className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3"
+      style={{
+        ...myStyle,
+        // background: "var(--color-secondary)",
+        //fontFamily: font,
+        fontSize: "var(--font-large-size)",
+        height: "auto",
+        width: "fit-content",
+        border: "none",
+        // color: "var(--color-accent)",
+      }}
+    >
+      {children}
+    </Button>
   );
 };
 

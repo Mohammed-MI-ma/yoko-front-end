@@ -35,19 +35,19 @@ export const getImageHighQualitySrc = (id) => {
       return "";
   }
 };
-export const getImageAlt = (id) => {
+export const getImageAlt = (id, t) => {
   switch (id) {
     case 1:
-      return "YOKO livraison";
+      return t("Dilevery Boy");
 
     case 2:
-      return "YOKO Marché";
+      return t("YOKO Market");
 
     case 3:
-      return "YOKO Mangez";
+      return t("YOKO Eat");
 
     case 4:
-      return "YOKO Traditional";
+      return t("Traditional Food");
     default:
       return "";
   }

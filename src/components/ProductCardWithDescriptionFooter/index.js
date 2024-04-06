@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import style from "./ProductCardWithDescriptionFooter.module.css";
 import useResponsiveState from "../../utils/useResponsiveState";
-//import { Error404 } from "../../images";
 import { Button } from "antd";
-import { AiOutlineLike } from "react-icons/ai";
 import { motion } from "framer-motion";
 
-import { CiShoppingCart } from "react-icons/ci";
+import { ShoppingCartOutlined, LikeOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 const ProductCardWithDescriptionFooter = ({
   fixedWidth,
@@ -17,35 +16,44 @@ const ProductCardWithDescriptionFooter = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState(backgroundImageUrl); // Set your initial lightweight image URL here
+  const [imageUrl, setImageUrl] = useState(backgroundImageUrl);
+  const responsiveState = useResponsiveState();
 
-  const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`); // Generate a random ID for the div
+  const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`);
+  const language = useSelector((state) => state.application.language);
 
   useEffect(() => {
     const handleScroll = () => {
-      const element = document.getElementById(divId); // Replace "yourDivId" with the actual ID of your div
-      if (!element) return; // Return if the element is not found
+      const element = document.getElementById(divId);
+      if (!element) return;
 
-      const rect = element.getBoundingClientRect();
-      const topInView = rect.top >= 0 && rect.top <= window.innerHeight;
-      const bottomInView =
-        rect.bottom >= 0 && rect.bottom <= window.innerHeight;
+      try {
+        const rect = element.getBoundingClientRect();
+        const topInView = rect.top >= 0 && rect.top <= window.innerHeight;
+        const bottomInView =
+          rect.bottom >= 0 && rect.bottom <= window.innerHeight;
 
-      if (topInView || bottomInView) {
-        setIsVisible(true);
-        window.removeEventListener("scroll", handleScroll);
+        if (topInView || bottomInView) {
+          setIsVisible(true);
+          window.removeEventListener("scroll", handleScroll);
+        }
+      } catch (error) {
+        console.error("Error occurred while handling scroll:", error);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [divId]);
+    try {
+      window.addEventListener("scroll", handleScroll);
 
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    } catch (error) {
+      console.error("Error occurred while adding scroll listener:", error);
+    }
+  }, [divId]);
   useEffect(() => {
     if (isVisible && !imageLoaded) {
-      // Load your high definition image here
       const highDefinitionImageUrl = highDefinitionImgUrl; // Set your high definition image URL here
       const img = new Image();
       img.src = highDefinitionImageUrl;
@@ -68,7 +76,6 @@ const ProductCardWithDescriptionFooter = ({
       }, 5000); // Set the timeout duration (in milliseconds) as needed
     }
   }, [isVisible, imageLoaded, highDefinitionImgUrl]);
-  const responsiveState = useResponsiveState();
 
   const containerStyles = {
     border: ".25px solid #D9D9D9",
@@ -145,7 +152,7 @@ const ProductCardWithDescriptionFooter = ({
               {descriptionContent || "Description Content"}
             </p>
             <footer style={footerStyles}>
-              <bold
+              <b
                 style={{
                   fontSize: responsiveState.fixedFontSize_ProductCard,
                   fontWeight: "700",
@@ -153,16 +160,15 @@ const ProductCardWithDescriptionFooter = ({
                   fontFamily: "Primary-Bold-fr",
                 }}
               >
-                10.64 MAD
-              </bold>{" "}
+                100.64 MAD
+              </b>
               <div>
-                <Button shape="circle" size="small" icon={<AiOutlineLike />} />
+                <Button shape="circle" icon={<LikeOutlined />} />
                 &nbsp;
                 <Button
                   shape="circle"
-                  size="small"
                   style={{ background: "var(--color-primary)", color: "white" }}
-                  icon={<CiShoppingCart />}
+                  icon={<ShoppingCartOutlined />}
                 />
               </div>
             </footer>

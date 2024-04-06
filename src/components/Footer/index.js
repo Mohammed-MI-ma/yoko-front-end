@@ -154,7 +154,7 @@ const Footer = ({ language }) => {
             <div>
               <Select
                 onChange={handleChange}
-                Placement="bottomLeft"
+                placement="bottomLeft"
                 defaultValue="Francais"
                 style={{
                   width: 146,
@@ -164,11 +164,19 @@ const Footer = ({ language }) => {
                 options={[
                   {
                     value: "Francais",
-                    label: t("french"),
+                    label: (
+                      <p style={{ fontFamily: fontFamilyBold }}>
+                        {t("french")}
+                      </p>
+                    ),
                   },
                   {
                     value: "Arabe",
-                    label: t("arabic"),
+                    label: (
+                      <p style={{ fontFamily: fontFamilyBold }}>
+                        {t("arabic")}
+                      </p>
+                    ),
                   },
                 ]}
               />

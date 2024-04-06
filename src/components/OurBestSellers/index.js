@@ -1,8 +1,15 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { useTranslation } from "react-i18next";
-import { Button } from "antd";
+
+import useResponsiveState from "../../utils/useResponsiveState";
+
+import ProductCardWithDescriptionFooter from "../ProductCardWithDescriptionFooter";
+
+import style from "./OurBestSellers.module.css";
+
+import useFontFamily from "../../utils/useFontFamily";
 
 import {
   Delivery_low,
@@ -10,23 +17,17 @@ import {
   YOKOMarket_low,
   YokoEat_low,
 } from "../../images";
-import useResponsiveState from "../../utils/useResponsiveState";
-import ProductCardWithDescriptionFooter from "../ProductCardWithDescriptionFooter";
 
 const OurBestSellers = () => {
+  const { t, i18n } = useTranslation();
   const responsiveState = useResponsiveState();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
   const language = useSelector((state) => state.application.language);
-  const primaryRegularFont = useMemo(
-    () => `Primary-Bold-${language}`,
-    [language]
-  );
-
-  const { t } = useTranslation();
 
   const sectionStyle = {
     dir: language === "ar" ? "rtl" : "ltr",
-    fontFamily: primaryRegularFont,
+    fontFamily: fontFamilyBold,
     fontSize: responsiveState.fixedFontSize,
     textTransform: "uppercase",
     color: "var(--color-secondary)",
@@ -38,43 +39,24 @@ const OurBestSellers = () => {
       className={`w-full flex flex-col items-center `}
       style={{
         maxWidth: "75rem",
-        // marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
+        marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
       }}
     >
       <div>
         <h1 style={sectionStyle}>{t("Our best sellers")}</h1>
         <div
-          className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
-          style={{
-            margin: "0 auto",
-            gap: responsiveState.fixedGap,
-            marginBottom: `calc(${responsiveState.fixedHeight} / 2)`,
-          }}
+          className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center ${style.grid}`}
         >
           {[1, 2, 3, 4].map((id) => (
             <ProductCardWithDescriptionFooter
-              fixedWidth={responsiveState.fixedWidth} // Set fixed width
-              fixedHeight={responsiveState.fixedHeight} // Set fixed height
+              key={id}
+              fixedWidth={responsiveState.fixedWidth}
+              fixedHeight={responsiveState.fixedHeight}
               highDefinitionImgUrl={getImageHighQualitySrc(id)}
               backgroundImageUrl={getImageLowQualitySrc(id)}
               descriptionContent={getImageAlt(id)}
             />
           ))}
-        </div>{" "}
-        <div className="flex flex-row-reverse">
-          <Button
-            style={{
-              width: "217.64px",
-              height: "58.55px",
-              borderRadius: "50px",
-              fontSize: "16px",
-              background: "var(--color-primary)",
-              color: "white",
-              fontFamily: "Primary-Bold-fr",
-            }}
-          >
-            SEE MORE
-          </Button>
         </div>
       </div>
     </section>

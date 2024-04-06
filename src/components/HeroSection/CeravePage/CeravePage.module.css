@@ -1,15 +1,17 @@
 .basketAr {
-  transform: translateX(-40%);
 }
 .smallScreens {
   display: none;
 }
 .largeScreens {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .smallScreenHeight {
   height: 50%;
+}
+.mainContainer {
+  justify-content: center;
 }
 /* Mobile devices (up to 388px) */
 @media only screen and (max-width: 388px) {
@@ -22,6 +24,9 @@
   .smallScreenHeight {
     height: 50%;
   }
+  .mainContainer {
+    justify-content: flex-start;
+  }
 }
 
 /* Small devices (389px to 575px) */
@@ -31,6 +36,9 @@
   }
   .largeScreens {
     display: none;
+  }
+  .mainContainer {
+    justify-content: flex-start;
   }
 }
 
@@ -42,11 +50,16 @@
   .largeScreens {
     display: none;
   }
+  .mainContainer {
+    justify-content: flex-start;
+  }
 }
 
 /* Large devices (768px to 991px) */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* Your styles here */
+  .mainContainer {
+    justify-content: flex-start;
+  }
 }
 
 /* Extra large devices (992px to 1199px) */

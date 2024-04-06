@@ -27,7 +27,8 @@
   "basket": "استمتع بأفضل",
   "takeAdvantage": "استفد منها",
   "Fresh": "مع المنتجات الطازجة",
-  "ForYou": "مع سلالنا",
+  "ForYou": "استمتع بأجمل اختيار من السلال الطازجة، مصممة خصيصًا لك",
+
   "///////_": "***_PiedDePage",
   "contact us": "تواصل معنا",
   "Discover our yoko": "اكتشف يوكو ",
@@ -58,5 +59,8 @@
   "serverUnreachable": "الخادم غير متاح.",
   "otpEmailSentSuccess": "تم إرسال رسالة البريد الإلكتروني OTP بنجاح",
   "settings": "الإعدادات",
-  "Réessayer": "عذرًا، يُرجى المحاولة مرة أخرى."
+  "Réessayer": "عذرًا، يُرجى المحاولة مرة أخرى.",
+  "Discover": "اكتشف",
+  "Meilleures offres": "أفضل العروض",
+  "YOKO livraison": ""
 }

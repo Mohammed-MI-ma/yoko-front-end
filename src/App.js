@@ -8,7 +8,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //__ANTD
-import { ConfigProvider, BackTop, Spin, Drawer, Layout } from "antd";
+import {
+  ConfigProvider,
+  BackTop,
+  Spin,
+  Drawer,
+  Layout,
+  FloatButton,
+} from "antd";
 import frFR from "antd/lib/locale/fr_FR";
 import arEG from "antd/lib/locale/ar_EG";
 
@@ -264,7 +271,7 @@ function App() {
             }
           />
         </Routes>
-        <BackTop visibilityHeight={0} />
+        <FloatButton.BackTop visibilityHeight={0} />
         <div
           style={{
             position: "absolute",

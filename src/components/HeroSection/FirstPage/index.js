@@ -1,8 +1,8 @@
 import React from "react";
 
-import { bucket, bucketMobile } from "../../../images";
+import { bucketMobile } from "../../../images";
 
-import { Button, Image } from "antd";
+import { Image } from "antd";
 
 import style from "./firstpage.module.css";
 
@@ -14,11 +14,35 @@ import HeaderHero from "../HeaderHero";
 import CenteredContainer from "../../CenteredContainer";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../../utils/useFontFamily";
+import { HeroActionButton } from "../PHILIPSPage";
 
 const MarketPage = ({ language, t }) => {
   const { i18n } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const HeaderHeroMemoized = React.memo(() => (
+    <HeaderHero>
+      <div
+        style={{
+          maxWidth: "21.25rem",
+          textAlign: "center",
+          fontSize: "1.875rem",
+        }}
+      >
+        {t("ForYou")}
+      </div>
+    </HeaderHero>
+  ));
 
+  const HeroActionButtonMemoized = React.memo(() => (
+    <HeroActionButton
+      myStyle={{
+        background: "var(--color-primary)",
+        fontFamily: fontFamilyBold,
+      }}
+    >
+      {t("takeAdvantage")}
+    </HeroActionButton>
+  ));
   return (
     <HeroContainer
       language={language}
@@ -26,33 +50,11 @@ const MarketPage = ({ language, t }) => {
       isGlow
     >
       <main
-        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.smallScreenHeight}`}
+        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer} ${style.smallScreenHeight}`}
       >
-        <HeaderHero>
-          <h1 className={style.smallScreens} style={{ lineHeight: "35px" }}>
-            {t("ForYou")}
-          </h1>
-          <h1
-            className={style.largeScreens}
-            style={{ lineHeight: "35px", maxWidth: "400px" }}
-          >
-            {t("ForYou")}
-          </h1>
-        </HeaderHero>
-        <Button
-          className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3"
-          style={{
-            background: "var(--color-primary)",
-            fontFamily: fontFamilyBold,
-            fontSize: "var(--font-large-size)",
-            height: "auto",
-            width: "fit-content",
-            border: "none",
-          }}
-        >
-          {t("takeAdvantage")}
-        </Button>
+        <HeaderHeroMemoized />
 
+        <HeroActionButtonMemoized />
         <SocialMediaButtons color={"var(--color-primary)"} />
       </main>
       <CenteredContainer
@@ -60,12 +62,9 @@ const MarketPage = ({ language, t }) => {
           language === "ar" ? style.basketAr : null
         }`}
       >
-        <div className={style.largeScreens}>
-          <Image src={bucket} preview={false} />
+        <div>
+          <Image src={bucketMobile} preview={false} width={"60%"} />
         </div>
-        <CenteredContainer className={style.smallScreens}>
-          <Image src={bucketMobile} preview={false} width={"65%"} />
-        </CenteredContainer>
       </CenteredContainer>
     </HeroContainer>
   );

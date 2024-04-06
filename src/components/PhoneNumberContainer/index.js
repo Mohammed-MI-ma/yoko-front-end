@@ -16,7 +16,7 @@ const PhoneNumberContainer = () => {
 
   return (
     <span
-      itemprop="telephone"
+      itemProp="telephone"
       className="flex items-center gap-1 "
       style={{
         direction: direction,

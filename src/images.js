@@ -1,25 +1,26 @@
 export const Logo =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Frame.svg";
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/logoDark_low.png";
 
 export const LogoB =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/logoB.png";
 
-export const LogoMobile =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/logophoneversion.png";
+// TODO: 137 kB
 export const glow =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/glow.png";
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/myGlow_low.png";
+// TODO: 28.2 kB
+export const ceraveLogo_low =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave_logo_low.png";
 
-export const vectorObj =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/vectorObj.png";
-export const cerave =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave.png";
-export const cerave_logo =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave-logo-vector-removebg-preview.png";
+// TODO: 43.6 kB
+export const airfryer =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/airfryer_low.png";
 
+// TODO: 17.6 kB
 export const philips =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/philips.png";
-export const airfryer =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/airfryer.png";
+
+export const cerave =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave.png";
 
 export const bucket =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/bucket.png";

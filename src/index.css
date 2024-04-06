@@ -115,4 +115,5 @@ header {
   li.slick-active
   button {
   background-color: #000000;
+  border: 0.5px solid white;
 }

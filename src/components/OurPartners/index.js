@@ -13,6 +13,7 @@ import {
 } from "../../utils/imageUtils";
 import useDynamicWidth from "../../utilities/useDynamicWidth";
 
+import style from "./OurPartners.module.css";
 const OurPartners = ({ vierge }) => {
   const divRef = useDynamicWidth(); // Use the custom hook
 
@@ -22,12 +23,13 @@ const OurPartners = ({ vierge }) => {
   const direction = useDirection(i18n.language);
 
   const sectionStyle = {
-    dir: direction,
+    direction: direction,
     fontFamily: fontFamilyBold,
     fontSize: responsiveState.fixedFontSize,
     textTransform: "uppercase",
     color: "var(--color-secondary)",
     marginBottom: "1.4375rem",
+    fontWeight: 900,
   };
 
   return (
@@ -41,8 +43,7 @@ const OurPartners = ({ vierge }) => {
       <div ref={divRef}>
         <h1 style={sectionStyle}>{t("Discover our yoko")}</h1>
         <div
-          className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center"
-          style={{ margin: "0 auto", gap: responsiveState.fixedGap }}
+          className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center ${style.grid}`}
         >
           {[1, 2, 3, 4].map((id) => (
             <ImageCardWithDescriptionFooter
@@ -50,7 +51,7 @@ const OurPartners = ({ vierge }) => {
               fixedHeight={responsiveState.fixedHeight} // Set fixed height
               highDefinitionImgUrl={vierge ? null : getImageHighQualitySrc(id)}
               backgroundImageUrl={vierge ? null : getImageLowQualitySrc(id)}
-              descriptionContent={vierge ? null : getImageAlt(id)}
+              descriptionContent={vierge ? null : getImageAlt(id, t)}
               key={id}
               action={vierge ? null : getAction(id)}
             />

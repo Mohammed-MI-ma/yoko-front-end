@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Carousel } from "antd";
+import { Carousel, ConfigProvider } from "antd";
 
 import FirstPage from "./FirstPage";
 import CeravePage from "./CeravePage";
@@ -41,13 +41,23 @@ const HeroSection = () => {
   }, [language, t]); // Update memoization when language or t changes
 
   return (
-    <section className="w-full shadow-lg">
-      <Carousel autoplay infinite>
-        {memoizedPages.map((page) => (
-          <CarouselPage key={page.id}>{page.component}</CarouselPage>
-        ))}
-      </Carousel>
-    </section>
+    <ConfigProvider
+      theme={{
+        components: {
+          Carousel: {
+            dotHeight: 16,
+          },
+        },
+      }}
+    >
+      <section className="w-full" style={{ marginBottom: "5rem" }}>
+        <Carousel>
+          {memoizedPages.map((page) => (
+            <CarouselPage key={page.id}>{page.component}</CarouselPage>
+          ))}
+        </Carousel>
+      </section>
+    </ConfigProvider>
   );
 };
 

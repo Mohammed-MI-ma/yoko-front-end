@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
-import style from "./ImageCardWithDescriptionFooter.module.css";
-import useResponsiveState from "../../utils/useResponsiveState";
-import { motion } from "framer-motion";
+
 import { Link } from "react-router-dom";
+
 import { useSelector } from "react-redux";
+
+import { useTranslation } from "react-i18next";
+
+import { motion } from "framer-motion";
+
+import useFontFamily from "../../utils/useFontFamily";
+import useResponsiveState from "../../utils/useResponsiveState";
+
+import style from "./ImageCardWithDescriptionFooter.module.css";
+import CenteredContainer from "../CenteredContainer";
+
 const ImageCardWithDescriptionFooter = ({
   fixedWidth,
   highDefinitionImgUrl,
@@ -14,59 +24,83 @@ const ImageCardWithDescriptionFooter = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState(backgroundImageUrl); // Set your initial lightweight image URL here
+  const [imageUrl, setImageUrl] = useState(backgroundImageUrl);
+  const { i18n } = useTranslation();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const responsiveState = useResponsiveState();
 
-  const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`); // Generate a random ID for the div
+  const [divId] = useState(`div-${Math.random().toString(36).substr(2, 9)}`);
   const language = useSelector((state) => state.application.language);
 
   useEffect(() => {
     const handleScroll = () => {
-      const element = document.getElementById(divId); // Replace "yourDivId" with the actual ID of your div
-      if (!element) return; // Return if the element is not found
+      const element = document.getElementById(divId);
+      if (!element) return;
 
-      const rect = element.getBoundingClientRect();
-      const topInView = rect.top >= 0 && rect.top <= window.innerHeight;
-      const bottomInView =
-        rect.bottom >= 0 && rect.bottom <= window.innerHeight;
+      try {
+        const rect = element.getBoundingClientRect();
+        const topInView = rect.top >= 0 && rect.top <= window.innerHeight;
+        const bottomInView =
+          rect.bottom >= 0 && rect.bottom <= window.innerHeight;
 
-      if (topInView || bottomInView) {
-        setIsVisible(true);
-        window.removeEventListener("scroll", handleScroll);
+        if (topInView || bottomInView) {
+          setIsVisible(true);
+          window.removeEventListener("scroll", handleScroll);
+        }
+      } catch (error) {
+        console.error("Error occurred while handling scroll:", error);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    try {
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    } catch (error) {
+      console.error("Error occurred while adding scroll listener:", error);
+    }
   }, [divId]);
 
   useEffect(() => {
+    // Declare fallbackTimeoutId variable outside the conditional block
+    let fallbackTimeoutId;
+
     if (isVisible && !imageLoaded) {
-      // Load your high definition image here
-      const highDefinitionImageUrl = highDefinitionImgUrl; // Set your high definition image URL here
+      const highDefinitionImageUrl = highDefinitionImgUrl;
       const img = new Image();
-      img.src = highDefinitionImageUrl;
 
-      // Inside the image onload event handler
       img.onload = () => {
-        // Clear any existing timeout
-        clearTimeout(timeoutId);
-
-        // Update the state with the high definition image URL
+        clearTimeout(fallbackTimeoutId);
         setImageUrl(highDefinitionImageUrl);
         setImageLoaded(true);
       };
 
-      // Set a timeout to handle slow network conditions
-      const timeoutId = setTimeout(() => {
-        // Fallback to default image or display placeholder
-        //setImageUrl(Error404); // Set your default image URL here
+      img.onerror = () => {
+        console.error(
+          "Error loading high-definition image:",
+          highDefinitionImageUrl
+        );
+        clearTimeout(fallbackTimeoutId);
+        setImageUrl(backgroundImageUrl);
         setImageLoaded(true);
-      }, 5000); // Set the timeout duration (in milliseconds) as needed
+      };
+
+      img.src = highDefinitionImageUrl;
+
+      // Assign the timeout ID to fallbackTimeoutId
+      fallbackTimeoutId = setTimeout(() => {
+        setImageUrl(backgroundImageUrl);
+        setImageLoaded(true);
+      }, 5000);
     }
-  }, [isVisible, imageLoaded, highDefinitionImgUrl]);
-  const responsiveState = useResponsiveState();
+
+    // Clean up by clearing the timeout when the component unmounts
+    return () => {
+      clearTimeout(fallbackTimeoutId);
+    };
+  }, [isVisible, imageLoaded, highDefinitionImgUrl, backgroundImageUrl]);
 
   const containerStyles = {
     width: fixedWidth || "100%", // Use fixed width or full width if not provided
@@ -97,9 +131,28 @@ const ImageCardWithDescriptionFooter = ({
     borderBottomRightRadius: responsiveState.fixedBorderRadius,
   };
   const paragraphStyles = {
-    fontFamily: "Neue_Power-fr",
+    fontFamily: language === "fr" ? "Neue_Power-fr" : fontFamilyBold,
     fontSize: responsiveState.fixedFontSize,
   };
+  return (
+    <HoverableDiv id={divId}>
+      <Link to={`/${language}/${action}`}>
+        <CenteredContainer
+          className={`${style.container}`}
+          style={containerStyles}
+        >
+          <div style={descriptionStyles}>
+            <p style={paragraphStyles}>
+              {descriptionContent || "Description Content"}
+            </p>
+          </div>
+        </CenteredContainer>
+      </Link>
+    </HoverableDiv>
+  );
+};
+
+export const HoverableDiv = ({ children, id }) => {
   return (
     <motion.div
       whileHover={{
@@ -108,23 +161,10 @@ const ImageCardWithDescriptionFooter = ({
       }}
       transition={{ type: "spring", stiffness: 100 }}
       whileTap={{ scale: 0.905 }}
-      id={divId}
+      id={id}
       style={{ cursor: "pointer", margin: "0 auto" }}
     >
-      <Link to={`/${language}/${action}`}>
-        <div
-          className={`flex justify-center items-center ${style.container}`}
-          style={containerStyles}
-        >
-          {/* Render description div */}
-          <div style={descriptionStyles}>
-            {/* Add your description content here */}
-            <p style={paragraphStyles}>
-              {descriptionContent || "Description Content"}
-            </p>
-          </div>
-        </div>
-      </Link>
+      {children}
     </motion.div>
   );
 };

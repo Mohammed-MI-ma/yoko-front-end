@@ -1,35 +1,33 @@
-.container {
-  margin: 0;
-  height: calc(100vh - 100px);
-  color: #fff;
-  text-align: center;
+.grid {
+  margin: 0 auto;
+  gap: 1rem;
 }
 @media only screen and (max-width: 388px) {
+  .grid {
+    gap: 12rem;
+  }
 }
 
 /* Small devices (389px to 575px) */
 @media only screen and (min-width: 389px) and (max-width: 575px) {
+  .grid {
+    gap: 12rem;
+  }
 }
 
 /* Medium devices (576px to 767px) */
 @media only screen and (min-width: 576px) and (max-width: 770px) {
-  .container {
-    height: calc(100vh);
+  .grid {
+    grid-row-gap: 88px;
   }
 }
 
 /* Large devices (768px to 991px) */
 @media only screen and (min-width: 771px) and (max-width: 991px) {
-  .container {
-    max-height: 75vh;
-  }
 }
 
 /* Extra large devices (992px to 1199px) */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .container {
-    max-height: 500px;
-  }
 }
 
 /* Extra extra large devices (1200px and above) */

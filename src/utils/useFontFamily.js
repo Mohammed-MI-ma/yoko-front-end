@@ -22,7 +22,7 @@ const useFontFamily = (language, fontWeight = "normal") => {
         break;
       // Add more cases for other languages and font weights as needed
       default:
-        selectedFontFamily = "Special-fr";
+        selectedFontFamily = "Primary-Bold-fr";
     }
 
     setFontFamily(selectedFontFamily);
