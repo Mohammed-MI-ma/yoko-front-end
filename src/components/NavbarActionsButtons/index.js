@@ -13,7 +13,7 @@ import { setDrawerOpenSettings } from "../../reducers/applicationService/applica
 
 const SignUpButton = ({ text, font, language, icon }) => {
   return (
-    <Link to={`/${language}/yoko/account/log-in`}>
+    <Link to={`/yoko/account/log-in`}>
       <ConfigProvider
         theme={{
           components: {
@@ -71,14 +71,13 @@ const NavbarActionsButtons = ({ font }) => {
 
   const navigate = useNavigate();
   const onChange = (checked) => {
-    console.log("first", checked);
     switch (checked) {
       case false:
-        navigate(`${language}/web/guest/acceuil`);
+        navigate(`/web/guest/acceuil`);
         break;
 
       case true:
-        navigate(`${language}/yoko/account/dashboard`);
+        navigate(`/yoko/account/dashboard`);
 
         break;
       default:

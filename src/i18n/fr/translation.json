@@ -102,10 +102,16 @@
   "save": "Sauvegarder",
 
   "car": "Voiture",
-  "Vélo": "Voiture",
-  "Pickup": "Voiture",
+  "Vélo": "Vélo",
+  "Pickup": "Pickup",
   "Moto": "Moto",
   "403_MSG": "Vous n'êtes pas autorisé à accéder à cette page, vo",
   "Réessayer": "Impossible de charger les données",
-  "Meilleures offres": "Meilleures offres"
+  "Meilleures offres": "Meilleures offres",
+  "poweredByMeiliSearch": "Recherche alimentée par MeiliSearch",
+  "Modify Delivery Information": "Modifier les informations livreur",
+  "yes": "Oui",
+  "no": "Non",
+  "Delete deliveryBoy": "Supprimer définitivement le livreur",
+  "confirmDeleteDeliveryBoy": "Êtes-vous sûr de vouloir supprimer ce livreur"
 }

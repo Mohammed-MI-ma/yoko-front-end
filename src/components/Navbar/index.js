@@ -61,10 +61,7 @@ const Navbar = () => {
             }}
           >
             <HideComponentOnRoutes
-              routes={[
-                `/${language}/yoko/account/log-in`,
-                `/${language}/yoko/account/log-in-admin`,
-              ]}
+              routes={[`/yoko/account/log-in`, `/yoko/account/log-in-admin`]}
             >
               <SearchInputField className={style.largeScreens} />
             </HideComponentOnRoutes>

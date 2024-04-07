@@ -265,10 +265,7 @@ const LoginPage = ({ fixedHeight, language }) => {
               }}
             >
               {t("termsAndPrivacy")}
-              <Link to={`/${language}/yoko/account/log-in-admin`}>
-                {" "}
-                {t("AdminPanel")}
-              </Link>
+              <Link to={`/yoko/account/log-in-admin`}> {t("AdminPanel")}</Link>
             </p>
           </CenteredContainer>
         </ConfigProvider>

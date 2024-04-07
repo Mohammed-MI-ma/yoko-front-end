@@ -136,7 +136,7 @@ const ImageCardWithDescriptionFooter = ({
   };
   return (
     <HoverableDiv id={divId}>
-      <Link to={`/${language}/${action}`}>
+      <Link to={`/${action}`}>
         <CenteredContainer
           className={`${style.container}`}
           style={containerStyles}

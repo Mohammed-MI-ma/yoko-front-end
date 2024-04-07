@@ -37,7 +37,6 @@ import { Rue_high, Rue_low } from "./images";
 import LoginPage from "./pages/LoginPage";
 import OurPartners from "./components/OurPartners";
 import AdminLoginPage from "./pages/AdminLoginPage";
-import DrawerGeneric from "./components/DrawerGeneric";
 import { setDrawerOpenSettings } from "./reducers/applicationService/applicationSlice";
 import { useTranslation } from "react-i18next";
 import DashboardPage from "./pages/DashboardPage";
@@ -120,12 +119,9 @@ function App() {
           <Navbar />
         </header>
         <Routes>
+          <Route path="/" element={<Navigate to={`/web/guest/acceuil`} />} />
           <Route
-            path="/"
-            element={<Navigate to={`/${language}/web/guest/acceuil`} />}
-          />
-          <Route
-            path={`/${language}/web/guest/acceuil`}
+            path={`/web/guest/acceuil`}
             element={
               <Suspense
                 fallback={
@@ -143,7 +139,7 @@ function App() {
             }
           />
           <Route
-            path={`/${language}/web/guest/traditional`}
+            path={`/web/guest/traditional`}
             element={
               <Suspense
                 fallback={
@@ -161,7 +157,7 @@ function App() {
             }
           />{" "}
           <Route
-            path={`/${language}/web/guest/eat`}
+            path={`/web/guest/eat`}
             element={
               <Suspense
                 fallback={
@@ -179,7 +175,7 @@ function App() {
             }
           />
           <Route
-            path={`/${language}/web/guest/delivery`}
+            path={`/web/guest/delivery`}
             element={
               <Suspense
                 fallback={
@@ -201,7 +197,7 @@ function App() {
             }
           />
           <Route
-            path={`/${language}/web/guest/market`}
+            path={`/web/guest/market`}
             element={
               <Suspense
                 fallback={
@@ -217,7 +213,7 @@ function App() {
             }
           />{" "}
           <Route
-            path={`/${language}/yoko/account/log-in`}
+            path={`/yoko/account/log-in`}
             element={
               <Suspense
                 fallback={
@@ -239,7 +235,7 @@ function App() {
             }
           />
           <Route
-            path={`/${language}/yoko/account/log-in-admin`}
+            path={`/yoko/account/log-in-admin`}
             element={
               <Suspense
                 fallback={
@@ -261,7 +257,7 @@ function App() {
             }
           />
           <Route
-            path={`/${language}/yoko/account/dashboard`}
+            path={`/yoko/account/dashboard`}
             element={
               isAdminAuthenticated() ? (
                 <DashboardPage />

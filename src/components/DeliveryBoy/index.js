@@ -1,75 +1,63 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFontFamily from "../../utils/useFontFamily";
-import {
-  Avatar,
-  Button,
-  ConfigProvider,
-  DatePicker,
-  Divider,
-  Input,
-  List,
-  Result,
-  Segmented,
-  Space,
-  Switch,
-  Tabs,
-} from "antd";
-import { SiMeilisearch } from "react-icons/si";
+import { Button, ConfigProvider, List, Popconfirm, Space, Tabs } from "antd";
 
-import { FaCar } from "react-icons/fa";
 import { RiBikeLine } from "react-icons/ri";
-import { FaMotorcycle } from "react-icons/fa";
-import { FaTruckPickup } from "react-icons/fa";
-import dayjs from "dayjs";
-import { Radio } from "antd";
-import { PlusOutlined, UnlockOutlined } from "@ant-design/icons";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import CenteredContainer from "../CenteredContainer";
-import { searchDeliveryBoyMeiliSearch } from "../../reducers/applicationService/delivery/deliveryActions";
+import { FaMotorcycle, FaTruckPickup, FaCar } from "react-icons/fa";
+import { PlusOutlined } from "@ant-design/icons";
+import { MdEdit, MdAutoDelete } from "react-icons/md";
+
+import {
+  deleteDeliveryBoy,
+  searchDeliveryBoyMeiliSearch,
+} from "../../reducers/applicationService/delivery/deliveryActions";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSearchInputEmptyState } from "../../reducers/applicationService/delivery/deliverySlice";
+import { findObjectById } from "../../reducers/applicationService/delivery/deliverySlice";
+
+import useFontFamily from "../../utils/useFontFamily";
+import CenteredContainer from "../CenteredContainer";
+
+import style from "./DeliveryBoy.module.css";
+import DeliveryBoySearchEngine from "../DeliveryBoySearchEngine";
+import DeliveryBoyEditionDrawer from "../DeliveryBoyEditionDrawer";
 
 const DeliveryBoy = () => {
   const dispatch = useDispatch();
-  const isSearchInputEmpty = useSelector(
-    (state) => state.delivery.isSearchDeliveryBoyInputEmpty
-  );
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeKey, setActiveKey] = useState("1");
-
   const { t, i18n } = useTranslation();
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-    {
-      title: "Ant Design Title 2",
-    },
-    {
-      title: "Ant Design Title 3",
-    },
-    {
-      title: "Ant Design Title 4",
-    },
-  ];
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+
+  const { data } = useSelector((state) => state.delivery.deliveryBoys);
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+  const showChildrenDrawer = (e) => {
+    dispatch(findObjectById({ id: e }));
+    // Update the URL with the opened ID
+    window.history.replaceState(null, "", `/yoko/account/dashboard/${e}`);
+    setChildrenDrawer(true);
+  };
+  const onChildrenDrawerClose = () => {
+    window.history.replaceState(null, "", `/yoko/account/dashboard`);
+
+    setChildrenDrawer(false);
+  };
+
+  const searchDeliveryBoy = useCallback(() => {
+    dispatch(searchDeliveryBoyMeiliSearch({ query: "" }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    searchDeliveryBoy();
+  }, [searchDeliveryBoy]);
+
   const items = [
     {
       key: "1",
       label: (
         <h1
+          className={style.tabTitle}
           style={{
             fontFamily: fontFamilyLight,
-            fontSize: "var(--font-extra-small-size)",
-            color: "var(--color-secondary)",
           }}
         >
           {t("Recherche")}
@@ -77,13 +65,7 @@ const DeliveryBoy = () => {
       ),
       children: (
         <div
-          className={
-            "flex-col w-full gap-10 overflow-auto justify-start bordered shadow-md p-5 "
-          }
-          style={{
-            maxHeight: "25rem",
-            borderRadius: "var(--border-radius-large)",
-          }}
+          className={"flex-col w-full gap-10 overflow-auto justify-start p-5 "}
         >
           <List
             pagination={{
@@ -93,34 +75,63 @@ const DeliveryBoy = () => {
             }}
             itemLayout="vertical"
             dataSource={data}
-            renderItem={(item, index) => (
+            renderItem={(item) => (
               <List.Item
                 actions={[
-                  <IconText
-                    icon={StarOutlined}
-                    text="156"
-                    key="list-vertical-star-o"
-                  />,
-                  <IconText
-                    icon={LikeOutlined}
-                    text="156"
-                    key="list-vertical-like-o"
-                  />,
-                  <IconText
-                    icon={MessageOutlined}
-                    text="2"
-                    key="list-vertical-message"
-                  />,
+                  <Button
+                    onClick={() => showChildrenDrawer(item?._id)}
+                    type="link"
+                    style={{
+                      fontFamily: fontFamilyLight,
+                      fontSize: "var(--font-small-size)",
+                    }}
+                  >
+                    <IconText
+                      icon={MdEdit}
+                      text="Edition"
+                      key="list-vertical-message"
+                    />
+                  </Button>,
+                  <Popconfirm
+                    title={t("Delete deliveryBoy")}
+                    description={t("confirmDeleteDeliveryBoy")}
+                    okText={t("yes")}
+                    cancelText={t("no")}
+                    okType="text"
+                    onConfirm={() =>
+                      dispatch(deleteDeliveryBoy({ id: item._id }))
+                    }
+                  >
+                    <Button
+                      type="link"
+                      danger
+                      style={{
+                        fontFamily: fontFamilyLight,
+                        fontSize: "var(--font-small-size)",
+                      }}
+                    >
+                      <IconText
+                        icon={MdAutoDelete}
+                        text={<p>Supprimer {item?.firstName}</p>}
+                        key="list-vertical-message"
+                      />
+                    </Button>
+                  </Popconfirm>,
                 ]}
               >
                 <List.Item.Meta
-                  avatar={
-                    <Avatar
-                      src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
-                    />
+                  title={
+                    <h1 style={{ fontFamily: fontFamilyBold }}>
+                      {item?.firstName}&nbsp;
+                      {item?.lastName}
+                    </h1>
                   }
-                  title={<a href="https://ant.design">{item.title}</a>}
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  description={
+                    <>
+                      {item?.email}, {item?.phone},
+                      <IconFormatter icon={item?.vehicleType} />
+                    </>
+                  }
                 />
               </List.Item>
             )}
@@ -128,180 +139,8 @@ const DeliveryBoy = () => {
         </div>
       ),
     },
-    {
-      key: "2",
-      label: (
-        <h1
-          style={{
-            fontFamily: fontFamilyLight,
-            fontSize: "var(--font-extra-small-size)",
-            color: "var(--color-secondary)",
-          }}
-        >
-          <UnlockOutlined />
-          {t("Dilevery Boy")}
-        </h1>
-      ),
-      children: (
-        <div
-          className={
-            " flex-col w-full gap-10 overflow-auto justify-start bordered shadow-md p-5 "
-          }
-          style={{
-            maxHeight: "25rem",
-            borderRadius: "var(--border-radius-large)",
-          }}
-        >
-          {isSearchInputEmpty ? (
-            <Result status="403" title="403" subTitle={t("403_MSG")} />
-          ) : (
-            <>
-              <Divider style={{ fontFamily: fontFamilyLight, margin: 0 }}>
-                1-{t("personnalInfo")}
-              </Divider>
-
-              <Label>{t("CNIE")}*</Label>
-              <Input placeholder={t("n° CNIE")} maxLength={10} />
-              <Label>{t("Nom")}*</Label>
-              <Input placeholder={t("Nom")} />
-              <Label>{t("Prenom")}*</Label>
-              <Input placeholder={t("Prenom")} />
-              <Label>{t("DOB")}*</Label>
-              <DatePicker
-                defaultValue={dayjs("2015/01/01", "YYYY/MM/DD")}
-                format={"YYYY/MM/DD"}
-              />
-              <Label>{t("Sexe")}*</Label>
-              <Radio.Group value={1}>
-                <Radio value={1}>{t("Homme")}</Radio>
-                <Radio value={2}>{t("Femme")}</Radio>
-              </Radio.Group>
-              <Divider
-                style={{
-                  fontFamily: fontFamilyLight,
-                  marginTop: "var(--spacing-medium)",
-                }}
-              >
-                2-{t("coordonnées")}
-              </Divider>
-
-              <Label>{t("Adresse électronique")}*</Label>
-              <Input placeholder={t("Adresse électronique")} />
-              <Label>{t("GSM")}*</Label>
-              <Input placeholder={t("Numéro de téléphone")} />
-              <Label>{t("chooseTransport")}*</Label>
-              <Segmented
-                size="large"
-                options={[
-                  {
-                    label: (
-                      <div
-                        style={{
-                          padding: 4,
-                        }}
-                      >
-                        <Avatar
-                          style={{
-                            backgroundColor: "var(--color-secondary)",
-                            verticalAlign: "middle",
-                          }}
-                          size="large"
-                        >
-                          <FaCar />
-                        </Avatar>
-                        <div>Voiture</div>
-                      </div>
-                    ),
-                    value: "Voiture",
-                  },
-                  {
-                    label: (
-                      <div
-                        style={{
-                          padding: 4,
-                        }}
-                      >
-                        {" "}
-                        <Avatar
-                          style={{
-                            backgroundColor: "var(--color-secondary)",
-                            verticalAlign: "middle",
-                          }}
-                          size="large"
-                        >
-                          <RiBikeLine />
-                        </Avatar>
-                        <div>Vélo</div>
-                      </div>
-                    ),
-                    value: "summer",
-                  },
-                  {
-                    label: (
-                      <div
-                        style={{
-                          padding: 4,
-                        }}
-                      >
-                        <Avatar
-                          style={{
-                            backgroundColor: "var(--color-secondary)",
-                            verticalAlign: "middle",
-                          }}
-                          size="large"
-                        >
-                          <FaMotorcycle />
-                        </Avatar>
-                        <div>Moto</div>
-                      </div>
-                    ),
-                    value: "autumn",
-                  },
-                  {
-                    label: (
-                      <div
-                        style={{
-                          padding: 4,
-                        }}
-                      >
-                        <Avatar
-                          style={{
-                            backgroundColor: "var(--color-secondary)",
-                            verticalAlign: "middle",
-                          }}
-                          size="large"
-                        >
-                          <FaTruckPickup />
-                        </Avatar>
-                        <div>Pickup</div>
-                      </div>
-                    ),
-                    value: "winter",
-                  },
-                ]}
-              />
-              <Button
-                className="w-full mt-20"
-                style={{
-                  fontFamily: fontFamilyLight,
-                  background: "var(--color-secondary)",
-                  color: "white",
-                }}
-              >
-                {t("save")}
-              </Button>
-            </>
-          )}
-        </div>
-      ),
-    },
   ];
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-    dispatch(searchDeliveryBoyMeiliSearch({ query: value }));
-    const isEmpty = value.trim() === "";
-    dispatch(updateSearchInputEmptyState(isEmpty));
-  };
+
   return (
     <ConfigProvider
       theme={{
@@ -309,33 +148,11 @@ const DeliveryBoy = () => {
           colorPrimary: "none",
           hoverBorderColor: "#1d3034",
         },
-        components: {},
       }}
     >
       <div className={"h-full flex-col "}>
         <div className={"flex items-center justify-center gap-10"}>
-          <div className={"w-full"}>
-            <Input
-              placeholder={t("placeholderLivreur")}
-              style={{
-                borderRadius: "100px",
-                fontFamily: fontFamilyLight,
-              }}
-              onChange={(e) => handleSearch(e.target.value)}
-              value={searchTerm}
-            />
-            <footer>
-              <CenteredContainer
-                style={{
-                  fontSize: "var(--font-tiny-size)",
-                  justifyContent: "left",
-                }}
-              >
-                <p>Recherche alimentée par MeiliSearch</p>
-                <SiMeilisearch />
-              </CenteredContainer>{" "}
-            </footer>
-          </div>
+          <DeliveryBoySearchEngine />
           <CenteredContainer className={"flex-col"}>
             <Button
               type="primary"
@@ -362,9 +179,14 @@ const DeliveryBoy = () => {
         </div>
 
         <div className="flex-grow w-full ">
-          <Tabs defaultActiveKey={activeKey} items={items} />
+          <Tabs defaultActiveKey={1} items={items} />
         </div>
       </div>
+      <DeliveryBoyEditionDrawer
+        title={t("Modify Delivery Information")}
+        open={childrenDrawer}
+        onClose={onChildrenDrawerClose}
+      />
     </ConfigProvider>
   );
 };
@@ -383,4 +205,24 @@ export const Label = ({ children }) => {
       {children}
     </p>
   );
+};
+export const IconText = ({ icon, text }) => (
+  <Space>
+    {React.createElement(icon)}
+    {text}
+  </Space>
+);
+export const IconFormatter = ({ icon }) => {
+  // Map string values to corresponding icons
+  const iconMap = {
+    Pickup: FaTruckPickup,
+    car: FaCar,
+    Moto: FaMotorcycle,
+    Vélo: RiBikeLine,
+  };
+
+  // Get the corresponding icon from the map
+  const selectedIcon = iconMap[icon] || FaMotorcycle; // Default to coffee icon if no match found
+
+  return <Space> {React.createElement(selectedIcon)}</Space>;
 };

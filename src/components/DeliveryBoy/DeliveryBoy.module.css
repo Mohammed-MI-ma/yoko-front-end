@@ -1,0 +1,8 @@
+.tabTitle {
+  font-size: var(--font-extra-small-size);
+  color: var(--color-secondary);
+}
+.poweredBymeiliSearch {
+  font-size: var(--font-tiny-size);
+  justify-content: left;
+}
