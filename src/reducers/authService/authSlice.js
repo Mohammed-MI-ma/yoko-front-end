@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  savePreferencesOrders,
-  savePreferencesProduct,
-  sendOTP,
-  verifyCode,
-} from "./authActions";
+import { sendOTP, verifyCode } from "./authActions";
 
 const userToken = localStorage.getItem("access_token") || null;
 const refreshToken = localStorage.getItem("refreshToken") || null;
@@ -34,6 +29,7 @@ const initialState = {
 
   //Preferences
   loadingPreferences: false,
+  showModalForMoreDeliveryPerson: true,
 };
 
 const authSlice = createSlice({
@@ -147,26 +143,6 @@ const authSlice = createSlice({
       })
       .addCase(verifyCode.rejected, (state, action) => {
         state.loadingOTP = false;
-      })
-      //PreferencesProduct
-      .addCase(savePreferencesProduct.pending, (state) => {
-        state.loadingPreferences = true;
-      })
-      .addCase(savePreferencesProduct.fulfilled, (state, action) => {
-        state.loadingPreferences = false;
-      })
-      .addCase(savePreferencesProduct.rejected, (state, action) => {
-        state.loadingPreferences = false;
-      })
-      //PreferencesOrders
-      .addCase(savePreferencesOrders.pending, (state) => {
-        state.loadingPreferences = true;
-      })
-      .addCase(savePreferencesOrders.fulfilled, (state, action) => {
-        state.loadingPreferences = false;
-      })
-      .addCase(savePreferencesOrders.rejected, (state, action) => {
-        state.loadingPreferences = false;
       });
   },
 });

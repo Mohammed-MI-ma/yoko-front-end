@@ -20,6 +20,7 @@ import CenteredContainer from "../CenteredContainer";
 import style from "./DeliveryBoy.module.css";
 import DeliveryBoySearchEngine from "../DeliveryBoySearchEngine";
 import DeliveryBoyEditionDrawer from "../DeliveryBoyEditionDrawer";
+import DeliveryBoyAddDrawer from "../DeliveryBoyAddDrawer";
 
 const DeliveryBoy = () => {
   const dispatch = useDispatch();
@@ -27,8 +28,14 @@ const DeliveryBoy = () => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
+  const isAllowedToAddNewDeliveryBoy = useSelector(
+    (state) => state.delivery.isAllowedToAddNewDeliveryBoy
+  );
+
   const { data } = useSelector((state) => state.delivery.deliveryBoys);
+
   const [childrenDrawer, setChildrenDrawer] = useState(false);
+  const [childrenDrawerNewBoy, setChildrenDrawerNewBoy] = useState(false);
 
   const showChildrenDrawer = (e) => {
     dispatch(findObjectById({ id: e }));
@@ -36,15 +43,33 @@ const DeliveryBoy = () => {
     window.history.replaceState(null, "", `/yoko/account/dashboard/${e}`);
     setChildrenDrawer(true);
   };
+  const closeDrawerFunction = () => {
+    setChildrenDrawerNewBoy(false);
+  };
+  const closeDrawerEDitFunction = () => {
+    setChildrenDrawer(false);
+  };
   const onChildrenDrawerClose = () => {
     window.history.replaceState(null, "", `/yoko/account/dashboard`);
 
     setChildrenDrawer(false);
   };
+  const showChildrenDrawerNewBoy = (e) => {
+    window.history.replaceState(
+      null,
+      "",
+      `/yoko/account/dashboard/addDeliveryBoy/`
+    );
+    setChildrenDrawerNewBoy(true);
+  };
+  const onChildrenDrawerNewBoyClose = () => {
+    window.history.replaceState(null, "", `/yoko/account/dashboard`);
+    setChildrenDrawerNewBoy(false);
+  };
 
   const searchDeliveryBoy = useCallback(() => {
-    dispatch(searchDeliveryBoyMeiliSearch({ query: "" }));
-  }, [dispatch]);
+    dispatch(searchDeliveryBoyMeiliSearch({ query: "", t }));
+  }, [dispatch, t]);
 
   useEffect(() => {
     searchDeliveryBoy();
@@ -98,9 +123,9 @@ const DeliveryBoy = () => {
                     okText={t("yes")}
                     cancelText={t("no")}
                     okType="text"
-                    onConfirm={() =>
-                      dispatch(deleteDeliveryBoy({ id: item._id }))
-                    }
+                    onConfirm={() => {
+                      dispatch(deleteDeliveryBoy({ id: item._id }));
+                    }}
                   >
                     <Button
                       type="link"
@@ -140,6 +165,11 @@ const DeliveryBoy = () => {
       ),
     },
   ];
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleClearSearch = () => {
+    setSearchTerm(""); // Reset the search term
+  };
 
   return (
     <ConfigProvider
@@ -152,19 +182,38 @@ const DeliveryBoy = () => {
     >
       <div className={"h-full flex-col "}>
         <div className={"flex items-center justify-center gap-10"}>
-          <DeliveryBoySearchEngine />
+          <DeliveryBoySearchEngine
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
           <CenteredContainer className={"flex-col"}>
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<PlusOutlined />}
-              disabled
-              style={{
-                background: "var(--color-secondary)",
-                color: "white",
-              }}
-            />
-
+            {isAllowedToAddNewDeliveryBoy && data?.length === 0 ? (
+              <Button
+                onClick={() => {
+                  showChildrenDrawerNewBoy();
+                  handleClearSearch();
+                  dispatch(searchDeliveryBoyMeiliSearch({ query: "", t }));
+                }}
+                type="primary"
+                shape="circle"
+                icon={<PlusOutlined />}
+                style={{
+                  background: "var(--color-secondary)",
+                  color: "white",
+                }}
+              />
+            ) : (
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<PlusOutlined />}
+                disabled
+                style={{
+                  background: "#c3c3c3",
+                  color: "white",
+                }}
+              />
+            )}
             <footer>
               <p
                 style={{
@@ -172,7 +221,7 @@ const DeliveryBoy = () => {
                   textAlign: "center",
                 }}
               >
-                Nouveau livreur
+                <>Nouveau livreur</>
               </p>
             </footer>
           </CenteredContainer>
@@ -186,6 +235,14 @@ const DeliveryBoy = () => {
         title={t("Modify Delivery Information")}
         open={childrenDrawer}
         onClose={onChildrenDrawerClose}
+        closeDrawerFunction={closeDrawerEDitFunction}
+      />
+      {/**Add new deliveryBoy 2 level Drawer*/}
+      <DeliveryBoyAddDrawer
+        title={t("Add new Delivery Information")}
+        open={childrenDrawerNewBoy}
+        onClose={onChildrenDrawerNewBoyClose}
+        closeDrawerFunction={closeDrawerFunction}
       />
     </ConfigProvider>
   );

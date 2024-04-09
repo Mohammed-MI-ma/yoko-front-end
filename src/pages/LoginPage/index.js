@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import { useTranslation } from "react-i18next";
-
 import OtpInput from "react-otp-input";
-
 import validator from "validator";
-
 import {
   Button,
   ConfigProvider,
@@ -23,31 +17,31 @@ import {
 import useDirection from "../../utils/useDirection";
 import CenteredContainer from "../../components/CenteredContainer";
 import useFontFamily from "../../utils/useFontFamily";
-
 import { FaGoogle, FaFacebookF } from "react-icons/fa6";
-
 import {
   setIsLoggedIn,
   setUserLoginFulfilled,
   setUserLoginPending,
   setUserLoginRejected,
 } from "../../reducers/authService/authSlice";
-
-import style from "./loginPage.module.css";
 import { Bike_low, LogoB } from "../../images";
 import ButtonWithStyles from "../../components/ButtonWithStyles";
 import { sendOTP } from "../../reducers/authService/authActions";
 
-const LoginPage = ({ fixedHeight, language }) => {
+import style from "./loginPage.module.css";
+
+const LoginPage = ({ fixedHeight }) => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
+
   const fontFamilylight = useFontFamily(i18n.language, "normal");
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const direction = useDirection(i18n.language);
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
   const [, setEmailExists] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -71,7 +65,6 @@ const LoginPage = ({ fixedHeight, language }) => {
     setIsValidEmail(validator.isEmail(value));
   };
 
-  //__STYLING
   const containerStyles = {
     backgroundPosition: "top",
     backgroundSize: "cover",
@@ -83,8 +76,6 @@ const LoginPage = ({ fixedHeight, language }) => {
     minHeight: "75vh",
     margin: "0 auto",
   };
-
-  //__AXIOS
   const searchEmailInDatabase = async () => {
     try {
       const response = await axios.post(
@@ -92,22 +83,16 @@ const LoginPage = ({ fixedHeight, language }) => {
         { email, role: "user" }
       );
       if (response.status === 200) {
-        // Check if the user was found in the database
         if (response.data.result) {
-          // User found
           setEmailExists(true);
-
           message.success(t("userFoundSuccess"));
         }
       } else {
-        // Handle unexpected response status
         message.error("Unexpected response status");
       }
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
         if (error.response.status === 404) {
-          // User not found
           message.warning(t("userNotFound"));
           sendOtp();
           setModalOpen(true);
@@ -181,7 +166,7 @@ const LoginPage = ({ fixedHeight, language }) => {
           }
         });
     }
-  }, [dispatch, otp]);
+  }, [dispatch, otp, t]);
 
   return (
     <div
@@ -265,7 +250,6 @@ const LoginPage = ({ fixedHeight, language }) => {
               }}
             >
               {t("termsAndPrivacy")}
-              <Link to={`/yoko/account/log-in-admin`}> {t("AdminPanel")}</Link>
             </p>
           </CenteredContainer>
         </ConfigProvider>

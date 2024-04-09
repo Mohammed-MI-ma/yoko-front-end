@@ -3,6 +3,7 @@
   "YOKO": "YOKO",
   "aCasa": "profite actuellement ",
   "maintenant": "de son séjour à Casablanca",
+  "Casablanca": "Casablanca",
 
   "/////////////_": "***_FirstPage",
   "Nous avons": "Nous avons",
@@ -105,13 +106,17 @@
   "Vélo": "Vélo",
   "Pickup": "Pickup",
   "Moto": "Moto",
-  "403_MSG": "Vous n'êtes pas autorisé à accéder à cette page, vo",
+  "403_MSG": "Vous n'êtes pas autorisé à accéder à cette page",
   "Réessayer": "Impossible de charger les données",
+  "please signIn": "Veuillez vous connecter",
   "Meilleures offres": "Meilleures offres",
   "poweredByMeiliSearch": "Recherche alimentée par MeiliSearch",
   "Modify Delivery Information": "Modifier les informations livreur",
   "yes": "Oui",
   "no": "Non",
   "Delete deliveryBoy": "Supprimer définitivement le livreur",
-  "confirmDeleteDeliveryBoy": "Êtes-vous sûr de vouloir supprimer ce livreur"
+  "confirmDeleteDeliveryBoy": "Êtes-vous sûr de vouloir supprimer ce livreur",
+
+  "Add new Delivery Information": "AJOUTER UN NOUVEAU LIVREUR",
+  "fileAttenteActualise": "file attente actualisée"
 }

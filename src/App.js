@@ -2,26 +2,24 @@
 import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
 
 //__REACT-DOM
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 //__REACT_REDUX
 import { useDispatch, useSelector } from "react-redux";
 
 //__ANTD
-import {
-  ConfigProvider,
-  BackTop,
-  Spin,
-  Drawer,
-  Layout,
-  FloatButton,
-} from "antd";
+import { ConfigProvider, Spin, FloatButton } from "antd";
 import frFR from "antd/lib/locale/fr_FR";
 import arEG from "antd/lib/locale/ar_EG";
 
 //__CONFIG
 import { loadFonts, loadImages } from "./services/functions/functions";
-import ImageConfig from "./config.dev";
+import {
+  ImageConfigsDelivery,
+  ImageConfigsGeneral,
+  ImageConfigsHome,
+  ImageConfigsLogin,
+} from "./config.dev";
 import { FontsConfig } from "./fontsConfig";
 
 //__STYLING
@@ -58,11 +56,15 @@ function App() {
   const { t } = useTranslation();
   // Retrieve the currently selected language from the application state
   const language = useSelector((state) => state.application.language);
+  const isLoggedIn = useSelector((state) => state.application.isLoggedIn);
+
   const openSettings = useSelector(
     (state) => state.application.drawerOpenSettings
   );
 
   const [loading, setLoading] = useState(true);
+  // Inside your component:
+  const location = useLocation();
 
   // Initialize locale state as null
   const [locale, setLocale] = useState(null);
@@ -70,10 +72,32 @@ function App() {
     d(setDrawerOpenSettings(false));
   };
   // useEffect hook to fetch fonts and images, then update loading state
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await Promise.all([loadFonts(FontsConfig), loadImages(ImageConfig)]);
+        await Promise.all([
+          loadFonts(FontsConfig),
+          loadImages(ImageConfigsGeneral),
+        ]);
+        switch (location.pathname) {
+          case "/":
+            await Promise.all([loadImages(ImageConfigsHome)]);
+            break;
+          case "/web/guest/acceuil":
+            await Promise.all([loadImages(ImageConfigsHome)]);
+            break;
+          case "/web/guest/delivery":
+            if (!isLoggedIn)
+              await Promise.all([loadImages(ImageConfigsDelivery)]);
+            break;
+          case "/yoko/account/log-in":
+            if (!isLoggedIn) await Promise.all([loadImages(ImageConfigsLogin)]);
+            break;
+
+          default:
+            break;
+        }
       } catch (error) {
         console.error("Error while preparing:", error);
       } finally {
@@ -83,7 +107,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn, location.pathname]);
   // useEffect hook to fetch contact info only once on component mount
 
   const dispatchFetchContactInfo = useCallback(() => {

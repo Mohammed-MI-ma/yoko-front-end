@@ -16,30 +16,30 @@ const useSpecificObject = () => {
   return specificObject;
 };
 
-const DeliveryBoyDetails = ({ onSave }) => {
+const DeliveryBoyDetails = ({ onSave, flag }) => {
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const loading = useSelector((state) => state.delivery.loadingDeliveryBoy);
 
   const specificObject = useSpecificObject();
-  const [cnie, setCnie] = useState(specificObject.cnie);
-  const [firstName, setFirstName] = useState(specificObject.firstName);
-  const [lastName, setLastName] = useState(specificObject.lastName);
-  const [sex, setSex] = useState(specificObject.sex);
-  const [email, setEmail] = useState(specificObject.email);
-  const [phone, setPhone] = useState(specificObject.phone);
-  const [transport, setTransport] = useState(specificObject.vehicleType);
+  const [cnie, setCnie] = useState(specificObject?.cnie);
+  const [firstName, setFirstName] = useState(specificObject?.firstName);
+  const [lastName, setLastName] = useState(specificObject?.lastName);
+  const [sex, setSex] = useState(specificObject?.sex);
+  const [email, setEmail] = useState(specificObject?.email);
+  const [phone, setPhone] = useState(specificObject?.phone);
+  const [transport, setTransport] = useState(specificObject?.vehicleType);
 
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    setCnie(specificObject.cnie);
-    setFirstName(specificObject.firstName);
-    setLastName(specificObject.lastName);
-    setSex(specificObject.sex);
-    setEmail(specificObject.email);
-    setPhone(specificObject.phone);
-    setTransport(specificObject.vehicleType);
+    setCnie(specificObject?.cnie);
+    setFirstName(specificObject?.firstName);
+    setLastName(specificObject?.lastName);
+    setSex(specificObject?.sex);
+    setEmail(specificObject?.email);
+    setPhone(specificObject?.phone);
+    setTransport(specificObject?.vehicleType);
   }, [specificObject]);
 
   const options = transportationOptions.map((option) => ({
@@ -53,18 +53,39 @@ const DeliveryBoyDetails = ({ onSave }) => {
   }, [cnie, firstName, lastName, email, phone, transport]);
 
   const handleSave = () => {
-    onSave({
-      id: specificObject._id,
-      deliveryBoyData: {
-        cnie: cnie,
-        firstName: firstName,
-        lastName: lastName,
-        sex: sex === 1 ? "homme" : "femme",
-        email: email,
-        phone: phone,
-        vehicleType: transport,
-      },
-    });
+    setCnie("");
+    setFirstName("");
+    setLastName("");
+    setSex(1);
+    setEmail("");
+    setPhone("");
+    setTransport("car");
+    onSave(
+      flag === 1
+        ? {
+            deliveryBoyData: {
+              cnie: cnie,
+              firstName: firstName,
+              lastName: lastName,
+              sex: sex === 1 ? "homme" : "femme",
+              email: email,
+              phone: phone,
+              vehicleType: transport,
+            },
+          }
+        : {
+            id: specificObject._id,
+            deliveryBoyData: {
+              cnie: cnie,
+              firstName: firstName,
+              lastName: lastName,
+              sex: sex === 1 ? "homme" : "femme",
+              email: email,
+              phone: phone,
+              vehicleType: transport,
+            },
+          }
+    );
   };
 
   return (
@@ -80,7 +101,7 @@ const DeliveryBoyDetails = ({ onSave }) => {
         maxLength={10}
         name="cnie"
         value={cnie}
-        disabled
+        disabled={flag !== 1}
         onChange={(e) => setCnie(e.target.value)}
       />
 
@@ -152,7 +173,7 @@ const DeliveryBoyDetails = ({ onSave }) => {
           color: "white",
         }}
       >
-        Mettre a jour livreur
+        {flag !== 1 ? <>Mettre a jour livreur</> : <>Ajouter livreur</>}
       </Button>
     </>
   );

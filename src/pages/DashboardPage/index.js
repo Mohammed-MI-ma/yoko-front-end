@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Card, Divider } from "antd";
-
+import axios from "axios";
 import useFontFamily from "../../utils/useFontFamily";
 
 import {
@@ -21,15 +21,20 @@ import ProductManager from "../../components/ProductManager";
 import OrdersView from "../../components/OrdersView";
 import AnimatesIcon from "../../components/AnimatesIcon";
 import CenteredContainer from "../../components/CenteredContainer";
+import useDirection from "../../utils/useDirection";
+import { setCredentials } from "../../reducers/authService/authSlice";
 const MAX_LENGTH = 100;
-const DashboardPage = ({ language }) => {
+const DashboardPage = () => {
   const { t, i18n } = useTranslation();
   const { preferences } = useSelector((state) => state.auth.userInfo);
+  const language = useSelector((state) => state.application.language);
+  const accessToken = useSelector((state) => state.auth.userToken);
+  const d = useDispatch();
+  const direction = useDirection(i18n.language);
 
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  useEffect(() => {}, []);
   const containerStyles = {
     width: dynamicWidth,
     margin: "0 auto",
@@ -43,6 +48,9 @@ const DashboardPage = ({ language }) => {
             color: "var(--color-accent)",
             fontWeight: 700,
             fontFamily: fontFamilyBold,
+            display: "flex",
+            flexDirection: language === "ar" ? "row-reverse" : "row",
+            gap: ".5rem",
           }}
         >
           <span
@@ -52,9 +60,10 @@ const DashboardPage = ({ language }) => {
           >
             {t("YOKO")}
           </span>
-          &nbsp;{t("Dashboard")}
+          <span>{t("Dashboard")}</span>
         </h1>
       </BreadCrumb>
+
       <div className={`flex flex-col`} style={containerStyles}>
         <div className="w-full h-full flex flex-grow justify-center items-center flex-col">
           <div
@@ -84,19 +93,27 @@ const DashboardPage = ({ language }) => {
             >
               {t("discoverSelection")}
             </p>
-            <CustomDivider width={"6rem"} height={"10px"} />
+            <CustomDivider width={"6rem"} height={"5px"} />
             <div
               className="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 items-center mt-5 gap-5"
               style={{ margin: "0 auto" }}
             >
               {[1, 2, 3, 4].map((id) => (
                 <Card
-                  title={getTitle(id, t)}
+                  title={getTitle(id, t, fontFamilyLight)}
+                  dir={direction}
                   bordered
                   key={id}
                   className="shadow-lg"
                 >
-                  {getDescription(id, t, preferences, fontFamilyBold)}
+                  {getDescription(
+                    id,
+                    t,
+                    preferences,
+                    fontFamilyBold,
+                    accessToken,
+                    d
+                  )}
                 </Card>
               ))}
             </div>
@@ -109,7 +126,6 @@ const DashboardPage = ({ language }) => {
 
 export default DashboardPage;
 
-//thick CustomDivider
 export const CustomDivider = ({ width, height }) => {
   return (
     <div style={{ width: width }}>
@@ -118,16 +134,17 @@ export const CustomDivider = ({ width, height }) => {
         style={{
           backgroundColor: "var(--color-primary)",
           height: height,
+          borderRadius: "50px",
         }}
       />
     </div>
   );
 };
-export const getTitle = (id, t) => {
+export const getTitle = (id, t, font) => {
   switch (id) {
     case 1:
       return (
-        <div className="flex">
+        <div className="flex" style={{ fontFamily: font }}>
           &nbsp; &nbsp;
           <AnimatesIcon icon={<ProductOutlined />} />
           &nbsp;{t("ProduitsYOKO")}
@@ -135,21 +152,21 @@ export const getTitle = (id, t) => {
       );
     case 2:
       return (
-        <div className="flex">
+        <div className="flex" style={{ fontFamily: font }}>
           &nbsp; &nbsp;
           <AnimatesIcon icon={<TruckOutlined />} /> &nbsp;{t("LivraisonsYOKO")}
         </div>
       );
     case 3:
       return (
-        <div className="flex">
+        <div className="flex" style={{ fontFamily: font }}>
           &nbsp; &nbsp;
           <AnimatesIcon icon={<ContactsOutlined />} /> &nbsp;{t("ContactYOKO")}
         </div>
       );
     case 4:
       return (
-        <div className="flex">
+        <div className="flex" style={{ fontFamily: font }}>
           &nbsp; &nbsp;
           <AnimatesIcon icon={<StockOutlined />} /> &nbsp;{t("CommandesYOKO")}
         </div>
@@ -158,7 +175,7 @@ export const getTitle = (id, t) => {
       return "";
   }
 };
-const getDescription = (id, t, preferences, font) => {
+const getDescription = (id, t, preferences, font, token, d) => {
   switch (id) {
     case 1:
       return (
@@ -173,6 +190,9 @@ const getDescription = (id, t, preferences, font) => {
     case 2:
       return (
         <TruncatedText
+          onChangeCheckBoxHandler={(e) =>
+            onChangeCheckBoxHandler(e, token, 1, d)
+          }
           skip={preferences?.hideModalForDeliveriesYoko}
           maxLength={MAX_LENGTH}
           title={
@@ -215,4 +235,39 @@ const getDescription = (id, t, preferences, font) => {
     default:
       return "";
   }
+};
+const onChangeCheckBoxHandler = (e, token, target, d) => {
+  let myTarget;
+  switch (target) {
+    case 1:
+      myTarget = "updateVisibilityModalReadMoreDeliveryBoy";
+      break;
+
+    default:
+      break;
+  }
+  let data = JSON.stringify({
+    hidden: e,
+  });
+
+  let config = {
+    method: "put",
+    maxBodyLength: Infinity,
+    url: `http://localhost:5000/api/auth/preferences/${myTarget}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    data: data,
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      localStorage.setItem("userData", JSON.stringify(response.data.data));
+      d(setCredentials(response?.data.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

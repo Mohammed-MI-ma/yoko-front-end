@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Input } from "antd";
 import { SiMeilisearch } from "react-icons/si";
 import { useDispatch } from "react-redux";
@@ -8,9 +8,9 @@ import CenteredContainer from "../CenteredContainer";
 import { searchDeliveryBoyMeiliSearch } from "../../reducers/applicationService/delivery/deliveryActions";
 import useFontFamily from "../../utils/useFontFamily";
 import style from "./DeliveryBoySearchEngine.module.css";
+import { setIsAllowedToAddNewDeliveryBoy } from "../../reducers/applicationService/delivery/deliverySlice";
 
-const DeliveryBoySearchEngine = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+const DeliveryBoySearchEngine = ({ searchTerm, setSearchTerm }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
@@ -18,10 +18,21 @@ const DeliveryBoySearchEngine = () => {
   const handleSearch = useCallback(
     (value) => {
       setSearchTerm(value);
-      dispatch(searchDeliveryBoyMeiliSearch({ query: value }));
+      dispatch(searchDeliveryBoyMeiliSearch({ query: value, t }));
     },
-    [dispatch]
+    [dispatch, t, setSearchTerm]
   );
+
+  useEffect(() => {
+    // Vérifie si searchTerm est vide
+    if (searchTerm === "") {
+      // Dispatchez votre action ici lorsque searchTerm est vide
+      dispatch(setIsAllowedToAddNewDeliveryBoy(false));
+    } else {
+      dispatch(setIsAllowedToAddNewDeliveryBoy(true));
+    }
+  }, [dispatch, searchTerm]); // searchTerm est une dépendance de l'effet useEffect
+
   const memoizedTranslations = useMemo(() => {
     return {
       placeholder: t("placeholderLivreur"),
@@ -43,6 +54,7 @@ const DeliveryBoySearchEngine = () => {
       <footer>
         <CenteredContainer className={style.poweredBymeiliSearch}>
           <p>{memoizedTranslations.poweredByMeiliSearch}</p>
+
           <SiMeilisearch />
         </CenteredContainer>
       </footer>

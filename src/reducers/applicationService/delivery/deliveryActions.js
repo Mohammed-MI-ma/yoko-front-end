@@ -4,7 +4,7 @@ import { message } from "antd";
 
 export const searchDeliveryBoyMeiliSearch = createAsyncThunk(
   "delivery/searchDeliveryBoy",
-  async ({ query }, { rejectWithValue }) => {
+  async ({ query, t }, { rejectWithValue }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +17,8 @@ export const searchDeliveryBoyMeiliSearch = createAsyncThunk(
       );
 
       if (response.status === 200) {
-        // Handle successful search response
+        message.success(t("fileAttenteActualise"));
+
         return response.data;
       } else {
         message.error("unexpectedError");

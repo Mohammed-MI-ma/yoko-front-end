@@ -3,27 +3,27 @@ import DrawerGeneric from "../DrawerGeneric";
 import DeliveryBoyDetails from "../DeliveryBoyDetails";
 import CenteredContainer from "../CenteredContainer";
 import { TruckOutlined } from "@ant-design/icons";
-import AnimatesIcon from "../../components/AnimatesIcon";
+import AnimatesIcon from "../AnimatesIcon";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { updateDeliveryBoy } from "../../reducers/applicationService/delivery/deliveryActions";
+import { addDeliveryBoy } from "../../reducers/applicationService/delivery/deliveryActions";
 
-const DeliveryBoyEditionDrawer = ({
+const DeliveryBoyAddDrawer = ({
   title,
   open,
   onClose,
   closeDrawerFunction,
 }) => {
   const dispatch = useDispatch();
-  const onSave = ({ id, deliveryBoyData }) => {
-    dispatch(updateDeliveryBoy({ id, deliveryBoyData }));
+  const { i18n } = useTranslation();
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+
+  const onSave = ({ deliveryBoyData }) => {
+    // dispatch(searchDeliveryBoyMeiliSearch({ query: "", t }));
+    dispatch(addDeliveryBoy({ deliveryBoyData }));
     closeDrawerFunction();
   };
-
-  const { i18n } = useTranslation();
-
-  const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
   return (
     <DrawerGeneric
@@ -50,10 +50,11 @@ const DeliveryBoyEditionDrawer = ({
           borderRadius: "var(--border-radius-large)",
         }}
       >
-        <DeliveryBoyDetails onSave={onSave} />
+        {/* Add form */}
+        <DeliveryBoyDetails onSave={onSave} flag={1} />
       </div>
     </DrawerGeneric>
   );
 };
 
-export default DeliveryBoyEditionDrawer;
+export default DeliveryBoyAddDrawer;

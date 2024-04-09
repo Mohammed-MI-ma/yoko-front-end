@@ -44,12 +44,30 @@ const ImageConfig = [
   { uri: Delivery_low },
   { uri: Traditional_low },
   { uri: Rue_low },
-
   { uri: YOKO_EAT_low },
   { uri: YOKO_Rest_low },
-  { uri: Bike_low },
 
   // { uri: Traditional },
 ];
-
-export default ImageConfig;
+//"/web/guest/acceuil"
+export const ImageConfigsGeneral = [{ uri: Logo }, { uri: LogoB }];
+//"/web/guest/acceuil"
+export const ImageConfigsHome = [
+  { uri: glow },
+  { uri: ceraveLogo_low },
+  { uri: cerave },
+  { uri: philips },
+  { uri: airfryer },
+  { uri: bucket },
+  { uri: basket },
+  { uri: bucketMobile },
+  { uri: YokoEat_low },
+  { uri: YOKOMarket_low },
+  { uri: Tagine_low },
+  { uri: Delivery_low },
+  { uri: Traditional_low },
+];
+//"/web/guest/delivery"
+export const ImageConfigsDelivery = [{ uri: Rue_low }];
+//"/yoko/account/log-in"
+export const ImageConfigsLogin = [{ uri: Bike_low }];
