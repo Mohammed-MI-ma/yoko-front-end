@@ -91,6 +91,7 @@ const DeliveryBoy = () => {
       children: (
         <div
           className={"flex-col w-full gap-10 overflow-auto justify-start p-5 "}
+          style={{ paddingTop: "0px" }}
         >
           <List
             pagination={{
@@ -146,16 +147,26 @@ const DeliveryBoy = () => {
               >
                 <List.Item.Meta
                   title={
-                    <h1 style={{ fontFamily: fontFamilyBold }}>
+                    <h1
+                      style={{
+                        fontFamily: fontFamilyBold,
+                        fontSize: "var(--font-small-size)",
+                      }}
+                    >
                       {item?.firstName}&nbsp;
                       {item?.lastName}
                     </h1>
                   }
                   description={
-                    <>
+                    <p
+                      style={{
+                        fontSize: "var(--font-extra-small-size)",
+                        color: "black",
+                      }}
+                    >
                       {item?.email}, {item?.phone},
                       <IconFormatter icon={item?.vehicleType} />
-                    </>
+                    </p>
                   }
                 />
               </List.Item>

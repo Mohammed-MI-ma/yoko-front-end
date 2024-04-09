@@ -1,6 +1,6 @@
 .grid {
   margin: 0 auto;
-  gap: 1rem;
+  gap: 3rem;
 }
 @media only screen and (max-width: 388px) {
   .grid {

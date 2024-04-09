@@ -38,6 +38,7 @@ import AdminLoginPage from "./pages/AdminLoginPage";
 import { setDrawerOpenSettings } from "./reducers/applicationService/applicationSlice";
 import { useTranslation } from "react-i18next";
 import DashboardPage from "./pages/DashboardPage";
+import MarketPage from "./pages/MarketPage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFoodPage"));
@@ -233,9 +234,11 @@ function App() {
                     }
                   />
                 }
-              ></Suspense>
+              >
+                <MarketPage />
+              </Suspense>
             }
-          />{" "}
+          />
           <Route
             path={`/yoko/account/log-in`}
             element={

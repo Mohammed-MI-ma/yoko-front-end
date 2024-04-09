@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Card, Divider } from "antd";
+import { Card, Divider, Button } from "antd";
 import axios from "axios";
 import useFontFamily from "../../utils/useFontFamily";
 
@@ -11,6 +11,7 @@ import {
   TruckOutlined,
   ContactsOutlined,
   StockOutlined,
+  PaperClipOutlined,
 } from "@ant-design/icons";
 
 import BreadCrumb from "../../components/BreadCrumb";
@@ -180,8 +181,33 @@ const getDescription = (id, t, preferences, font, token, d) => {
     case 1:
       return (
         <TruncatedText
+          onChangeCheckBoxHandler={(e) =>
+            onChangeCheckBoxHandler(e, token, 2, d)
+          }
           skip={preferences?.hideModalForProductYoko}
-          title={t("Espace produit")}
+          title={
+            <CenteredContainer
+              style={{
+                justifyContent: "space-between",
+                textTransform: "uppercase",
+              }}
+            >
+              <CenteredContainer
+                style={{
+                  justifyContent: "left",
+                  gap: "1rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                <AnimatesIcon icon={<ProductOutlined />} />
+                <h1 style={{ fontFamily: font }}>{t("Espace produit")}</h1>
+              </CenteredContainer>
+
+              <div>
+                <Button icon={<PaperClipOutlined />}></Button>
+              </div>
+            </CenteredContainer>
+          }
           text={t("product_manager")}
           maxLength={MAX_LENGTH}
           children={<ProductManager />}
@@ -242,7 +268,9 @@ const onChangeCheckBoxHandler = (e, token, target, d) => {
     case 1:
       myTarget = "updateVisibilityModalReadMoreDeliveryBoy";
       break;
-
+    case 2:
+      myTarget = "updateVisibilityModalReadMoreProducts";
+      break;
     default:
       break;
   }

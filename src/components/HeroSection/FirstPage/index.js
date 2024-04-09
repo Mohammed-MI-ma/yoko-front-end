@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import useFontFamily from "../../../utils/useFontFamily";
 import { HeroActionButton } from "../PHILIPSPage";
 
-const MarketPage = ({ language, t }) => {
+const FirstPage = ({ language, t }) => {
   const { i18n } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const HeaderHeroMemoized = React.memo(() => (
@@ -70,4 +70,4 @@ const MarketPage = ({ language, t }) => {
   );
 };
 
-export default MarketPage;
+export default FirstPage;
