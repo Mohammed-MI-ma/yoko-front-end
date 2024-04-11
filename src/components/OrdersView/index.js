@@ -1,31 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import CenteredContainer from "../CenteredContainer";
-import { bucket, bucketMobile } from "../../images";
+import { bucket } from "../../images";
 import { useTranslation } from "react-i18next";
-import useFontFamily from "../../utils/useFontFamily";
-import {
-  Avatar,
-  ConfigProvider,
-  DatePicker,
-  Divider,
-  Input,
-  Segmented,
-  Space,
-  Switch,
-  Table,
-  Tabs,
-  Tag,
-  Timeline,
-} from "antd";
-import { FaCar } from "react-icons/fa";
-import { RiBikeLine } from "react-icons/ri";
-import { FaMotorcycle } from "react-icons/fa";
-import { FaTruckPickup } from "react-icons/fa";
-import dayjs from "dayjs";
-import { Radio } from "antd";
+import { ConfigProvider, Space, Table, Tabs, Tag } from "antd";
 
 const OrdersView = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const scrollableContainerRef = useRef(null);
   useEffect(() => {
     // Scroll the container to the top when the component mounts
@@ -33,7 +13,6 @@ const OrdersView = () => {
       scrollableContainerRef.current.scrollTop = 0;
     }
   }, []);
-  const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const data = [
     {
       key: "1",

@@ -12,7 +12,7 @@ export const searchDeliveryBoyMeiliSearch = createAsyncThunk(
     };
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/application/delivery-boy/search?query=${query}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy/search?query=${query}`,
         config
       );
 

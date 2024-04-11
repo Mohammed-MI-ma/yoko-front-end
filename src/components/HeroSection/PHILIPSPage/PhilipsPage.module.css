@@ -61,6 +61,9 @@
   .mainContainer {
     justify-content: flex-start;
   }
+  .smallScreenHeight {
+    height: 100%;
+  }
 }
 
 /* Extra large devices (992px to 1199px) */
@@ -69,6 +72,9 @@
   .mainContainer {
     justify-content: center;
   }
+  .smallScreenHeight {
+    height: 100%;
+  }
 }
 
 /* Extra extra large devices (1200px and above) */
@@ -76,5 +82,8 @@
   /* Your styles here */
   .mainContainer {
     justify-content: center;
+  }
+  .smallScreenHeight {
+    height: 100%;
   }
 }

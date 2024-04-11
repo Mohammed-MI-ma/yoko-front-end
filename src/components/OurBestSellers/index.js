@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { useTranslation } from "react-i18next";
 
-import useResponsiveState from "../../utils/useResponsiveState";
+import useDirection from "../../utils/useDirection";
 
 import ProductCardWithDescriptionFooter from "../ProductCardWithDescriptionFooter";
 
@@ -20,43 +20,36 @@ import {
 
 const OurBestSellers = () => {
   const { t, i18n } = useTranslation();
-  const responsiveState = useResponsiveState();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
-
-  const language = useSelector((state) => state.application.language);
-
-  const sectionStyle = {
-    dir: language === "ar" ? "rtl" : "ltr",
-    fontFamily: fontFamilyBold,
-    fontSize: responsiveState.fixedFontSize,
-    textTransform: "uppercase",
-    color: "var(--color-secondary)",
-    marginBottom: "1.4375rem",
-  };
+  const direction = useDirection(i18n.language);
 
   return (
-    <section
-      className={`w-full flex flex-col items-center `}
-      style={{
-        maxWidth: "75rem",
-        marginBottom: `calc(78px + (${responsiveState.fixedHeight} / 3))`,
-      }}
-    >
+    <section className={`w-full`} style={{ marginBottom: "5rem" }}>
       <div>
-        <h1 style={sectionStyle}>{t("Our best sellers")}</h1>
-        <div
-          className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center ${style.grid}`}
-        >
-          {[1, 2, 3, 4].map((id) => (
-            <ProductCardWithDescriptionFooter
-              key={id}
-              fixedWidth={responsiveState.fixedWidth}
-              fixedHeight={responsiveState.fixedHeight}
-              highDefinitionImgUrl={getImageHighQualitySrc(id)}
-              backgroundImageUrl={getImageLowQualitySrc(id)}
-              descriptionContent={getImageAlt(id)}
-            />
-          ))}
+        <div className={style.container}>
+          <div
+            style={{ maxWidth: "62.5rem" }}
+            className={`bg-cover h-full relative w-full `}
+          >
+            <h1
+              className={`${style.headerStyle} `}
+              style={{ direction: direction, fontFamily: fontFamilyBold }}
+            >
+              <h1>{t("Our best sellers")}</h1>
+            </h1>
+            <div
+              className={`grid grid-cols-2 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 items-center ${style.grid}`}
+            >
+              {[1, 2, 3, 4].map((id) => (
+                <ProductCardWithDescriptionFooter
+                  key={id}
+                  highDefinitionImgUrl={getImageHighQualitySrc(id)}
+                  backgroundImageUrl={getImageLowQualitySrc(id)}
+                  descriptionContent={getImageAlt(id)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

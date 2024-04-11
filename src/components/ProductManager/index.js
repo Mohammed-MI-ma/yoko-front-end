@@ -1,28 +1,68 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, ConfigProvider, List, Popconfirm, Space, Tabs } from "antd";
+import { Button, ConfigProvider, List, Tabs, Avatar } from "antd";
 import ProductSearchEngine from "../ProductSearchEngine";
 import CenteredContainer from "../CenteredContainer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PlusOutlined } from "@ant-design/icons";
 import useFontFamily from "../../utils/useFontFamily";
 import style from "./ProductManager.module.css";
+import { searchProductMeiliSearch } from "../../reducers/applicationService/product/productActions";
+import ProductEditionDrawer from "../ProductEditionDrawer";
+import ProductAddDrawer from "../ProductAddDrawer";
 
 const ProductManager = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
+  const [searchTerm, setSearchTerm] = useState("");
   const handleClearSearch = () => {
-    setSearchTerm(""); // Reset the search term
+    setSearchTerm("");
   };
+  const { data } = useSelector((state) => state.product.products);
+
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
-  const scrollableContainerRef = useRef(null);
   const isAllowedToAddNewProduct = useSelector(
-    (state) => state.delivery.isAllowedToAddNewProduct
+    (state) => state.product.isAllowedToAddNewProduct
   );
-  const { data } = useSelector((state) => state.product.products);
+
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+  const [childrenDrawerNewProduct, setChildrenDrawerNewProduct] =
+    useState(false);
+  const closeDrawerEDitFunction = () => {
+    setChildrenDrawer(false);
+  };
+  const onChildrenDrawerClose = () => {
+    window.history.replaceState(null, "", `/yoko/account/dashboard`);
+
+    setChildrenDrawer(false);
+  };
+  const closeDrawerFunction = () => {
+    setChildrenDrawerNewProduct(false);
+  };
+  const showChildrenDrawerNewProduct = (e) => {
+    window.history.replaceState(
+      null,
+      "",
+      `/yoko/account/dashboard/addProduct/`
+    );
+    setChildrenDrawerNewProduct(true);
+  };
+  const onChildrenDrawerNewProductClose = () => {
+    window.history.replaceState(null, "", `/yoko/account/dashboard`);
+    setChildrenDrawerNewProduct(false);
+  };
+  const searchProduct = useCallback(() => {
+    dispatch(searchProductMeiliSearch({ query: "", t }));
+  }, [dispatch, t]);
+
+  useEffect(() => {
+    searchProduct();
+  }, [searchProduct]);
+
   const items = [
     {
       key: "1",
@@ -48,20 +88,20 @@ const ProductManager = () => {
             }}
             itemLayout="vertical"
             dataSource={data}
-            renderItem={(item) => (
+            renderItem={(item, index) => (
               <List.Item>
                 <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
+                    />
+                  }
                   title={
                     <h1 style={{ fontFamily: fontFamilyBold }}>
-                      {item?.firstName}&nbsp;
-                      {item?.lastName}
+                      {item?.brand}&nbsp;
                     </h1>
                   }
-                  description={
-                    <>
-                      {item?.email}, {item?.phone},
-                    </>
-                  }
+                  description={<>{item?.name}</>}
                 />
               </List.Item>
             )}
@@ -70,12 +110,6 @@ const ProductManager = () => {
       ),
     },
   ];
-  useEffect(() => {
-    // Scroll the container to the top when the component mounts
-    if (scrollableContainerRef.current) {
-      scrollableContainerRef.current.scrollTop = 0;
-    }
-  }, []);
 
   return (
     <ConfigProvider
@@ -96,9 +130,9 @@ const ProductManager = () => {
             {isAllowedToAddNewProduct && data?.length === 0 ? (
               <Button
                 onClick={() => {
-                  //  showChildrenDrawerNewProduct();
+                  showChildrenDrawerNewProduct();
                   handleClearSearch();
-                  // dispatch(searchDeliveryBoyMeiliSearch({ query: "", t }));
+                  dispatch(searchProductMeiliSearch({ query: "", t }));
                 }}
                 type="primary"
                 shape="circle"
@@ -136,6 +170,19 @@ const ProductManager = () => {
           <Tabs defaultActiveKey={1} items={items} />
         </div>
       </div>
+      <ProductEditionDrawer
+        title={t("Modify product Information")}
+        open={childrenDrawer}
+        onClose={onChildrenDrawerClose}
+        closeDrawerFunction={closeDrawerEDitFunction}
+      />
+
+      <ProductAddDrawer
+        title={t("Add new product Information")}
+        open={childrenDrawerNewProduct}
+        onClose={onChildrenDrawerNewProductClose}
+        closeDrawerFunction={closeDrawerFunction}
+      />
     </ConfigProvider>
   );
 };

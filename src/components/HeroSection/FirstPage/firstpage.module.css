@@ -1,70 +1,8 @@
-.basketAr {
+.bucketImage {
+  width: 70% !important;
 }
-.smallScreens {
-  display: none;
-}
-.largeScreens {
-  display: flex;
-}
-.smallScreenHeight {
-  height: 50%;
-}
+
 .mainContainer {
-  justify-content: center;
-}
-/* Mobile devices (up to 388px) */
-@media only screen and (max-width: 388px) {
-  .smallScreens {
-    display: flex;
-  }
-  .largeScreens {
-    display: none;
-  }
-  .smallScreenHeight {
-    height: 50%;
-  }
-  .mainContainer {
-    justify-content: flex-start;
-  }
-}
-
-/* Small devices (389px to 575px) */
-@media only screen and (min-width: 389px) and (max-width: 575px) {
-  .smallScreens {
-    display: flex;
-  }
-  .largeScreens {
-    display: none;
-  }
-  .mainContainer {
-    justify-content: flex-start;
-  }
-}
-
-/* Medium devices (576px to 767px) */
-@media only screen and (min-width: 576px) and (max-width: 770px) {
-  .smallScreens {
-    display: flex;
-  }
-  .largeScreens {
-    display: none;
-  }
-  .mainContainer {
-    justify-content: flex-start;
-  }
-}
-
-/* Large devices (768px to 991px) */
-@media only screen and (min-width: 771px) and (max-width: 991px) {
-  /* Your styles here */
-}
-
-/* Extra large devices (992px to 1199px) */
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-  /* Your styles here */
-}
-
-/* Extra extra large devices (1200px and above) */
-@media only screen and (min-width: 1200px) {
-  /* Your styles here */
+  justify-content: flex-start;
+  height: 50%;
 }

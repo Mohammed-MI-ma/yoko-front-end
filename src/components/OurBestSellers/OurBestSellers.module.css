@@ -1,24 +1,36 @@
+.container {
+  margin: 0;
+  height: calc(100vh - 100px);
+  color: #fff;
+  text-align: center;
+}
+.headerStyle {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 700;
+  margin-bottom: 1.4375rem;
+}
 .grid {
-  margin: 0 auto;
-  gap: 1rem;
+  /*grid*/
 }
 @media only screen and (max-width: 388px) {
   .grid {
-    gap: 12rem;
+    row-gap: 1.5rem;
   }
 }
 
 /* Small devices (389px to 575px) */
 @media only screen and (min-width: 389px) and (max-width: 575px) {
   .grid {
-    gap: 12rem;
+    row-gap: 2.5rem;
   }
 }
 
 /* Medium devices (576px to 767px) */
 @media only screen and (min-width: 576px) and (max-width: 770px) {
   .grid {
-    grid-row-gap: 88px;
+    row-gap: 2.5rem;
   }
 }
 
@@ -34,5 +46,7 @@
 @media only screen and (min-width: 1200px) {
   .container {
     max-height: 500px;
+    display: flex;
+    justify-content: center;
   }
 }

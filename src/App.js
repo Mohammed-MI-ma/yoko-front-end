@@ -1,18 +1,13 @@
-//__REACT
 import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
-
-//__REACT-DOM
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-
-//__REACT_REDUX
 import { useDispatch, useSelector } from "react-redux";
-
-//__ANTD
 import { ConfigProvider, Spin, FloatButton } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
+
 import frFR from "antd/lib/locale/fr_FR";
 import arEG from "antd/lib/locale/ar_EG";
 
-//__CONFIG
 import { loadFonts, loadImages } from "./services/functions/functions";
 import {
   ImageConfigsDelivery,
@@ -20,59 +15,50 @@ import {
   ImageConfigsHome,
   ImageConfigsLogin,
 } from "./config.dev";
+
 import { FontsConfig } from "./fontsConfig";
 
-//__STYLING
-import style from "./App.module.css";
-
-//__COMPONENTS && LAZY COMPONENTS
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
 import Footer from "./components/Footer";
-import { LoadingOutlined } from "@ant-design/icons";
+
 import { fetchContactInfo } from "./actions/contactActions";
 import { Rue_high, Rue_low } from "./images";
 import LoginPage from "./pages/LoginPage";
-import OurPartners from "./components/OurPartners";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import { setDrawerOpenSettings } from "./reducers/applicationService/applicationSlice";
-import { useTranslation } from "react-i18next";
 import DashboardPage from "./pages/DashboardPage";
 import MarketPage from "./pages/MarketPage";
+import SettingsAdminDrawer from "./components/SettingsAdminDrawer";
+
+import style from "./App.module.css";
+import { ROLE } from "./utils/roles";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFoodPage"));
 const YOKOEatPage = lazy(() => import("./pages/YOKOEatPage"));
 const DeliveryBoyPage = lazy(() => import("./pages/DeliveryBoyPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
-// Lazily load the component responsible for starting the simulation modal
-const SettingsAdminDrawer = lazy(() =>
-  import("./components/SettingsAdminDrawer")
-);
 function App() {
-  // Initializing state for tracking the loading status of necessary assets
   const [appIsReady, setAppIsReady] = useState(false);
-  const d = useDispatch();
-  // Retrieve the state indicating whether the Menu Drawer is open or closed
+  const location = useLocation();
   const { t } = useTranslation();
-  // Retrieve the currently selected language from the application state
+
+  const d = useDispatch();
+
   const language = useSelector((state) => state.application.language);
   const isLoggedIn = useSelector((state) => state.application.isLoggedIn);
-
   const openSettings = useSelector(
     (state) => state.application.drawerOpenSettings
   );
 
   const [loading, setLoading] = useState(true);
-  // Inside your component:
-  const location = useLocation();
-
-  // Initialize locale state as null
   const [locale, setLocale] = useState(null);
+
   const onClose = () => {
     d(setDrawerOpenSettings(false));
   };
-  // useEffect hook to fetch fonts and images, then update loading state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,8 +95,12 @@ function App() {
 
     fetchData();
   }, [isLoggedIn, location.pathname]);
-  // useEffect hook to fetch contact info only once on component mount
 
+  useEffect(() => {
+    setLocale(language === "ar" ? arEG : frFR);
+  }, [language]);
+
+  //CONTACT_API
   const dispatchFetchContactInfo = useCallback(() => {
     d(fetchContactInfo());
   }, [d]);
@@ -118,10 +108,6 @@ function App() {
   useEffect(() => {
     dispatchFetchContactInfo();
   }, [dispatchFetchContactInfo]);
-  // Update locale whenever language changes
-  useEffect(() => {
-    setLocale(language === "ar" ? arEG : frFR);
-  }, [language]);
 
   if (!appIsReady) {
     return <Loader isLoading={loading} />;
@@ -132,9 +118,9 @@ function App() {
       locale={locale}
       theme={{
         components: {
-          Button: { defaultHoverColor: "var(--color-secondary)" },
+          Button: { defaultHoverColor: "#1d3034" },
           Carousel: {
-            colorBgContainer: "var(--color-primary)",
+            colorBgContainer: "#65b44a",
           },
         },
       }}
@@ -180,7 +166,7 @@ function App() {
                 <TraditionalFoodPage language={language} />
               </Suspense>
             }
-          />{" "}
+          />
           <Route
             path={`/web/guest/eat`}
             element={
@@ -290,41 +276,43 @@ function App() {
                 <DashboardPage />
               ) : (
                 <Navigate to="/" replace />
-              ) // Redirect unauthorized users to the home page
+              )
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense
+                fallback={
+                  <Spin
+                    spinning
+                    fullscreen
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 24 }} spin />
+                    }
+                  />
+                }
+              >
+                <NotFoundPage />
+              </Suspense>
             }
           />
         </Routes>
         <FloatButton.BackTop visibilityHeight={0} />
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 0,
-            top: 0,
-            opacity: "0",
-            transform: "scale(0.1)",
-          }}
-        >
-          <OurPartners vierge />
-        </div>
         <Footer language={language} />
-        <Suspense fallback={<div>Loading...</div>}>
-          {openSettings && (
-            <SettingsAdminDrawer
-              openSettings={openSettings}
-              onClose={onClose}
-              t={t}
-            />
-          )}
-        </Suspense>
+        <SettingsAdminDrawer
+          openSettings={openSettings}
+          onClose={onClose}
+          t={t}
+        />
       </div>
     </ConfigProvider>
   );
 }
 
 export default App;
+
 const isAdminAuthenticated = () => {
-  // Implement your authentication logic here
-  // For example, check if the user is logged in and is an admin
   const user = JSON.parse(localStorage.getItem("userData"));
-  return user && user.role === "admin"; // Assuming role is stored in the user object
+  return user && user.role === ROLE.admin;
 };

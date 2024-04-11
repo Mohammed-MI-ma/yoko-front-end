@@ -11,6 +11,7 @@ import { searchProductMeiliSearch } from "../../reducers/applicationService/prod
 import useFontFamily from "../../utils/useFontFamily";
 import style from "./ProductSearchEngine.module.css";
 import { setIsAllowedToAddNewDeliveryBoy } from "../../reducers/applicationService/delivery/deliverySlice";
+import { setIsAllowedToAddNewProduct } from "../../reducers/applicationService/product/productSlice";
 
 const ProductSearchEngine = ({ searchTerm, setSearchTerm }) => {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ const ProductSearchEngine = ({ searchTerm, setSearchTerm }) => {
     // Vérifie si searchTerm est vide
     if (searchTerm === "") {
       // Dispatchez votre action ici lorsque searchTerm est vide
-      dispatch(setIsAllowedToAddNewDeliveryBoy(false));
+      dispatch(setIsAllowedToAddNewProduct(false));
     } else {
-      dispatch(setIsAllowedToAddNewDeliveryBoy(true));
+      dispatch(setIsAllowedToAddNewProduct(true));
     }
   }, [dispatch, searchTerm]); // searchTerm est une dépendance de l'effet useEffect
 

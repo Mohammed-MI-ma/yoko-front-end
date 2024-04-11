@@ -1,3 +1,46 @@
-.container {
-  /* Add your container styles here */
+.mainCard {
+  background-size: cover;
+  width: 12.5rem;
+  height: 12.5rem;
+  position: relative;
+  background-position: center;
+  border: 0.015625rem solid var(--color-primary);
+  background-repeat: no-repeat;
+}
+
+.mainCard > div {
+  background-color: var(--color-primary);
+  color: white;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+  height: 4.375rem;
+}
+
+@media only screen and (max-width: 388px) {
+  .mainCard {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
+/* Small devices (389px to 575px) */
+@media only screen and (min-width: 389px) and (max-width: 575px) {
+}
+
+/* Medium devices (576px to 767px) */
+@media only screen and (min-width: 576px) and (max-width: 770px) {
+}
+
+/* Large devices (768px to 991px) */
+@media only screen and (min-width: 771px) and (max-width: 991px) {
+}
+
+/* Extra large devices (992px to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+}
+
+/* Extra extra large devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
 }

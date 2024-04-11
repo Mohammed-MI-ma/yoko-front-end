@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
-
 import { useSelector } from "react-redux";
-
 import { useTranslation } from "react-i18next";
-
 import { motion } from "framer-motion";
 
 import useFontFamily from "../../utils/useFontFamily";
 import useResponsiveState from "../../utils/useResponsiveState";
-
-import style from "./ImageCardWithDescriptionFooter.module.css";
 import CenteredContainer from "../CenteredContainer";
 
+import style from "./ImageCardWithDescriptionFooter.module.css";
+
 const ImageCardWithDescriptionFooter = ({
-  fixedWidth,
   highDefinitionImgUrl,
-  fixedHeight,
   backgroundImageUrl,
   descriptionContent,
   action,
@@ -103,33 +97,9 @@ const ImageCardWithDescriptionFooter = ({
   }, [isVisible, imageLoaded, highDefinitionImgUrl, backgroundImageUrl]);
 
   const containerStyles = {
-    width: fixedWidth || "100%", // Use fixed width or full width if not provided
-    height: fixedHeight || "auto", // Use fixed height or auto height if not provided
-
     backgroundImage: `url(${imageUrl})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    position: "relative",
-    borderTopLeftRadius: responsiveState.fixedBorderRadius,
-    borderTopRightRadius: responsiveState.fixedBorderRadius,
-    border: ".25px solid var(--color-primary)",
   };
 
-  const descriptionStyles = {
-    position: "absolute",
-    bottom: 0,
-    height: `calc(${responsiveState.fixedHeight} / 3)`,
-    width: "100%",
-    backgroundColor: "var(--color-primary)", // Example background color
-    color: "white", // Example text color
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    transform: "translateY(100%)",
-    borderBottomLeftRadius: responsiveState.fixedBorderRadius,
-    borderBottomRightRadius: responsiveState.fixedBorderRadius,
-  };
   const paragraphStyles = {
     fontFamily: language === "fr" ? "Neue_Power-fr" : fontFamilyBold,
     fontSize: responsiveState.fixedFontSize,
@@ -138,14 +108,14 @@ const ImageCardWithDescriptionFooter = ({
     <HoverableDiv id={divId}>
       <Link to={`/${action}`}>
         <CenteredContainer
-          className={`${style.container}`}
+          className={`${style.mainCard} shadow-lg`}
           style={containerStyles}
         >
-          <div style={descriptionStyles}>
+          <CenteredContainer>
             <p style={paragraphStyles}>
               {descriptionContent || "Description Content"}
             </p>
-          </div>
+          </CenteredContainer>
         </CenteredContainer>
       </Link>
     </HoverableDiv>

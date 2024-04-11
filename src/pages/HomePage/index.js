@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import HeroSection from "../../components/HeroSection";
 import OurPartners from "../../components/OurPartners";
 import OurBestSellers from "../../components/OurBestSellers";
@@ -10,9 +12,9 @@ import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import ProductOfTheWeek from "../../components/ProductOfTheWeek";
 
-const HomePage = ({ language }) => {
-  // Retrieve the translation function from the useTranslation hook
+const HomePage = () => {
   const { t } = useTranslation();
+  const language = useSelector((state) => state.application.language);
 
   return (
     <>
@@ -22,27 +24,32 @@ const HomePage = ({ language }) => {
         <meta charSet="UTF-8" />
         <meta
           name="description"
-          content="Calculate your eligibility for social care programs based on socio-economic declarations with the RSU Calculator. Get accurate scores and guidance for accessing social welfare benefits. Free and easy-to-use."
+          content="Discover Yoko, a revolutionary platform developed by Morocco Innovation Hub Company. Yoko offers a comprehensive suite of services tailored for businesses in Morocco, including food delivery, marketplace solutions, and more. Experience the convenience of Yoko as it transforms the way you engage with local businesses and services in Morocco."
         />
+
         <meta name="keywords" content="Keywords related to your content" />
-        <meta name="author" content="Morocco Innovation Hub" />
+        <meta name="author" content="Morocco Innovation Hub Company" />
+        <meta name="developer" content="Mohammed Aboutalha" />
+        <meta name="creator" content="Mohammed Aboutalha" />
+        <meta name="publisher" content="Morocco Innovation Hub Company" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content={t("home")} />
+        <meta property="og:description" content={t("og_description")} />
         <meta
-          property="og:description"
-          content="Description of your website/page"
+          property="og:url"
+          content="https://www.moroccoinnovationhub.org/web/guest/acceuil"
         />
-        <meta property="og:url" content="URL of the page" />
         <meta property="og:image" content="URL of the image" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        {/* Add other meta tags as needed */}
       </Helmet>
+
       <section style={{ flex: "1 1 auto" }}>
         <section id={"main-content"} className="flex items-center flex-col">
           <HeroSection />
-          <OurPartners vierge={false} />
+          <OurPartners />
           <OurBestSellers />
           <ProductOfTheWeek />
         </section>

@@ -2,8 +2,6 @@ import React from "react";
 
 import { bucketMobile } from "../../../images";
 
-import { Image } from "antd";
-
 import style from "./firstpage.module.css";
 
 import SocialMediaButtons from "../../SocialMedia";
@@ -25,7 +23,7 @@ const FirstPage = ({ language, t }) => {
         style={{
           maxWidth: "21.25rem",
           textAlign: "center",
-          fontSize: "1.875rem",
+          fontSize: "1.5rem",
         }}
       >
         {t("ForYou")}
@@ -57,14 +55,13 @@ const FirstPage = ({ language, t }) => {
         <HeroActionButtonMemoized />
         <SocialMediaButtons color={"var(--color-primary)"} />
       </main>
-      <CenteredContainer
-        className={` lg:w-1/2 p-4 sm:m-10  ${style.smallScreenHeight} ${
-          language === "ar" ? style.basketAr : null
-        }`}
-      >
-        <div>
-          <Image src={bucketMobile} preview={false} width={"60%"} />
-        </div>
+      <CenteredContainer>
+        <img
+          src={bucketMobile}
+          preview={false}
+          className={style.bucketImage}
+          alt={"bucket filled with vegetables"}
+        />
       </CenteredContainer>
     </HeroContainer>
   );

@@ -198,9 +198,9 @@ const MarketPage = () => {
               }}
             >
               <Layout style={layoutStyle}>
-                <Sider width="20%" style={siderStyle}>
+                {/*  <Sider width="20%" style={siderStyle}>
                   <Collapse items={items} defaultActiveKey={["1"]} />
-                </Sider>
+            </Sider>*/}
                 <Layout>
                   <Header style={headerStyle}>
                     <DeliveryBoySearchEngine></DeliveryBoySearchEngine>

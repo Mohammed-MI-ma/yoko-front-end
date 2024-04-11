@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
+
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+
 import { Carousel, ConfigProvider } from "antd";
 
 import FirstPage from "./FirstPage";
@@ -13,13 +15,9 @@ const HeroSection = () => {
   const language = useSelector((state) => state.application.language);
   const { t } = useTranslation();
 
-  // Memoize the pages array creation
   const memoizedPages = useMemo(() => {
     try {
-      // Ensure language and t are available
       if (!language || !t) return [];
-
-      // Return the array of page components
       return [
         {
           id: "firstPage",
@@ -38,14 +36,14 @@ const HeroSection = () => {
       console.error("Error occurred while memoizing pages:", error);
       return [];
     }
-  }, [language, t]); // Update memoization when language or t changes
+  }, [language, t]);
 
   return (
     <ConfigProvider
       theme={{
         components: {
           Carousel: {
-            dotHeight: 16,
+            dotHeight: 8,
           },
         },
       }}

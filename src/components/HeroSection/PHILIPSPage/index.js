@@ -1,22 +1,29 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { airfryer, philips } from "../../../images";
 
 import { Button, Image } from "antd";
 
-import style from "./PhilipsPage.module.css";
-
 import HeroContainer from "../HeroContainer";
 import HeaderHero from "../HeaderHero";
-
 import CenteredContainer from "../../CenteredContainer";
-import { useTranslation } from "react-i18next";
 import useFontFamily from "../../../utils/useFontFamily";
 import SocialMediaButtons from "../../SocialMedia";
+
+//Local asset
 import motifBackground from "../../../assets/images/motifBackground.png";
-const PhilipsPage = ({ language }) => {
+
+//Styling
+import style from "./PhilipsPage.module.css";
+
+const PhilipsPage = () => {
+  const language = useSelector((state) => state.application.language);
   const { i18n, t } = useTranslation();
+
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
+
   return (
     <HeroContainer
       language={language}
@@ -27,9 +34,11 @@ const PhilipsPage = ({ language }) => {
         className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer} ${style.smallScreenHeight}`}
       >
         <Image src={philips} preview={false} width={190} />
+
         <HeaderHero color={"var(--color-secondary)"}>
-          {t("Meilleures offres")}
+          {t("SpecialOffers")}
         </HeaderHero>
+
         <HeroActionButton
           myStyle={{
             background: "var(--color-secondary)",
@@ -39,8 +48,10 @@ const PhilipsPage = ({ language }) => {
         >
           {t("Discover")}
         </HeroActionButton>
+
         <SocialMediaButtons color={"var(--color-secondary)"} />
       </main>
+
       <CenteredContainer
         style={{
           backgroundImage: `url(${motifBackground})`,
@@ -69,13 +80,10 @@ export const HeroActionButton = ({ children, myStyle, action }) => {
       className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3"
       style={{
         ...myStyle,
-        // background: "var(--color-secondary)",
-        //fontFamily: font,
-        fontSize: "var(--font-large-size)",
+        fontSize: "var(--font-medium-size)",
         height: "auto",
         width: "fit-content",
         border: "none",
-        // color: "var(--color-accent)",
       }}
     >
       {children}

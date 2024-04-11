@@ -1,6 +1,7 @@
 import React from "react";
 
 import { cerave, ceraveLogo_low } from "../../../images";
+import { useSelector } from "react-redux";
 
 import { Image } from "antd";
 
@@ -15,11 +16,13 @@ import useFontFamily from "../../../utils/useFontFamily";
 import SocialMediaButtons from "../../SocialMedia";
 import { HeroActionButton } from "../PHILIPSPage";
 
-const CeravePage = ({ language }) => {
+const CeravePage = () => {
+  const language = useSelector((state) => state.application.language);
+
   const { i18n, t } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const HeaderHeroMemoized = React.memo(() => (
-    <HeaderHero color={"var(--color-accent)"}>
+    <HeaderHero color={"var(--color-secondary)"}>
       {t("Meilleures offres")}
     </HeaderHero>
   ));
@@ -35,32 +38,25 @@ const CeravePage = ({ language }) => {
     </HeroActionButton>
   ));
   return (
-    <HeroContainer language={language} bgColor={"#84f75d"} isGlow={false}>
+    <HeroContainer
+      language={language}
+      bgColor={"rgb(134 255 93)"}
+      isGlow={false}
+    >
       <main
-        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer} ${style.smallScreenHeight}`}
+        className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer}`}
       >
-        <Image src={ceraveLogo_low} preview={false} width={190} />
+        <Image src={ceraveLogo_low} preview={false} width={180} />
         <HeaderHeroMemoized />
         <HeroActionButtonMemoized />
         <SocialMediaButtons color={"var(--color-secondary)"} />
       </main>
-      <CenteredContainer
-        style={{
-          backgroundRepeat: "round",
-          backgroundPositionXx: "center",
-        }}
-        className={`lg:w-1/2  ${style.smallScreenHeight}`}
-      >
-        <div
-          className={`${style.largeScreens}  ${
-            language === "ar" ? style.basketAr : null
-          }`}
-        >
-          <Image src={cerave} preview={false} width={"60%"} />
-        </div>
-        <CenteredContainer className={style.smallScreens}>
-          <Image src={cerave} preview={false} width={"90%"} />
-        </CenteredContainer>
+      <CenteredContainer>
+        <img
+          src={cerave}
+          className={style.ceraveImage}
+          alt="Cerave skincare product"
+        />
       </CenteredContainer>
     </HeroContainer>
   );

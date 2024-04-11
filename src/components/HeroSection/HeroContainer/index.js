@@ -9,11 +9,12 @@ const HeroContainer = ({ bgColor, language, children, isGlow }) => {
 
   return (
     <div
-      className={`bg-cover h-full relative flex flex-col-reverse lg:flex-row items-center w-full ${flexDirectionClass}`}
+      className={`bg-cover h-full relative shadow-lg flex flex-col-reverse lg:flex-row items-center w-full ${flexDirectionClass}`}
       style={{
         backgroundImage: isGlow ? `url(${glow})` : "none",
         backgroundColor: bgColor,
         color: "var(--color-accent)",
+        maxWidth: "62.5rem",
       }}
     >
       {children}

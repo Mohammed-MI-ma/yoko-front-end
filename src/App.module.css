@@ -1,8 +1,8 @@
 .bgHeader {
-  min-height: 100px;
+  min-height: 6.25rem;
 }
 .wrapper {
-  max-width: 1400px;
+  max-width: 87.5rem;
   width: 100%;
   margin: 0 auto;
   position: relative;

@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Space, Tooltip } from "antd";
 import { useTranslation } from "react-i18next";
+
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+
 import useFontFamily from "../../utils/useFontFamily";
 
 const SocialMediaButton = ({ color, icon, tooltip }) => {
@@ -9,6 +11,7 @@ const SocialMediaButton = ({ color, icon, tooltip }) => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
   const title = t(tooltip);
+
   return (
     <Tooltip title={<p style={{ fontFamily: fontFamilyLight }}>{title}</p>}>
       <Button
@@ -22,7 +25,7 @@ const SocialMediaButton = ({ color, icon, tooltip }) => {
   );
 };
 
-const SocialMediaButtons = ({ color, size = "large" }) => {
+const SocialMediaButtons = ({ color, size = "default" }) => {
   return (
     <Space>
       <SocialMediaButton
