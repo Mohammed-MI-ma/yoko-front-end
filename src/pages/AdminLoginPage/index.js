@@ -60,19 +60,6 @@ const AdminLoginPage = ({ fixedHeight }) => {
     setIsValidEmail(validator.isEmail(value));
   };
 
-  //__STYLING
-  const containerStyles = {
-    backgroundPosition: "top",
-    backgroundSize: "cover",
-    borderBottom: "0px",
-    width: dynamicWidth,
-    height: fixedHeight || "auto",
-    position: "relative",
-    backgroundColor: "white",
-    minHeight: "75vh",
-    margin: "0 auto",
-  };
-
   //__AXIOS
   const searchEmailInDatabase = async () => {
     try {
@@ -178,154 +165,154 @@ const AdminLoginPage = ({ fixedHeight }) => {
           }
         });
     }
-  }, [dispatch, otp]);
+  }, [dispatch, otp, t]);
 
   return (
-    <div
-      className={`flex flex-col ${style.containerExtend}`}
-      style={containerStyles}
-    >
-      <div
-        className={`grid grid-cols-1 md:grid-cols-2 w-full flex-grow ${style.gridExtend}`}
-        dir={direction}
-      >
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#65b44a",
-              borderRadius: 10,
-              fontSize: 10,
-              colorBorder: "#65b44a",
-            },
-            components: {
-              Button: {
-                defaultActiveBorderColor: "var(--color-primary)",
-              },
-            },
-          }}
-        >
-          <CenteredContainer className="text-center gap-2 flex-col">
-            <h1 style={{ fontSize: "2rem", fontFamily: fontFamilyBold }}>
-              {t("welcome")} {t("Admin")}
-            </h1>
-            <p
-              style={{
-                fontFamily: fontFamilylight,
-              }}
-            >
-              {t("emailAddress")}
-            </p>
-            <Input
-              value={email}
-              onChange={handleEmailChange}
-              size="large"
-              placeholder={t("adresse électronique")}
-              style={{
-                fontFamily: fontFamilylight,
-              }}
-            />
-            <Button
-              disabled={!isValidEmail} // Disable the button if email is invalid
-              ghost={!isValidEmail}
-              className="w-full"
-              size="large"
-              style={{
-                background: "var(--color-primary)",
-                fontFamily: fontFamilyBold,
-                color: "white",
-              }}
-              onClick={searchEmailInDatabase} // Call searchEmailInDatabase function on button click
-            >
-              {t("continue")}
-            </Button>
+    <section className={`w-full`}>
+      <div>
+        <div className={style.container}>
+          <div style={{ maxWidth: "62.5rem", display: "flex" }}>
+            <div className={`flex flex-col`}>
+              <div
+                className={`grid grid-cols-1 md:grid-cols-2 w-full flex-grow ${style.grid}`}
+                dir={direction}
+              >
+                <ConfigProvider
+                  theme={{
+                    token: {
+                      colorPrimary: "#65b44a",
+                      borderRadius: 10,
+                      fontSize: 10,
+                      colorBorder: "#65b44a",
+                    },
+                    components: {
+                      Button: {
+                        defaultActiveBorderColor: "var(--color-primary)",
+                      },
+                    },
+                  }}
+                >
+                  <CenteredContainer className="text-center gap-2 flex-col">
+                    <h1
+                      style={{ fontSize: "2rem", fontFamily: fontFamilyBold }}
+                    >
+                      {t("welcome")} {t("Admin")}
+                    </h1>
+                    <p
+                      style={{
+                        fontFamily: fontFamilylight,
+                      }}
+                    >
+                      {t("emailAddress")}
+                    </p>
+                    <Input
+                      value={email}
+                      onChange={handleEmailChange}
+                      size="large"
+                      placeholder={t("adresse électronique")}
+                      style={{
+                        fontFamily: fontFamilylight,
+                      }}
+                    />
+                    <Button
+                      disabled={!isValidEmail} // Disable the button if email is invalid
+                      ghost={!isValidEmail}
+                      className="w-full"
+                      size="large"
+                      style={{
+                        background: "var(--color-primary)",
+                        fontFamily: fontFamilyBold,
+                        color: "white",
+                      }}
+                      onClick={searchEmailInDatabase} // Call searchEmailInDatabase function on button click
+                    >
+                      {t("continue")}
+                    </Button>
 
-            <p
-              style={{
-                fontSize: "var(--font-extra-small-size)",
-                fontFamily: fontFamilylight,
-              }}
-            >
-              Authentication en deux étapes: Protégez votre compte avec une
-              double vérification de sécurité.
-            </p>
-          </CenteredContainer>
-        </ConfigProvider>
-
-        <CenteredContainer>
-          <div
-            id="rect"
-            className="flex justify-center p-10 items-start flex-col h-40 w-full relative"
-            style={{
-              background: "var(--color-secondary)",
-              borderRadius: "1.875rem",
-              gap: "var(--spacing-small)",
-            }}
-          >
-            <img src={LogoB} style={{ width: " 50% " }} alt={t("logoText")} />
-            <p style={{ fontSize: "8px", color: "var(--color-primary)" }}>
-              STAY COMFORTABLE
-            </p>
-            <img
-              width={350}
-              src={Bike_low}
-              style={{
-                position: "absolute",
-                top: 0,
-                transform: "translate(15%,-30%)",
-                objectFit:
-                  "contain" /* or object-fit: cover; depending on your needs */,
-              }}
-              alt={t("logoText")}
-            />
+                    <p
+                      style={{
+                        fontSize: "var(--font-extra-small-size)",
+                        fontFamily: fontFamilylight,
+                      }}
+                    >
+                      Authentication en deux étapes: Protégez votre compte avec
+                      une double vérification de sécurité.
+                    </p>
+                  </CenteredContainer>
+                </ConfigProvider>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div
+                    className={`flex justify-center relative p-10 items-start flex-col h-40 w-full ${style.rect}`}
+                  >
+                    <img
+                      src={LogoB}
+                      style={{ width: " 50% " }}
+                      alt={t("logoText")}
+                    />
+                    <p
+                      style={{ fontSize: "8px", color: "var(--color-primary)" }}
+                    >
+                      STAY COMFORTABLE
+                    </p>
+                    <img
+                      width={350}
+                      src={Bike_low}
+                      className={style.bike}
+                      alt={t("bike")}
+                    />
+                  </div>
+                </div>
+                <Modal
+                  open={modalOpen}
+                  centered
+                  footer={null}
+                  closable
+                  onCancel={closeModal}
+                >
+                  <Space direction="vertical" size="middle">
+                    <h1
+                      style={{
+                        fontFamily: fontFamilyBold,
+                        fontWeight: "700",
+                        fontSize: "2rem",
+                      }}
+                    >
+                      Saisissez le code
+                    </h1>
+                    <p>
+                      Saisissez le code à 4 chiffres que nous avons envoyé à
+                      votre adresse électronique <b>{email}</b>
+                    </p>
+                    <OtpInput
+                      value={otp}
+                      inputType="number"
+                      inputStyle={{
+                        width: 62,
+                        height: 62,
+                        fontFamily: fontFamilyBold,
+                        fontSize: "2rem",
+                        border: "2px solid var(--color-primary)",
+                        borderRadius: "15px",
+                      }}
+                      onChange={setOtp}
+                      numInputs={4}
+                      renderSeparator={<span>&nbsp;</span>}
+                      renderInput={(props) => <input {...props} />}
+                    />
+                    <CenteredContainer
+                      style={{ gap: "1rem", justifyContent: "start" }}
+                    >
+                      <p>Toujours rien? Renvoyer le code dans une minute</p>{" "}
+                      {/* <Countdown value={deadline} format="mm:ss" />*/}
+                    </CenteredContainer>
+                  </Space>
+                </Modal>
+              </div>
+            </div>
           </div>
-          <Modal
-            open={modalOpen}
-            centered
-            footer={null}
-            closable
-            onCancel={closeModal}
-          >
-            <Space direction="vertical" size="middle">
-              <h1
-                style={{
-                  fontFamily: fontFamilyBold,
-                  fontWeight: "700",
-                  fontSize: "2rem",
-                }}
-              >
-                Saisissez le code
-              </h1>
-              <p>
-                Saisissez le code à 4 chiffres que nous avons envoyé à votre
-                adresse électronique <b>{email}</b>
-              </p>
-              <OtpInput
-                value={otp}
-                inputType="number"
-                inputStyle={{
-                  width: 45,
-                  height: 45,
-                  fontFamily: fontFamilyBold,
-                  fontSize: "2rem",
-                  border: "2px solid var(--color-primary)",
-                  borderRadius: "15px",
-                }}
-                onChange={setOtp}
-                numInputs={6}
-                renderSeparator={<span>&nbsp;</span>}
-                renderInput={(props) => <input {...props} />}
-              />
-              <CenteredContainer
-                style={{ gap: "1rem", justifyContent: "start" }}
-              >
-                <p>Toujours rien? Renvoyer le code dans une minute</p>{" "}
-                {/* <Countdown value={deadline} format="mm:ss" />*/}
-              </CenteredContainer>
-            </Space>
-          </Modal>
-        </CenteredContainer>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

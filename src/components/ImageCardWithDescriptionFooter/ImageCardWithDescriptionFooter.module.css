@@ -27,10 +27,18 @@
 
 /* Small devices (389px to 575px) */
 @media only screen and (min-width: 389px) and (max-width: 575px) {
+  .mainCard {
+    width: 10rem;
+    height: 10rem;
+  }
 }
 
 /* Medium devices (576px to 767px) */
 @media only screen and (min-width: 576px) and (max-width: 770px) {
+  .mainCard {
+    width: 12rem;
+    height: 12rem;
+  }
 }
 
 /* Large devices (768px to 991px) */

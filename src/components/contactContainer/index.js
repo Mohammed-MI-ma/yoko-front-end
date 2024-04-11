@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { IoMdMail } from "react-icons/io";
 import { useSelector } from "react-redux";
 import useDirection from "../../utils/useDirection";
+import useFontFamily from "../../utils/useFontFamily";
 
 const ContactContainer = () => {
   const [errorDisplayed, setErrorDisplayed] = useState(false);
@@ -13,7 +14,7 @@ const ContactContainer = () => {
   const contactInfo = useSelector((state) => state.contact.contactInfo);
   const loading = useSelector((state) => state.contact.loading);
   const error = useSelector((state) => state.contact.error);
-
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
   useEffect(() => {
     if (error && !errorDisplayed) {
       setErrorDisplayed(true);
@@ -42,7 +43,7 @@ const ContactContainer = () => {
       {loading ? (
         <Skeleton.Input active size="small" />
       ) : error || errorDisplayed ? (
-        <small>
+        <small style={{ fontFamily: fontFamilyLight }}>
           <i>{t("Réessayer")}</i>
         </small>
       ) : (

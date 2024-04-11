@@ -1,5 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 .pageFooter {
-  margin-top: 15rem;
   background: var(--color-secondary);
 }
 .grid {

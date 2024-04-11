@@ -114,7 +114,7 @@
   "no": "لا",
   "Delete deliveryBoy": "حذف السائق نهائيًا",
   "confirmDeleteDeliveryBoy": "هل أنت متأكد أنك تريد حذف هذا السائق بشكل دائم؟",
-
+  "adresse électronique": "بريدك الإلكتروني",
   "Add new Delivery Information": "إضافة سائق جديد",
   "fileAttenteActualise": "تم تحديث قائمة الانتظار"
 }

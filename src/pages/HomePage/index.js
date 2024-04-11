@@ -50,8 +50,8 @@ const HomePage = () => {
         <section id={"main-content"} className="flex items-center flex-col">
           <HeroSection />
           <OurPartners />
-          <OurBestSellers />
-          <ProductOfTheWeek />
+          {/* <OurBestSellers />
+          <ProductOfTheWeek />*/}
         </section>
       </section>
     </>

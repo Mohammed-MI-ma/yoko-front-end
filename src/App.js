@@ -299,7 +299,7 @@ function App() {
           />
         </Routes>
         <FloatButton.BackTop visibilityHeight={0} />
-        <Footer language={language} />
+        {<Footer language={language} />}
         <SettingsAdminDrawer
           openSettings={openSettings}
           onClose={onClose}

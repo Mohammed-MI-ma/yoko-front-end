@@ -1,7 +1,8 @@
 //__React
 import React, { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Dropdown, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { DownOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import useResponsiveState from "../../utils/useResponsiveState";
@@ -14,7 +15,7 @@ import {
 //31kb
 import { LogoB } from "../../images";
 
-import { ConfigProvider, Select } from "antd";
+import { ConfigProvider } from "antd";
 
 import FooterItem from "../FooterItem";
 import SocialMediaButtons from "../SocialMedia";
@@ -32,48 +33,60 @@ import { CustomDivider } from "../../pages/DashboardPage";
 
 //_styling
 import style from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 const RIGHT = "right";
 const LEFT = "left";
 const AR = "ar";
 
-const Footer = ({ language }) => {
+const Footer = () => {
+  const language = useSelector((state) => state.application.language);
   const { t, i18n } = useTranslation();
-  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const responsiveState = useResponsiveState();
-
+  const items = [
+    {
+      key: "1",
+      label: <p style={{ fontFamily: fontFamilyLight }}>{t("french")}</p>,
+    },
+    {
+      key: "2",
+      label: <p style={{ fontFamily: fontFamilyLight }}>{t("arabic")}</p>,
+    },
+  ];
   const direction = useDirection(i18n.language);
 
   const handleChange = (value) => {
     switch (value) {
-      case "Francais":
+      case "fr":
         changeLanguage("fr");
         break;
-      case "Arabe":
+      case "ar":
         changeLanguage("ar");
-        break;
-      case "Anglais":
-        changeLanguage("en");
         break;
       default:
         changeLanguage("fr");
         break;
     }
   };
-
+  const onClick = ({ key }) => {
+    switch (key) {
+      case "1":
+        changeLanguage("fr");
+        break;
+      case "2":
+        changeLanguage("ar");
+        break;
+      default:
+        changeLanguage("fr");
+        break;
+    }
+  };
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     dispatch(setLanguage(lng));
     dispatch(setSiteDirection(direction));
-    if (lng === "ar") {
-      navigate(window.location.pathname.replace(/^\/(fr|en)/, "/ar"));
-    } else {
-      navigate(window.location.pathname.replace(/^\/(ar|en)/, "/fr"));
-    }
   };
   // Memoize the pages array creation
   const memoizedContactUsBloc = useMemo(() => {
@@ -100,11 +113,11 @@ const Footer = ({ language }) => {
       return [
         {
           id: "YOKO Eat",
-          component: <>{t("YOKO Eat")}</>,
+          component: <Link to="/web/guest/eat">{t("YOKO Eat")}</Link>,
         },
         {
           id: "YOKO Market",
-          component: <> {t("YOKO Market")}</>,
+          component: <Link to="/web/guest/market"> {t("YOKO Market")}</Link>,
         },
         {
           id: "Dilevery Boy",
@@ -152,34 +165,29 @@ const Footer = ({ language }) => {
               <SocialMediaButtons color={"white"} />
             </div>
             <div>
-              <Select
-                onChange={handleChange}
-                placement="bottomLeft"
-                defaultValue="Francais"
-                style={{
-                  width: 146,
-                  height: 47,
-                  fontFamily: fontFamilyBold,
+              <Dropdown
+                menu={{
+                  items,
+                  onClick,
                 }}
-                options={[
-                  {
-                    value: "Francais",
-                    label: (
-                      <p style={{ fontFamily: fontFamilyBold }}>
-                        {t("french")}
-                      </p>
-                    ),
-                  },
-                  {
-                    value: "Arabe",
-                    label: (
-                      <p style={{ fontFamily: fontFamilyBold }}>
-                        {t("arabic")}
-                      </p>
-                    ),
-                  },
-                ]}
-              />
+                onChange={handleChange}
+              >
+                <Space
+                  dir={direction}
+                  style={{
+                    fontFamily: fontFamilyLight,
+                    color: "white",
+                    border: "1px solid white",
+                    padding: "15px",
+                    width: 146,
+                    height: 47,
+                    borderRadius: "10px",
+                  }}
+                >
+                  {language === AR ? t("arabic") : t("french")}
+                  <DownOutlined />
+                </Space>
+              </Dropdown>
             </div>
           </div>
         );
@@ -213,33 +221,39 @@ const Footer = ({ language }) => {
       }}
     >
       <footer
-        className={`w-full flex flex-col items-center ${style.pageFooter}`}
+        className={`w-full `}
+        style={{ background: "var(--color-secondary)" }}
       >
-        <div
-          className="flex flex-col items-center"
-          style={{
-            width: dynamicWidth,
-            fontFamily: fontFamilyBold,
-          }}
-        >
-          <div
-            className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 ${style.grid}`}
-          >
-            <img src={LogoB} alt="Company Logo" />
+        <div>
+          <div className={style.container}>
+            <div
+              style={{
+                maxWidth: "62.5rem",
+              }}
+              className={`bg-cover h-full relative w-full flex items-center flex-col`}
+            >
+              <div
+                className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 ${style.grid}`}
+              >
+                <div className="w-full" dir={direction}>
+                  <img src={LogoB} alt="YOKO Company Logo" width={"130px"} />
+                </div>
 
-            {[2, 3, 4].map((id) => (
-              <FooterItem
-                fixedWidth={responsiveState.fixedWidth}
-                fixedHeight={responsiveState.fixedHeight}
-                header={getHeader(id, t)}
-                descriptionContent={getContent(id)}
-                key={id}
-                language={language}
-              />
-            ))}
+                {[2, 3, 4].map((id) => (
+                  <FooterItem
+                    fixedWidth={responsiveState.fixedWidth}
+                    fixedHeight={responsiveState.fixedHeight}
+                    header={getHeader(id, t)}
+                    descriptionContent={getContent(id)}
+                    key={id}
+                    language={language}
+                  />
+                ))}
+              </div>
+              <CustomDivider width={"20.8rem"} height={"3px"} />
+              <CopyrightRNA />
+            </div>
           </div>
-          <CustomDivider width={"20.8rem"} height={"3px"} />
-          <CopyrightRNA />
         </div>
       </footer>
     </ConfigProvider>

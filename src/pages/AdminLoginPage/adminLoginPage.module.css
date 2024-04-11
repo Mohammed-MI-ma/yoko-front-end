@@ -1,60 +1,79 @@
-.containerExtend {
-  /* Your styles here */
-  margin-bottom: 0px;
-  margin-top: 0px;
+.container {
+  padding: 20px;
+  height: calc(100vh - 100px);
+  text-align: center;
 }
-.gridExtend {
-  gap: 1rem;
-  overflow: hidden;
+
+.rect {
+  background: var(--color-secondary);
+  border-radius: 1.875rem;
+  gap: var(--spacing-small);
+  direction: initial;
 }
-/* Mobile devices (up to 388px) */
+.rect .bike {
+  position: absolute;
+  transform: translate(50%, 10%);
+}
+.grid {
+  column-gap: 1rem;
+}
 @media only screen and (max-width: 388px) {
-  .containerExtend {
-    /* Your styles here */
-    margin-bottom: 20vh !important;
-    margin-top: 10vh !important;
+  .grid {
+    row-gap: 1rem;
   }
-  .gridExtend {
-    gap: 5rem;
+  .rect {
+    overflow: "hidden";
+  }
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
+  }
+  .rect {
+    overflow: hidden;
   }
 }
 
 /* Small devices (389px to 575px) */
 @media only screen and (min-width: 389px) and (max-width: 575px) {
-  .containerExtend {
-    /* Your styles here */
-    margin-bottom: 20vh !important;
-    margin-top: 10vh !important;
+  .grid {
+    row-gap: 2.5rem;
   }
-  .gridExtend {
-    gap: 5rem;
+  .rect {
+    overflow: "hidden";
+  }
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
+  }
+  .rect {
+    overflow: hidden;
   }
 }
 
 /* Medium devices (576px to 767px) */
-@media only screen and (min-width: 576px) and (max-width: 767px) {
-  /* Your styles here */
-  .containerExtend {
-    /* Your styles here */
-    margin-bottom: 20vh !important;
-    margin-top: 10vh !important;
+@media only screen and (min-width: 576px) and (max-width: 770px) {
+  .grid {
+    row-gap: 2.5rem;
   }
-  .gridExtend {
-    gap: 5rem;
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
   }
 }
 
 /* Large devices (768px to 991px) */
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* Your styles here */
+@media only screen and (min-width: 771px) and (max-width: 991px) {
 }
 
 /* Extra large devices (992px to 1199px) */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  /* Your styles here */
 }
 
 /* Extra extra large devices (1200px and above) */
 @media only screen and (min-width: 1200px) {
-  /* Your styles here */
+  .container {
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+  }
 }
