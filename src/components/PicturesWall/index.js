@@ -1,4 +1,4 @@
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Image, Upload, message } from "antd";
 import { useTranslation } from "react-i18next";
@@ -11,49 +11,13 @@ const getBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
-const PicturesWall = () => {
+const PicturesWall = ({ handleVariantChange, index }) => {
   const { t, i18n } = useTranslation();
   const [previewOpen, setPreviewOpen] = useState(false);
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const [previewImage, setPreviewImage] = useState("");
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file);
-    });
-    setUploading(true);
-    // You can use any AJAX library you like
-    fetch("https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setFileList([]);
-        message.success("upload successfully.");
-      })
-      .catch(() => {
-        message.error("upload failed.");
-      })
-      .finally(() => {
-        setUploading(false);
-      });
-  };
-  const props = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-      return false;
-    },
-    fileList,
-  };
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -62,8 +26,11 @@ const PicturesWall = () => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
-
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  useEffect(() => {
+    console.log(fileList);
+    handleVariantChangeHandler();
+  }, [fileList]);
 
   const uploadButton = (
     <button
@@ -72,28 +39,48 @@ const PicturesWall = () => {
         background: "none",
       }}
       type="button"
-      onClick={handleUpload}
     >
       <PlusOutlined />
       <div
         style={{
           marginTop: 8,
-          fontFamily: fontFamilyLight,
         }}
       >
-        {t("Upload")}
+        Upload
       </div>
     </button>
   );
-
+  const handleVariantChangeHandler = () => {
+    handleVariantChange(index, "images", fileList);
+  };
+  const onRemove = (file) => {
+    const index = fileList.indexOf(file);
+    const newFileList = fileList.slice();
+    console.log("qsdqsds", file.name);
+    newFileList.splice(index, 1);
+    setFileList(newFileList);
+  };
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt300Kb = file.size / 1024 < 300;
+    if (!isLt300Kb) {
+      message.error("Image must be smaller than 300KB!");
+    }
+    return isJpgOrPng && isLt300Kb;
+  };
   return (
     <>
       <Upload
+        action={`${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/upload`}
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
+        beforeUpload={beforeUpload}
         onChange={handleChange}
-        {...props}
+        onRemove={onRemove}
       >
         {fileList.length >= 3 ? null : uploadButton}
       </Upload>
@@ -105,7 +92,7 @@ const PicturesWall = () => {
           preview={{
             visible: previewOpen,
             onVisibleChange: (visible) => setPreviewOpen(visible),
-            afterOpenChange: (visible) => !visible && setPreviewImage(""),
+            afterClose: () => setPreviewImage(""),
           }}
           src={previewImage}
         />

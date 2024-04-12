@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { useTranslation } from "react-i18next";
 
-const BASE_URL = "http://localhost:5000/api/auth";
+const BASE_URL = process.env.REACT_APP_BASE_API_URI_DEV + "api/auth";
 
 export const sendOTP = createAsyncThunk(
   "auth/sendOTP",

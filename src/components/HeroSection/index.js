@@ -22,14 +22,17 @@ const HeroSection = () => {
         {
           id: "firstPage",
           component: <FirstPage language={language} t={t} />,
+          color: "var(--color-secondary)",
         },
         {
           id: "ceravePage",
           component: <CeravePage language={language} t={t} />,
+          color: "rgb(134 255 93)",
         },
         {
           id: "philipsPage",
           component: <PhilipsPage language={language} t={t} />,
+          color: "white",
         },
       ];
     } catch (error) {
@@ -49,9 +52,11 @@ const HeroSection = () => {
       }}
     >
       <section className="w-full" style={{ marginBottom: "5rem" }}>
-        <Carousel infinite autoplay>
+        <Carousel>
           {memoizedPages.map((page) => (
-            <CarouselPage key={page.id}>{page.component}</CarouselPage>
+            <CarouselPage key={page.id} color={page.color}>
+              {page.component}
+            </CarouselPage>
           ))}
         </Carousel>
       </section>
@@ -59,10 +64,15 @@ const HeroSection = () => {
   );
 };
 
-const CarouselPage = ({ children }) => {
+const CarouselPage = ({ children, color }) => {
   return (
     <div>
-      <div className={styles.container}>{children}</div>
+      <div
+        className={`shadow-lg ${styles.container}`}
+        style={{ backgroundColor: color }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

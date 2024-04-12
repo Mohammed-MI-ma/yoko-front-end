@@ -24,6 +24,7 @@ import AnimatesIcon from "../../components/AnimatesIcon";
 import CenteredContainer from "../../components/CenteredContainer";
 import useDirection from "../../utils/useDirection";
 import { setCredentials } from "../../reducers/authService/authSlice";
+
 const MAX_LENGTH = 100;
 const DashboardPage = () => {
   const { t, i18n } = useTranslation();
@@ -35,14 +36,10 @@ const DashboardPage = () => {
 
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
-  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  const containerStyles = {
-    width: dynamicWidth,
-    margin: "0 auto",
-  };
+
   return (
     <>
-      <BreadCrumb language={language}>
+      <BreadCrumb>
         <h1
           style={{
             fontSize: "2rem",
@@ -65,62 +62,67 @@ const DashboardPage = () => {
         </h1>
       </BreadCrumb>
 
-      <div className={`flex flex-col`} style={containerStyles}>
-        <div className="w-full h-full flex flex-grow justify-center items-center flex-col">
-          <div
-            style={{
-              display: "flex",
-              fontSize: "30px",
-              flexDirection: "column",
-              height: "max-content",
-              alignItems: "center",
-              fontFamily: fontFamilyLight,
-            }}
-          >
-            <h1
-              style={{
-                fontSize: "2.5rem",
-                fontFamily: fontFamilyBold,
-                textAlign: "center",
-              }}
-            >
-              {t("Commencez avec une Action Rapide")}
-            </h1>
-            <p
-              style={{
-                fontSize: "var(--font-medium-size)",
-                fontFamily: fontFamilyLight,
-              }}
-            >
-              {t("discoverSelection")}
-            </p>
-            <CustomDivider width={"6rem"} height={"5px"} />
-            <div
-              className="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 items-center mt-5 gap-5"
-              style={{ margin: "0 auto" }}
-            >
-              {[1, 2, 3, 4].map((id) => (
-                <Card
-                  title={getTitle(id, t, fontFamilyLight)}
-                  dir={direction}
-                  bordered
-                  key={id}
-                  className="shadow-lg"
+      <section className={`w-full mt-20 mb-20`}>
+        <div>
+          <CenteredContainer>
+            <div style={{ maxWidth: "62.5rem" }}>
+              <div className="w-full h-full flex flex-grow justify-center items-center flex-col">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                 >
-                  {getDescription(
-                    id,
-                    t,
-                    preferences,
-                    fontFamilyBold,
-                    accessToken,
-                    d
-                  )}
-                </Card>
-              ))}
+                  <h1
+                    style={{
+                      fontSize: "2.5rem",
+                      fontFamily: fontFamilyBold,
+                      textAlign: "center",
+                      maxWidth: "500px",
+                    }}
+                  >
+                    {t("Commencez avec une Action Rapide")}
+                  </h1>
+                  <p
+                    style={{
+                      fontSize: "var(--font-medium-size)",
+                      fontFamily: fontFamilyLight,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("discoverSelection")}
+                  </p>
+                  <CustomDivider width={"6rem"} height={"5px"} />
+                  <div
+                    className="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 items-center mt-5 gap-5"
+                    style={{ margin: "0 auto" }}
+                  >
+                    {[1, 2, 3, 4].map((id) => (
+                      <Card
+                        title={getTitle(id, t, fontFamilyLight)}
+                        dir={direction}
+                        bordered
+                        key={id}
+                        className="shadow-lg"
+                      >
+                        {getDescription(
+                          id,
+                          t,
+                          preferences,
+                          fontFamilyBold,
+                          accessToken,
+                          d
+                        )}
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </CenteredContainer>
         </div>
-      </div>
+      </section>
     </>
   );
 };
@@ -281,7 +283,7 @@ const onChangeCheckBoxHandler = (e, token, target, d) => {
   let config = {
     method: "put",
     maxBodyLength: Infinity,
-    url: `http://localhost:5000/api/auth/preferences/${myTarget}`,
+    url: `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/preferences/${myTarget}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

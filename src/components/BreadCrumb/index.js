@@ -1,38 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-
+import useDirection from "../../utils/useDirection";
+import { useTranslation } from "react-i18next";
+import style from "./BreadCrumb.module.css";
+import CenteredContainer from "../CenteredContainer";
 const BreadCrumb = ({ children }) => {
-  const language = useSelector((state) => state.application.language);
-  const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 3);
+  const { i18n } = useTranslation();
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+  const language = useSelector((state) => state.application.language);
+  const direction = useDirection(i18n.language);
+
   const pageFooterStyle = {
     backgroundColor: "var(--color-secondary)",
   };
   return (
-    <div
-      style={{
-        ...pageFooterStyle,
-        direction: language === "ar" ? "rtl" : "ltr",
-      }}
-      className={`w-full flex flex-col items-center`}
-    >
-      <div
-        className="flex flex-col items-start justify-center"
-        style={{
-          width: dynamicWidth,
-          height: 107,
-          direction: language === "ar" ? "rtl" : "ltr",
-        }}
-      >
-        {children}
+    <section className={`w-full`} dir={direction} style={pageFooterStyle}>
+      <div>
+        <CenteredContainer className={style.container}>
+          <div
+            style={{ maxWidth: "62.5rem" }}
+            className={`bg-cover h-full relative w-full `}
+          >
+            <div
+              className="flex flex-col items-start justify-center"
+              style={{
+                height: 107,
+                direction: language === "ar" ? "rtl" : "ltr",
+              }}
+            >
+              {children}
+            </div>
+          </div>
+        </CenteredContainer>
       </div>
-    </div>
+    </section>
   );
 };
 

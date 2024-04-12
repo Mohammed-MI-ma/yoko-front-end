@@ -40,7 +40,7 @@ import { sendOTP } from "../../reducers/authService/authActions";
 
 import style from "./loginPage.module.css";
 
-const LoginPage = ({ fixedHeight }) => {
+const LoginPage = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ const LoginPage = ({ fixedHeight }) => {
   const searchEmailInDatabase = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/auth/findUserByEmail`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
         { email, role: "user" }
       );
       if (response.status === 200) {
@@ -119,7 +119,7 @@ const LoginPage = ({ fixedHeight }) => {
     if (otp.length === 4) {
       dispatch(setUserLoginPending());
       axios
-        .post("http://localhost:5000/api/auth/verifyCode", {
+        .post(`${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/verifyCode`, {
           code: otp,
         })
         .then((response) => {
@@ -151,174 +151,184 @@ const LoginPage = ({ fixedHeight }) => {
   }, [dispatch, otp, t]);
 
   return (
-    <section className={`w-full`}>
-      <div>
-        <div className={style.container}>
-          <div
-            style={{ maxWidth: "62.5rem" }}
-            className={`bg-cover h-full relative w-full `}
-          >
-            <div className={`flex flex-col ${style.containerExtend}`}>
-              <div
-                className={`grid grid-cols-1 md:grid-cols-2 w-full flex-grow ${style.grid}`}
-                dir={direction}
-              >
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorPrimary: "#65b44a",
-                      borderRadius: 10,
-                      fontSize: 10,
-                      colorBorder: "#65b44a",
-                    },
-                    components: {
-                      Button: {
-                        defaultActiveBorderColor: "var(--color-primary)",
-                      },
-                    },
-                  }}
+    <>
+      <section className={`w-full`}>
+        <div>
+          <div className={style.container}>
+            <div
+              style={{ maxWidth: "62.5rem" }}
+              className={`bg-cover h-full relative w-full `}
+            >
+              <div className={`flex flex-col ${style.containerExtend}`}>
+                <div
+                  className={`grid grid-cols-1 md:grid-cols-2 w-full flex-grow ${style.grid}`}
+                  dir={direction}
                 >
-                  <CenteredContainer className="text-center gap-2 flex-col">
-                    <h1
-                      style={{ fontSize: "2rem", fontFamily: fontFamilyBold }}
-                    >
-                      {t("welcome")}
-                    </h1>
-                    <p
-                      style={{
-                        fontFamily: fontFamilylight,
-                      }}
-                    >
-                      {t("emailAddress")}
-                    </p>
-                    <Input
-                      value={email}
-                      onChange={handleEmailChange}
-                      size="large"
-                      dir={direction}
-                      placeholder={t("adresse électronique")}
-                      style={{
-                        fontFamily: fontFamilylight,
-                      }}
-                    />
-                    <Button
-                      disabled={!isValidEmail}
-                      ghost={!isValidEmail}
-                      className="w-full"
-                      size="large"
-                      style={{
-                        background: "var(--color-primary)",
-                        fontFamily: fontFamilyBold,
-                        color: "white",
-                      }}
-                      onClick={searchEmailInDatabase} // Call searchEmailInDatabase function on button click
-                    >
-                      {t("continue")}
-                    </Button>
-                    <Divider
-                      style={{
-                        fontFamily: fontFamilylight,
-                        fontSize: "0.75rem",
-                      }}
-                    >
-                      {t("orWith")}
-                    </Divider>
-                    <ButtonWithStyles
-                      icon={<FaGoogle />}
-                      style={{ fontFamily: fontFamilylight, fontWeight: "700" }}
-                    >
-                      {t("signInWithGoogle")}
-                    </ButtonWithStyles>
-                    <ButtonWithStyles
-                      icon={<FaFacebookF />}
-                      style={{ fontFamily: fontFamilylight, fontWeight: "700" }}
-                    >
-                      {t("signInWithFacebook")}
-                    </ButtonWithStyles>
-                    <p
-                      style={{
-                        fontSize: "var(--font-extra-small-size)",
-                        fontFamily: fontFamilylight,
-                      }}
-                    >
-                      {t("termsAndPrivacy")}
-                    </p>
-                  </CenteredContainer>
-                </ConfigProvider>
-
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <div
-                    className={`flex justify-center relative p-10 items-start flex-col h-40 w-full ${style.rect}`}
+                  <ConfigProvider
+                    theme={{
+                      token: {
+                        colorPrimary: "#65b44a",
+                        borderRadius: 10,
+                        fontSize: 10,
+                        colorBorder: "#65b44a",
+                      },
+                      components: {
+                        Button: {
+                          defaultActiveBorderColor: "var(--color-primary)",
+                        },
+                      },
+                    }}
                   >
-                    <img
-                      src={LogoB}
-                      style={{ width: " 50% " }}
-                      alt={t("logoText")}
-                    />
-                    <p
-                      style={{ fontSize: "8px", color: "var(--color-primary)" }}
+                    <CenteredContainer className="text-center gap-2 flex-col">
+                      <h1
+                        style={{ fontSize: "2rem", fontFamily: fontFamilyBold }}
+                      >
+                        {t("welcome")}
+                      </h1>
+                      <p
+                        style={{
+                          fontFamily: fontFamilylight,
+                        }}
+                      >
+                        {t("emailAddress")}
+                      </p>
+                      <Input
+                        value={email}
+                        onChange={handleEmailChange}
+                        size="large"
+                        dir={direction}
+                        placeholder={t("adresse électronique")}
+                        style={{
+                          fontFamily: fontFamilylight,
+                        }}
+                      />
+                      <Button
+                        disabled={!isValidEmail}
+                        ghost={!isValidEmail}
+                        className="w-full"
+                        size="large"
+                        style={{
+                          background: "var(--color-primary)",
+                          fontFamily: fontFamilyBold,
+                          color: "white",
+                        }}
+                        onClick={searchEmailInDatabase} // Call searchEmailInDatabase function on button click
+                      >
+                        {t("continue")}
+                      </Button>
+                      <Divider
+                        style={{
+                          fontFamily: fontFamilylight,
+                          fontSize: "0.75rem",
+                        }}
+                      >
+                        {t("orWith")}
+                      </Divider>
+                      <ButtonWithStyles
+                        icon={<FaGoogle />}
+                        style={{
+                          fontFamily: fontFamilylight,
+                          fontWeight: "700",
+                        }}
+                      >
+                        {t("signInWithGoogle")}
+                      </ButtonWithStyles>
+                      <ButtonWithStyles
+                        icon={<FaFacebookF />}
+                        style={{
+                          fontFamily: fontFamilylight,
+                          fontWeight: "700",
+                        }}
+                      >
+                        {t("signInWithFacebook")}
+                      </ButtonWithStyles>
+                      <p
+                        style={{
+                          fontSize: "var(--font-extra-small-size)",
+                          fontFamily: fontFamilylight,
+                        }}
+                      >
+                        {t("termsAndPrivacy")}
+                      </p>
+                    </CenteredContainer>
+                  </ConfigProvider>
+
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      className={`flex justify-center relative p-10 items-start flex-col h-40 w-full ${style.rect}`}
                     >
-                      STAY COMFORTABLE
-                    </p>
-                    <img
-                      width={350}
-                      src={Bike_low}
-                      className={style.bike}
-                      alt={t("bike")}
-                    />
+                      <img
+                        src={LogoB}
+                        style={{ width: " 50% " }}
+                        alt={t("logoText")}
+                      />
+                      <p
+                        style={{
+                          fontSize: "8px",
+                          color: "var(--color-primary)",
+                        }}
+                      >
+                        STAY COMFORTABLE
+                      </p>
+                      <img
+                        width={350}
+                        src={Bike_low}
+                        className={style.bike}
+                        alt={t("bike")}
+                      />
+                    </div>
                   </div>
                 </div>
-                <Modal
-                  open={modalOpen}
-                  centered
-                  footer={null}
-                  closable
-                  onCancel={closeModal}
-                >
-                  <Space direction="vertical" size="middle">
-                    <h1
-                      style={{
-                        fontFamily: fontFamilyBold,
-                        fontWeight: "700",
-                        fontSize: "2rem",
-                      }}
-                    >
-                      Saisissez le code
-                    </h1>
-                    <p>
-                      Saisissez le code à 4 chiffres que nous avons envoyé à
-                      votre adresse électronique <b>{email}</b>
-                    </p>
-                    <OtpInput
-                      value={otp}
-                      inputType="number"
-                      inputStyle={{
-                        width: 62,
-                        height: 62,
-                        fontFamily: fontFamilyBold,
-                        fontSize: "2rem",
-                        border: "2px solid var(--color-primary)",
-                        borderRadius: "15px",
-                      }}
-                      onChange={setOtp}
-                      numInputs={4}
-                      renderSeparator={<span>&nbsp;</span>}
-                      renderInput={(props) => <input {...props} />}
-                    />
-                    <CenteredContainer
-                      style={{ gap: "1rem", justifyContent: "start" }}
-                    >
-                      <p>Toujours rien? Renvoyer le code dans une minute</p>{" "}
-                      {/* <Countdown value={deadline} format="mm:ss" />*/}
-                    </CenteredContainer>
-                  </Space>
-                </Modal>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/**Modal OTP LOGIN 4 DIGIT */}
+      <Modal
+        open={modalOpen}
+        centered
+        footer={null}
+        closable
+        onCancel={closeModal}
+      >
+        <Space direction="vertical" size="middle">
+          <h1
+            style={{
+              fontFamily: fontFamilyBold,
+              fontWeight: "700",
+              fontSize: "2rem",
+            }}
+          >
+            Saisissez le code
+          </h1>
+          <p>
+            Saisissez le code à 4 chiffres que nous avons envoyé à votre adresse
+            électronique <b>{email}</b>
+          </p>
+          <OtpInput
+            value={otp}
+            inputType="number"
+            inputStyle={{
+              width: 62,
+              height: 62,
+              fontFamily: fontFamilyBold,
+              fontSize: "2rem",
+              border: "2px solid var(--color-primary)",
+              borderRadius: "15px",
+            }}
+            onChange={setOtp}
+            numInputs={4}
+            renderSeparator={<span>&nbsp;</span>}
+            renderInput={(props) => <input {...props} />}
+          />
+          <CenteredContainer style={{ gap: "1rem", justifyContent: "start" }}>
+            <p>Toujours rien? Renvoyer le code dans une minute</p>{" "}
+            {/* <Countdown value={deadline} format="mm:ss" />*/}
+          </CenteredContainer>
+        </Space>
+      </Modal>
+    </>
   );
 };
 

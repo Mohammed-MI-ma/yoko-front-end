@@ -7,15 +7,15 @@ import AnimatesIcon from "../AnimatesIcon";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { addDeliveryBoy } from "../../reducers/applicationService/delivery/deliveryActions";
+import { addProduct } from "../../reducers/applicationService/product/productActions";
 
 const ProductAddDrawer = ({ title, open, onClose, closeDrawerFunction }) => {
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
-  const onSave = ({ deliveryBoyData }) => {
-    dispatch(addDeliveryBoy({ deliveryBoyData }));
+  const onSave = ({ productData }) => {
+    dispatch(addProduct({ productData }));
     closeDrawerFunction();
   };
 

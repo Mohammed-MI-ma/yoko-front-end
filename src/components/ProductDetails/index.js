@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { GiClothes } from "react-icons/gi";
 import { MdSoupKitchen } from "react-icons/md";
 import { SiBookstack } from "react-icons/si";
-import { GiLipstick } from "react-icons/gi";
 import { GiHealthNormal } from "react-icons/gi";
 import { MdOutlineSportsGymnastics } from "react-icons/md";
 import { MdToys } from "react-icons/md";
@@ -47,14 +46,12 @@ const ProductDetails = ({ onSave, flag }) => {
     variants: [
       {
         sku: "",
-        size: "",
-        color: "",
+        attributes: {},
         quantity: 0,
         price: 0,
         images: [],
       },
     ],
-    ratings: [],
   });
 
   useEffect(() => {
@@ -70,10 +67,12 @@ const ProductDetails = ({ onSave, flag }) => {
   const options = productOptions.map((option) => ({
     label: getCategories(option.index, t),
     value: option.value,
+    disabled: option.disabled,
   }));
   const optionsExtension = productOptionsExtension.map((option) => ({
     label: getCategories(option.index, t),
     value: option.value,
+    disabled: option.disabled,
   }));
 
   useEffect(() => {
@@ -96,14 +95,12 @@ const ProductDetails = ({ onSave, flag }) => {
       brand: "",
       variants: [
         {
+          attributes: {},
           sku: "",
-          size: "",
-          color: "",
           quantity: 0,
           images: [],
         },
       ],
-      ratings: [],
     });
 
     onSave(
@@ -114,6 +111,7 @@ const ProductDetails = ({ onSave, flag }) => {
               description: product.description,
               category: product.category,
               brand: product.brand,
+              variants: product.variants,
             },
           }
         : {
@@ -123,6 +121,7 @@ const ProductDetails = ({ onSave, flag }) => {
               description: product.description,
               category: product.category,
               brand: product.brand,
+              variants: product.variants,
             },
           }
     );
@@ -178,6 +177,7 @@ const ProductDetails = ({ onSave, flag }) => {
         options={Brands.map((brand) => ({
           value: brand.value,
           label: brand.label,
+          disabled: brand.disabled,
         }))}
       />
       <Label>{t("productName")}</Label>
@@ -209,22 +209,25 @@ const ProductDetails = ({ onSave, flag }) => {
       </Divider>
 
       <Label>{t("choose category")}*</Label>
-      <Segmented
-        name="category"
-        value={product.category}
-        onChange={handleChangeCategory}
-        size="large"
-        options={options}
-      />
-      <Segmented
-        name="category"
-        value={product.category}
-        onChange={handleChangeCategory}
-        size="large"
-        options={optionsExtension}
-      />
+      <div style={{ overflow: "scroll" }}>
+        <Segmented
+          name="category"
+          value={product.category}
+          onChange={handleChangeCategory}
+          size="large"
+          options={options}
+        />
+        <Segmented
+          disabled
+          name="category"
+          value={product.category}
+          onChange={handleChangeCategory}
+          size="large"
+          options={optionsExtension}
+        />
+      </div>
       <ProductsVariants
-        category={"sqdqsd"}
+        category={product.category}
         pushVariantsProduct={pushVariantsProduct}
       />
       <Button

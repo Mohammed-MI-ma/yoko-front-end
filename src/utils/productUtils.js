@@ -1,16 +1,16 @@
 import { Avatar } from "antd";
 
 export const productOptions = [
-  { value: "Clothing", index: 1 },
-  { value: "Kitchen", index: 2 },
-  { value: "Books", index: 3 },
-  { value: "Beauty", index: 4 },
+  { value: "Clothing", index: 1, disabled: true },
+  { value: "Kitchen", index: 2, disabled: false },
+  { value: "Books", index: 3, disabled: true },
+  { value: "Beauty", index: 4, disabled: true },
 ];
 export const productOptionsExtension = [
-  { value: "Electronics", index: 5 },
-  { value: "Decor", index: 6 },
-  { value: "Toys", index: 7 },
-  { value: "Sports", index: 8 },
+  { value: "Electronics", index: 5, disabled: true },
+  { value: "Decor", index: 6, disabled: true },
+  { value: "Toys", index: 7, disabled: true },
+  { value: "Sports", index: 8, disabled: true },
 ];
 
 export const TemplateProduct = ({ text, icon }) => {

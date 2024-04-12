@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Avatar } from "antd";
@@ -19,7 +19,6 @@ const Navbar = () => {
   const { i18n } = useTranslation();
   const languag = useSelector((state) => state.application.language);
   const fontFamilylight = useFontFamily(i18n.language, "normal");
-  const language = useSelector((state) => state.application.language);
 
   return (
     <CenteredContainer className={`w-full flex-col ${style.mainContainer}`}>

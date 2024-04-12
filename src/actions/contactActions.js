@@ -12,7 +12,7 @@ export const fetchContactInfo = () => async (dispatch) => {
     dispatch(setLoading(true)); // Set loading state to true
 
     const response = await axios.get(
-      "http://localhost:5000/api/application/contact-application/"
+      `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/contact-application/`
     );
     const contactInfo = response.data;
 

@@ -17,7 +17,7 @@ export const searchDeliveryBoyMeiliSearch = createAsyncThunk(
       );
 
       if (response.status === 200) {
-        message.success(t("fileAttenteActualise"));
+        //  message.success(t("fileAttenteActualise"));
 
         return response.data;
       } else {
@@ -40,7 +40,7 @@ export const addDeliveryBoy = createAsyncThunk(
     };
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/application/delivery-boy`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy`,
         deliveryBoyData,
         config
       );
@@ -70,7 +70,7 @@ export const updateDeliveryBoy = createAsyncThunk(
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/application/delivery-boy/${id}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy/${id}`,
         deliveryBoyData,
         config
       );
@@ -98,7 +98,7 @@ export const deleteDeliveryBoy = createAsyncThunk(
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/application/delivery-boy/${id}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy/${id}`,
         config
       );
       if (response.status === 200) {

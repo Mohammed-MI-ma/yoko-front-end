@@ -58,7 +58,7 @@
   "signInWithFacebook": "Connectez-vous avec Facebook",
   "termsAndPrivacy": "En vous inscrivant, vous acceptez automatiquement nos Conditions d'utilisation, Politique de confidentialité et Politique en matière de cookies.",
   "userFoundSuccess": "L'utilisateur avec l'e-mail inséré a été trouvé avec succès dans notre base de données.",
-  "userNotFound": "L'utilisateur avec l'e-mail inséré n'a pas été trouvé dans notre base de données.",
+  "userNotFound": "L'utilisateur avec l'e-mail inséré n'est pas un utilisateur valide",
   "serverUnreachable": "Serveur inaccessible.",
   "tooManyRequests": "Trop de demandes, veuillez réessayer plus tard.",
   "otpEmailSentSuccess": "E-mail OTP envoyé avec succès",
@@ -141,5 +141,6 @@
   "Health": "Santé",
   "Upload": "Télécharger",
   "home": "Acceuil",
-  "og_description": "This page is the landing page of the Yoko Company Morocco website. It offers visitors the chance to explore all services offered by Yoko Company in Morocco, encompassing food, marketplace, and delivery, with all prices inclusive."
+  "og_description": "This page is the landing page of the Yoko Company Morocco website. It offers visitors the chance to explore all services offered by Yoko Company in Morocco, encompassing food, marketplace, and delivery, with all prices inclusive.",
+  "variantes": "variante(s)"
 }

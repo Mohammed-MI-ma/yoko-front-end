@@ -12,7 +12,7 @@ export const searchProductMeiliSearch = createAsyncThunk(
     };
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/application/product/search?query=${query}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/search?query=${query}`,
         config
       );
 
@@ -31,23 +31,23 @@ export const searchProductMeiliSearch = createAsyncThunk(
   }
 );
 export const addProduct = createAsyncThunk(
-  "delivery/addDeliveryBoy",
-  async (deliveryBoyData, { rejectWithValue }) => {
+  "product/addProduct",
+  async (productData, { rejectWithValue }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
+      const newProductDAta = removeThumbUrl(productData);
       const response = await axios.post(
-        `http://localhost:5000/api/application/delivery-boy`,
-        deliveryBoyData,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product`,
+        { productData: newProductDAta },
         config
       );
 
       if (response.status === 200) {
-        // Handle successful search response
-        console.log("famille", response.status);
+        console.log("product", response.status);
         return response.data;
       } else {
         message.error("unexpectedError");
@@ -70,7 +70,7 @@ export const updateProduct = createAsyncThunk(
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/application/delivery-boy/${id}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy/${id}`,
         deliveryBoyData,
         config
       );
@@ -98,7 +98,7 @@ export const deleteProduct = createAsyncThunk(
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/application/delivery-boy/${id}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/delivery-boy/${id}`,
         config
       );
       if (response.status === 200) {
@@ -114,3 +114,25 @@ export const deleteProduct = createAsyncThunk(
     }
   }
 );
+function removeThumbUrl(product) {
+  if (
+    product.productData.variants &&
+    Array.isArray(product.productData.variants)
+  ) {
+    product.productData.variants.forEach((variant) => {
+      if (variant.images && Array.isArray(variant.images)) {
+        variant.images.forEach((image) => {
+          delete image?.thumbUrl;
+          delete image?.uid;
+          delete image?.lastModifiedDate;
+          delete image?.percent;
+          delete image?.name;
+          delete image?.originFileObj;
+          delete image?.size;
+          delete image?.xhr;
+        });
+      }
+    });
+  }
+  return product.productData;
+}

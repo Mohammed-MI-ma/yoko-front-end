@@ -3,14 +3,12 @@ import { useSelector } from "react-redux";
 
 import HeroSection from "../../components/HeroSection";
 import OurPartners from "../../components/OurPartners";
-import OurBestSellers from "../../components/OurBestSellers";
 
 //__REACT_HELMET
 import { Helmet } from "react-helmet";
 
 //__REACT_i18N
 import { useTranslation } from "react-i18next";
-import ProductOfTheWeek from "../../components/ProductOfTheWeek";
 
 const HomePage = () => {
   const { t } = useTranslation();

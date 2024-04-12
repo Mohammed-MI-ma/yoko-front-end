@@ -28,6 +28,7 @@ const DeliveryBoy = () => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
+  const loadingSearch = useSelector((state) => state.delivery.loadingSearch);
   const isAllowedToAddNewDeliveryBoy = useSelector(
     (state) => state.delivery.isAllowedToAddNewDeliveryBoy
   );
@@ -94,6 +95,7 @@ const DeliveryBoy = () => {
           style={{ paddingTop: "0px" }}
         >
           <List
+            loading={loadingSearch}
             pagination={{
               position: "bottom",
               align: "center",

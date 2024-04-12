@@ -14,7 +14,28 @@ const initialState = {
   totalPages: 0,
   error: null,
   isAllowedToAddNewProduct: false,
-  specificObject: null,
+  specificObject: {
+    name: "",
+    description: "",
+    category: "Kitchen",
+    brand: "Lesieur",
+    variants: [
+      {
+        attributes: {},
+        sku: "",
+        quantity: 0,
+        price: 0,
+        images: [],
+      },
+    ],
+    ratings: [],
+  },
+  //MarketPlace
+  newest4Products: [],
+  popular4KitchenProducts: [],
+  popular4BeautyProducts: [],
+  popular4HomeProducts: [],
+  popular4SportsProducts: [],
 };
 const productSlice = createSlice({
   name: "product",
@@ -40,6 +61,21 @@ const productSlice = createSlice({
       const { id } = action.payload;
       const foundObject = state.products.data.find((obj) => obj._id === id);
       state.specificObject = foundObject ? { ...foundObject } : null;
+    },
+    setNewest4Products: (state, action) => {
+      state.newest4Products = action.payload;
+    },
+    setPopular4KitchenProducts: (state, action) => {
+      state.popular4KitchenProducts = action.payload;
+    },
+    setPopular4BeautyProducts: (state, action) => {
+      state.popular4BeautyProducts = action.payload;
+    },
+    setPopular4HomeProducts: (state, action) => {
+      state.popular4HomeProducts = action.payload;
+    },
+    setPopular4SportsProducts: (state, action) => {
+      state.popular4SportsProducts = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -116,6 +152,12 @@ export const {
   findObjectById,
   loadingProduct,
   setIsAllowedToAddNewProduct,
+  //marketPlace
+  setNewest4Products,
+  setPopular4KitchenProducts,
+  setPopular4BeautyProducts,
+  setPopular4HomeProducts,
+  setPopular4SportsProducts,
 } = productSlice.actions;
 
 export default productSlice.reducer;

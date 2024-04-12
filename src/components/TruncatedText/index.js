@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+
 import { useTranslation } from "react-i18next";
-import { Button, Checkbox, Modal, message } from "antd";
+
+import { Button, Checkbox, Modal } from "antd";
+
 import DrawerGeneric from "../DrawerGeneric";
 import useFontFamily from "../../utils/useFontFamily";
-import style from "./truncatedText.module.css";
 import useDirection from "../../utils/useDirection";
+
+import style from "./truncatedText.module.css";
+
 const TruncatedText = ({
   text,
   maxLength,
@@ -34,7 +39,14 @@ const TruncatedText = ({
   const onChangeCheckBox = (e) => onChangeCheckBoxHandler(e.target.checked);
   return (
     <div>
-      <p style={{ fontFamily: fontFamilyLight }}>{truncatedText}...</p>
+      <p
+        style={{
+          fontFamily: fontFamilyLight,
+          fontSize: "var(--font-extra-small-size)",
+        }}
+      >
+        {truncatedText}...
+      </p>
       {shouldDisplayButton && (
         <button
           onClick={skip ? () => toggleDrawer(true) : toggleExpanded}

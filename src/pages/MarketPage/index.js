@@ -5,22 +5,15 @@ import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import {
   Breadcrumb,
-  Button,
-  Card,
   Checkbox,
-  Col,
   Collapse,
   ConfigProvider,
-  Divider,
   Layout,
   List,
   Rate,
-  Row,
   Slider,
-  Typography,
 } from "antd";
-import DeliveryBoySearchEngine from "../../components/DeliveryBoySearchEngine";
-import ImageCardWithDescriptionFooter from "../../components/ImageCardWithDescriptionFooter";
+import MarketPlaceBriksComponent from "../../components/MarketPlaceBriksComponent";
 
 const MarketPage = () => {
   const { t, i18n } = useTranslation();
@@ -28,7 +21,7 @@ const MarketPage = () => {
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  const { Header, Footer, Sider, Content } = Layout;
+  const { Header, Sider, Content } = Layout;
   const data = [
     "Nouveautés",
     "Fruits, Légumes",
@@ -46,9 +39,7 @@ const MarketPage = () => {
     "Boucherie et Volaille",
     "Poissonnerie",
   ];
-  const text = `
-  A dog is a type of 
-`;
+
   const items = [
     {
       key: "1",
@@ -179,6 +170,7 @@ const MarketPage = () => {
             },
           ]}
         />
+
         <div
           className="w-full h-full flex flex-grow justify-center items-center flex-col"
           style={{ borderRadius: "60px" }}
@@ -198,76 +190,33 @@ const MarketPage = () => {
               }}
             >
               <Layout style={layoutStyle}>
-                {/*  <Sider width="20%" style={siderStyle}>
+                <Sider width="20%" style={siderStyle}>
                   <Collapse items={items} defaultActiveKey={["1"]} />
-            </Sider>*/}
+                </Sider>
                 <Layout>
-                  <Header style={headerStyle}>
-                    <DeliveryBoySearchEngine></DeliveryBoySearchEngine>
-                  </Header>
+                  <Header style={headerStyle}></Header>
                   <Content style={contentStyle}>
-                    <div className="flex justify-between items-center">
-                      <h1 style={{ color: "black" }}>Nouveautés</h1>
-                      <Button>savoir plus</Button>
-                    </div>
-                    <div
-                      className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center `}
-                    >
-                      {[1, 2, 3, 4].map((id) => (
-                        <div
-                          className="w-50 "
-                          style={{
-                            background: "red",
-                            margin: "10px",
-                            height: "200px",
-                          }}
-                        >
-                          hello
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <h1 style={{ color: "black" }}>Nouveautés</h1>
-                      <Button>savoir plus</Button>
-                    </div>
-                    <div
-                      className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center `}
-                    >
-                      {[1, 2, 3, 4].map((id) => (
-                        <div
-                          className="w-50 "
-                          style={{
-                            background: "red",
-                            margin: "10px",
-                            height: "200px",
-                          }}
-                        >
-                          hello
-                        </div>
-                      ))}
-                    </div>
-                    <Button>savoir plus</Button>
-                    <div className="flex justify-between items-center">
-                      <h1 style={{ color: "black" }}>Nouveautés</h1>
-                      <Button>savoir plus</Button>
-                    </div>
-                    <div
-                      className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center `}
-                    >
-                      {[1, 2, 3, 4].map((id) => (
-                        <div
-                          className="w-50 "
-                          style={{
-                            background: "red",
-                            margin: "10px",
-                            height: "200px",
-                          }}
-                        >
-                          hello
-                        </div>
-                      ))}
-                    </div>
-                    <Button>savoir plus</Button>
+                    <MarketPlaceBriksComponent
+                      title={t("Nouveautés")}
+                      toPage="/web/guest/market/newProduct"
+                      apiEndpoint="/products"
+                      category={null}
+                    />
+                    <MarketPlaceBriksComponent
+                      title={t("Fruites, Légumes")}
+                      apiEndpoint="/products"
+                      category={"kitchen"}
+                    />
+                    <MarketPlaceBriksComponent title={t("Hygiéne, Beauté")} />
+                    <MarketPlaceBriksComponent
+                      title={t("Entretien De La Maison")}
+                      category={"home"}
+                    />
+                    <MarketPlaceBriksComponent
+                      title={t("Entretien De La Maison")}
+                      category={"home"}
+                    />
+                    <MarketPlaceBriksComponent title={t("Healthy Lifestyle")} />
                   </Content>
                 </Layout>
               </Layout>
