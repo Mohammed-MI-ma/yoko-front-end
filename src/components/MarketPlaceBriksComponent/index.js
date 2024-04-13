@@ -7,33 +7,25 @@ import { useTranslation } from "react-i18next";
 import useFontFamily from "../../utils/useFontFamily";
 import { FrownOutlined } from "@ant-design/icons";
 
-const MarketPlaceBriksComponent = ({
-  title,
-  toPage,
-  apiEndpoint,
-  category,
-}) => {
+const MarketPlaceBriksComponent = ({ title, toPage, category }) => {
   const [products, setProducts] = useState([]);
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
-  const requestBody = {
-    category: category,
-    maxElements: 4,
-  };
   useEffect(() => {
-    // Fetch products when the component mounts or when apiEndpoint changes
     const fetchData = async () => {
       try {
-        const response = category
-          ? await axios.post(
-              `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/products`,
-              requestBody
-            )
-          : await axios.get(
-              `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/newest`
-            );
-
+        let response;
+        if (category !== null) {
+          response = await axios.post(
+            `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/products`,
+            { category, maxElements: 4 }
+          );
+        } else {
+          response = await axios.get(
+            `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/newest`
+          );
+        }
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -42,20 +34,20 @@ const MarketPlaceBriksComponent = ({
 
     fetchData();
 
-    // Clean up function to cancel any pending requests when component unmounts
     return () => {
-      // Cancel any pending requests or clean up resources if needed
+      // Clean up function
     };
-  }, [apiEndpoint]);
+  }, []);
+
   return (
     <>
-      <HeaderComponent toPage={toPage}>{title}</HeaderComponent>
-      {products.length !== 0 ? (
-        <div
-          className={`grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center `}
-        >
-          {products?.map((id) => (
-            <CardProduct key={id} />
+      <HeaderComponent toPage={toPage} category={category}>
+        {title}
+      </HeaderComponent>
+      {products.length ? (
+        <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
+          {products.map((product) => (
+            <CardProduct key={product.id} product={product} />
           ))}
         </div>
       ) : (

@@ -17,8 +17,6 @@ export const searchProductMeiliSearch = createAsyncThunk(
       );
 
       if (response.status === 200) {
-        message.success(t("fileAttenteActualise"));
-
         return response.data;
       } else {
         message.error("unexpectedError");

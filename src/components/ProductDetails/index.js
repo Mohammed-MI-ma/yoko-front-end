@@ -258,22 +258,22 @@ const getCategories = (id, t) => {
     case 3:
       return <TemplateProduct text={t("Books")} icon={<SiBookstack />} />;
     case 4:
+      return <TemplateProduct text={t("Beauty")} icon={<VscCircuitBoard />} />;
+    case 5:
       return (
         <TemplateProduct text={t("Electronics")} icon={<VscCircuitBoard />} />
       );
-    case 5:
-      return <TemplateProduct text={t("Decor")} icon={<FaCouch />} />;
     case 6:
-      return <TemplateProduct text={t("Toys")} icon={<MdToys />} />;
+      return <TemplateProduct text={t("Decor")} icon={<FaCouch />} />;
     case 7:
+      return <TemplateProduct text={t("Toys")} icon={<MdToys />} />;
+    case 8:
       return (
         <TemplateProduct
           text={t("Sports")}
           icon={<MdOutlineSportsGymnastics />}
         />
       );
-    case 8:
-      return <TemplateProduct text={t("Health")} icon={<GiHealthNormal />} />;
     default:
       return "";
   }

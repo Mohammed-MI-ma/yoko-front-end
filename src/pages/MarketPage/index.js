@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import { useSelector } from "react-redux";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import {
   Breadcrumb,
+  Button,
   Checkbox,
   Collapse,
   ConfigProvider,
@@ -13,7 +14,14 @@ import {
   Rate,
   Slider,
 } from "antd";
+import { MdDashboard } from "react-icons/md";
+
 import MarketPlaceBriksComponent from "../../components/MarketPlaceBriksComponent";
+import { Brands } from "../../components/ProductDetails/brands";
+import DeliveryBoySearchEngine from "../../components/DeliveryBoySearchEngine";
+import ProductSearchEngine from "../../components/ProductSearchEngine";
+import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
+import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
 
 const MarketPage = () => {
   const { t, i18n } = useTranslation();
@@ -22,28 +30,12 @@ const MarketPage = () => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
   const { Header, Sider, Content } = Layout;
-  const data = [
-    "Nouveautés",
-    "Fruits, Légumes",
-    "Herbes",
-    "Boucherie et Volaille",
-    "Poissonnerie",
-    "Pain, Boulangerie",
-    "Fruits, Légumes",
-    "Herbes",
-    "Boucherie et Volaille",
-    "Poissonnerie",
-    "Nouveautés",
-    "Fruits, Légumes",
-    "Herbes",
-    "Boucherie et Volaille",
-    "Poissonnerie",
-  ];
+  const data = [t("Clothing"), t("Kitchen"), t("Books"), t("Beauty")];
 
   const items = [
     {
       key: "1",
-      label: "Sections",
+      label: <SiderStyleLabel font={fontFamilyBold}>Sections</SiderStyleLabel>,
       children: (
         <List
           bordered
@@ -59,37 +51,40 @@ const MarketPage = () => {
     },
     {
       key: "2",
-      label: "Price",
-      children: (
-        <Slider
-          range
-          step={10}
-          defaultValue={[20, 50]}
-          onChange={null}
-          onChangeComplete={null}
-        />
+      label: (
+        <SiderStyleLabel font={fontFamilyBold}>{t("Price")}</SiderStyleLabel>
       ),
-    },
-    {
-      key: "3",
-      label: "Marque",
+
       children: (
         <>
-          <Checkbox defaultChecked={false} />
-          qsdqsd
-          <br />
-          <Checkbox indeterminate />
-          qsdqsdqs
-          <br />
-          <Checkbox defaultChecked />
-          qsdqsdqs
+          <Slider
+            range
+            step={10}
+            defaultValue={[20, 50]}
+            onChange={null}
+            onChangeComplete={null}
+          />
+          <Button style={{ width: "100%" }}> Filtrer</Button>
         </>
       ),
     },
     {
-      key: "4",
-      label: "Évaluation",
-      children: <Rate />,
+      key: "3",
+      label: (
+        <SiderStyleLabel font={fontFamilyBold}>{t("brand")}</SiderStyleLabel>
+      ),
+
+      children: (
+        <>
+          {Brands.map((brand) => (
+            <>
+              {" "}
+              <Checkbox defaultChecked={false}>{brand.label}</Checkbox>
+              <br></br>
+            </>
+          ))}
+        </>
+      ),
     },
   ];
   const headerStyle = {
@@ -106,6 +101,7 @@ const MarketPage = () => {
   const siderStyle = {
     color: "#fff",
     backgroundColor: "white",
+    marginRight: "20px",
   };
 
   const layoutStyle = {
@@ -124,6 +120,10 @@ const MarketPage = () => {
     margin: "0 auto",
     borderRadius: "80px",
   };
+
+  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {}, [searchTerm]);
+
   return (
     <>
       <BreadCrumb language={language}>
@@ -191,33 +191,20 @@ const MarketPage = () => {
             >
               <Layout style={layoutStyle}>
                 <Sider width="20%" style={siderStyle}>
-                  <Collapse items={items} defaultActiveKey={["1"]} />
+                  <Collapse
+                    items={items}
+                    defaultActiveKey={["1"]}
+                    expandIconPosition={"end"}
+                  />
                 </Sider>
                 <Layout>
-                  <Header style={headerStyle}></Header>
-                  <Content style={contentStyle}>
-                    <MarketPlaceBriksComponent
-                      title={t("Nouveautés")}
-                      toPage="/web/guest/market/newProduct"
-                      apiEndpoint="/products"
-                      category={null}
+                  <Header style={headerStyle}>
+                    <ProductSearchEngineMarketPlace
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
                     />
-                    <MarketPlaceBriksComponent
-                      title={t("Fruites, Légumes")}
-                      apiEndpoint="/products"
-                      category={"kitchen"}
-                    />
-                    <MarketPlaceBriksComponent title={t("Hygiéne, Beauté")} />
-                    <MarketPlaceBriksComponent
-                      title={t("Entretien De La Maison")}
-                      category={"home"}
-                    />
-                    <MarketPlaceBriksComponent
-                      title={t("Entretien De La Maison")}
-                      category={"home"}
-                    />
-                    <MarketPlaceBriksComponent title={t("Healthy Lifestyle")} />
-                  </Content>
+                  </Header>
+                  <MarketPlaceContentContainer onSearch={searchTerm !== ""} />
                 </Layout>
               </Layout>
             </ConfigProvider>
@@ -229,3 +216,14 @@ const MarketPage = () => {
 };
 
 export default MarketPage;
+export const SiderStyleLabel = ({ font, children }) => {
+  return (
+    <div
+      className="flex flex-row items-center"
+      style={{ color: "var(--color-primary)" }}
+    >
+      <MdDashboard />
+      <p style={{ fontFamily: font }}>{children}</p>
+    </div>
+  );
+};

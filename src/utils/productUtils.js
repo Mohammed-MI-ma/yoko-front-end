@@ -3,8 +3,8 @@ import { Avatar } from "antd";
 export const productOptions = [
   { value: "Clothing", index: 1, disabled: true },
   { value: "Kitchen", index: 2, disabled: false },
-  { value: "Books", index: 3, disabled: true },
-  { value: "Beauty", index: 4, disabled: true },
+  { value: "Books", index: 3, disabled: false },
+  { value: "Beauty", index: 4, disabled: false },
 ];
 export const productOptionsExtension = [
   { value: "Electronics", index: 5, disabled: true },

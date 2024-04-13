@@ -52,6 +52,3 @@ root.render(
     </React.StrictMode>
   </I18nextProvider>
 );
-
-// Measure performance in the app
-//reportWebVitals(console.log);
