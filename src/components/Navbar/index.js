@@ -59,11 +59,6 @@ const Navbar = () => {
               flexDirection: languag === "ar" ? "row-reverse" : "row",
             }}
           >
-            <HideComponentOnRoutes
-              routes={[`/yoko/account/log-in`, `/yoko/account/log-in-admin`]}
-            >
-              <SearchInputField className={style.largeScreens} />
-            </HideComponentOnRoutes>
             <NavbarActionsButtons font={fontFamilylight} />
           </CenteredContainer>
         </div>

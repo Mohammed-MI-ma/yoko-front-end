@@ -20,7 +20,7 @@ import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const MarketPage = () => {
+const MarketPageBeauty = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
@@ -149,6 +149,7 @@ const MarketPage = () => {
             {t("YOKO")}
           </span>
           &nbsp;{t("Market")}
+          <small> - {t(lastItem)}</small>
         </h1>
       </BreadCrumb>
       <div className={`flex flex-col`} style={containerStyles}>
@@ -221,7 +222,7 @@ const MarketPage = () => {
   );
 };
 
-export default MarketPage;
+export default MarketPageBeauty;
 export const SiderStyleLabel = ({ font, children }) => {
   return (
     <div

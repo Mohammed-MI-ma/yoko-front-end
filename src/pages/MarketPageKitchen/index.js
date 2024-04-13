@@ -18,9 +18,9 @@ import { MdDashboard } from "react-icons/md";
 import { Brands } from "../../components/ProductDetails/brands";
 import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const MarketPage = () => {
+const MarketPageKitchen = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
@@ -149,6 +149,7 @@ const MarketPage = () => {
             {t("YOKO")}
           </span>
           &nbsp;{t("Market")}
+          <small> - {t(lastItem)}</small>
         </h1>
       </BreadCrumb>
       <div className={`flex flex-col`} style={containerStyles}>
@@ -206,6 +207,7 @@ const MarketPage = () => {
                 <Layout>
                   <Header style={headerStyle}>
                     <ProductSearchEngineMarketPlace
+                      prefixExtension={<></>}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
                     />
@@ -221,7 +223,7 @@ const MarketPage = () => {
   );
 };
 
-export default MarketPage;
+export default MarketPageKitchen;
 export const SiderStyleLabel = ({ font, children }) => {
   return (
     <div

@@ -22,7 +22,7 @@ const HeaderComponent = ({ children, toPage, category }) => {
       {category !== null && (
         <Link to={toPage}>
           <Button
-            className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3 shadow-lg"
+            className="text-white px-10 py-3 text-xl rounded-full mt-3 mb-3 "
             style={{
               fontSize: "var(--font-small-size)",
               height: "46px",

@@ -15,13 +15,13 @@ const contentStyle = {
 const MarketPlaceContentContainer = ({ onSearch }) => {
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
-  const products = useSelector((state) => state.product.products.data);
+  const products = useSelector((state) => state.product?.products?.data);
 
   return (
     <>
       {onSearch ? (
         <Content style={{ ...contentStyle }} id="anOtherContent">
-          {products.length ? (
+          {products?.length ? (
             <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
               {products.map((product) => (
                 <CardProduct key={product.id} product={product} />
@@ -58,17 +58,30 @@ const MarketPlaceContentContainer = ({ onSearch }) => {
           {[
             {
               title: t("Nouveautés"),
-              toPage: "/web/guest/market/newProduct",
+              toPage: "/web/guest/market/newProducts",
               category: null,
             },
             {
               title: t("Cuisine"),
               category: "Kitchen",
+              toPage: "/web/guest/market/Kitchen",
             },
 
-            { title: t("Hygiéne, Beauté"), category: "Beauty" },
-            { title: t("Entretien De La Maison"), category: "home" },
-            { title: t("Healthy Lifestyle"), category: "sports" },
+            {
+              title: t("Hygiéne, Beauté"),
+              category: "Beauty",
+              toPage: "/web/guest/market/Beauty",
+            },
+            {
+              title: t("Entretien De La Maison"),
+              category: "home",
+              toPage: "/web/guest/market/Home",
+            },
+            {
+              title: t("Healthy Lifestyle"),
+              category: "sports",
+              toPage: "/web/guest/market/Sports",
+            },
           ].map((props, index) => (
             <MarketPlaceBriksComponent key={index} {...props} />
           ))}

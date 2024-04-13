@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ConfigProvider, Spin, FloatButton } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
 
 import frFR from "antd/lib/locale/fr_FR";
 import arEG from "antd/lib/locale/ar_EG";
@@ -28,16 +29,20 @@ import LoginPage from "./pages/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import { setDrawerOpenSettings } from "./reducers/applicationService/applicationSlice";
 import DashboardPage from "./pages/DashboardPage";
-import MarketPage from "./pages/MarketPage";
 import SettingsAdminDrawer from "./components/SettingsAdminDrawer";
 
 import style from "./App.module.css";
 import { ROLE } from "./utils/roles";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
+const MarketPage = lazy(() => import("./pages/MarketPage"));
+const MarketPageBeauty = lazy(() => import("./pages/MarketPageBeauty"));
+const MarketPageKitchen = lazy(() => import("./pages/MarketPageKitchen"));
+
 const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFoodPage"));
 const YOKOEatPage = lazy(() => import("./pages/YOKOEatPage"));
 const DeliveryBoyPage = lazy(() => import("./pages/DeliveryBoyPage"));
+
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function App() {
@@ -129,175 +134,247 @@ function App() {
         <header className={style.bgHeader}>
           <Navbar />
         </header>
-        <Routes>
-          <Route path="/" element={<Navigate to={`/web/guest/acceuil`} />} />
-          <Route
-            path={`/web/guest/acceuil`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
+        <AnimatePresence mode="wait">
+          {" "}
+          {/* Add AnimatePresence */}
+          <Routes>
+            <Route path="/" element={<Navigate to={`/web/guest/acceuil`} />} />
+            <Route
+              path={`/web/guest/acceuil`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1 }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="homepage" // Add a unique key
+                  >
+                    <HomePage language={language} />
+                  </motion.div>{" "}
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/web/guest/traditional`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <TraditionalFoodPage language={language} />
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/web/guest/eat`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <YOKOEatPage language={language} />
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/web/guest/delivery`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <DeliveryBoyPage
+                    language={language}
+                    highDefinitionImgUrl={Rue_high}
+                    backgroundImageUrl={Rue_low}
                   />
-                }
-              >
-                <HomePage language={language} />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/web/guest/traditional`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/web/guest/market`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  {" "}
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="homepage" // Add a unique key
+                  >
+                    <MarketPage />
+                  </motion.div>
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/web/guest/market/beauty`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  {" "}
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="beauty" // Add a unique key
+                  >
+                    <MarketPageBeauty />
+                  </motion.div>
+                </Suspense>
+              }
+            />{" "}
+            <Route
+              path={`/web/guest/market/Kitchen`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  {" "}
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="Kitchen" // Add a unique key
+                  >
+                    <MarketPageKitchen />
+                  </motion.div>
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/yoko/account/log-in`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <LoginPage
+                    language={language}
+                    highDefinitionImgUrl={Rue_high}
+                    backgroundImageUrl={Rue_low}
                   />
-                }
-              >
-                <TraditionalFoodPage language={language} />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/web/guest/eat`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/yoko/account/log-in-admin`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <AdminLoginPage
+                    language={language}
+                    highDefinitionImgUrl={Rue_high}
+                    backgroundImageUrl={Rue_low}
                   />
-                }
-              >
-                <YOKOEatPage language={language} />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/web/guest/delivery`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                }
-              >
-                <DeliveryBoyPage
-                  language={language}
-                  highDefinitionImgUrl={Rue_high}
-                  backgroundImageUrl={Rue_low}
-                />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/web/guest/market`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                }
-              >
-                <MarketPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/yoko/account/log-in`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                }
-              >
-                <LoginPage
-                  language={language}
-                  highDefinitionImgUrl={Rue_high}
-                  backgroundImageUrl={Rue_low}
-                />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/yoko/account/log-in-admin`}
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                }
-              >
-                <AdminLoginPage
-                  language={language}
-                  highDefinitionImgUrl={Rue_high}
-                  backgroundImageUrl={Rue_low}
-                />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/yoko/account/dashboard`}
-            element={
-              isAdminAuthenticated() ? (
-                <DashboardPage />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Suspense
-                fallback={
-                  <Spin
-                    spinning
-                    fullscreen
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                }
-              >
-                <NotFoundPage />
-              </Suspense>
-            }
-          />
-        </Routes>
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/yoko/account/dashboard`}
+              element={
+                isAdminAuthenticated() ? (
+                  <DashboardPage />
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <NotFoundPage />
+                </Suspense>
+              }
+            />
+          </Routes>{" "}
+        </AnimatePresence>
+
         <FloatButton.BackTop visibilityHeight={0} />
         {<Footer language={language} />}
         <SettingsAdminDrawer
