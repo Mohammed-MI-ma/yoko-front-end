@@ -41,16 +41,19 @@ const MarketPageKitchen = () => {
           bordered
           dataSource={data}
           renderItem={(item) => (
-            <p
-              onClick={() =>
-                item === "market"
-                  ? navigate(`/web/guest/market`)
-                  : navigate(`/web/guest/market/${item}`)
-              }
-            >
-              {lastItem === item ? <b> {t(item)}</b> : t(item)}
+            <>
+              <Button
+                type="text"
+                onClick={() =>
+                  item === "market"
+                    ? navigate(`/web/guest/market`)
+                    : navigate(`/web/guest/market/${item}`)
+                }
+              >
+                {lastItem === item ? <b> {t(item)}</b> : t(item)}
+              </Button>
               <br />
-            </p>
+            </>
           )}
         />
       ),
@@ -207,12 +210,15 @@ const MarketPageKitchen = () => {
                 <Layout>
                   <Header style={headerStyle}>
                     <ProductSearchEngineMarketPlace
-                      prefixExtension={<></>}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
+                      customPrefix={lastItem}
                     />
                   </Header>
-                  <MarketPlaceContentContainer onSearch={searchTerm !== ""} />
+                  <MarketPlaceContentContainer
+                    onSearch={searchTerm !== ""}
+                    currentPage={lastItem}
+                  />
                 </Layout>
               </Layout>
             </ConfigProvider>

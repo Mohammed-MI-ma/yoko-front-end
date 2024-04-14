@@ -2,12 +2,12 @@ import { Drawer } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const DrawerGeneric = ({ titre, open, onClose, children }) => {
+const DrawerGeneric = ({ titre, open, onClose, children, style }) => {
   const language = useSelector((state) => state.application.language);
 
   return (
     <Drawer
-      style={{ overflow: "none" }}
+      style={{ ...style, overflow: "none" }}
       title={titre}
       onClose={onClose}
       open={open}

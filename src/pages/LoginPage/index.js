@@ -84,6 +84,8 @@ const LoginPage = () => {
         if (response.data.result) {
           setEmailExists(true);
           message.success(t("userFoundSuccess"));
+          sendOtp();
+          setModalOpen(true);
         }
       } else {
         message.error("Unexpected response status");
@@ -126,8 +128,12 @@ const LoginPage = () => {
           if (response.status === 200) {
             dispatch(setUserLoginFulfilled(response.data));
             dispatch(setIsLoggedIn(true));
+            localStorage.setItem(
+              "userData",
+              JSON.stringify(response.data.user)
+            );
             localStorage.setItem("access_token", response.data.access_token);
-            localStorage.setItem("refresh_token", response.data.refresh_token);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
             message.success("created user suuccc");
             setOtp("");
             setModalOpen(false);
@@ -233,15 +239,7 @@ const LoginPage = () => {
                       >
                         {t("signInWithGoogle")}
                       </ButtonWithStyles>
-                      <ButtonWithStyles
-                        icon={<FaFacebookF />}
-                        style={{
-                          fontFamily: fontFamilylight,
-                          fontWeight: "700",
-                        }}
-                      >
-                        {t("signInWithFacebook")}
-                      </ButtonWithStyles>
+
                       <p
                         style={{
                           fontSize: "var(--font-extra-small-size)",

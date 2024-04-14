@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ConfigProvider, Spin, FloatButton } from "antd";
+import { ConfigProvider, Spin, FloatButton, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
@@ -18,7 +18,7 @@ import {
 } from "./config.dev";
 
 import { FontsConfig } from "./fontsConfig";
-
+import axios from "axios";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
 import Footer from "./components/Footer";
@@ -27,12 +27,17 @@ import { fetchContactInfo } from "./actions/contactActions";
 import { Rue_high, Rue_low } from "./images";
 import LoginPage from "./pages/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
-import { setDrawerOpenSettings } from "./reducers/applicationService/applicationSlice";
+import {
+  setDrawerOpenCart,
+  setDrawerOpenSettings,
+} from "./reducers/applicationService/applicationSlice";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsAdminDrawer from "./components/SettingsAdminDrawer";
 
 import style from "./App.module.css";
 import { ROLE } from "./utils/roles";
+import CartDrawer from "./components/CartDrawer";
+import { setCart } from "./reducers/applicationService/marketPlace/marketPlaceSlice";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPage = lazy(() => import("./pages/MarketPage"));
@@ -51,20 +56,50 @@ function App() {
   const { t } = useTranslation();
 
   const d = useDispatch();
+  const user = useSelector((state) => state.auth?.userInfo);
 
   const language = useSelector((state) => state.application.language);
   const isLoggedIn = useSelector((state) => state.application.isLoggedIn);
   const openSettings = useSelector(
     (state) => state.application.drawerOpenSettings
   );
-
+  const openCart = useSelector((state) => state.application.drawerOpenCart);
   const [loading, setLoading] = useState(true);
   const [locale, setLocale] = useState(null);
 
   const onClose = () => {
     d(setDrawerOpenSettings(false));
   };
-
+  const onCloseCart = () => {
+    d(setDrawerOpenCart(false));
+  };
+  const retreiveCart = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/cart/${user?.id}`
+      );
+      if (response.status === 200) {
+        console.log("888888", response?.data?.items);
+        d(setCart(response?.data?.items));
+      } else {
+        // Handle unexpected response status
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          message.success("Produit non  ajouté au panier");
+        } else if (error.response.status === 429) {
+          // Handle too many requests
+        } else {
+          // Handle other server errors
+        }
+      } else if (error.request) {
+        // Handle server unreachable
+      } else {
+        // Handle other errors
+      }
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -108,6 +143,7 @@ function App() {
   //CONTACT_API
   const dispatchFetchContactInfo = useCallback(() => {
     d(fetchContactInfo());
+    retreiveCart();
   }, [d]);
 
   useEffect(() => {
@@ -375,13 +411,14 @@ function App() {
           </Routes>{" "}
         </AnimatePresence>
 
-        <FloatButton.BackTop visibilityHeight={0} />
+        <FloatButton.BackTop visibilityHeight={0} style={{ bottom: "100px" }} />
         {<Footer language={language} />}
         <SettingsAdminDrawer
           openSettings={openSettings}
           onClose={onClose}
           t={t}
         />
+        <CartDrawer openCart={openCart} onCloseCart={onCloseCart} t={t} />
       </div>
     </ConfigProvider>
   );

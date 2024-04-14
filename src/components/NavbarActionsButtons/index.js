@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Spin, Button, ConfigProvider, Space, message } from "antd";
+import { Spin, Button, ConfigProvider, Space, Badge } from "antd";
 import { useLocation } from "react-router-dom";
+import { FaCartArrowDown } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ import style from "./NavbarActionsButtons.module.css";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Switch } from "antd";
 import { setDrawerOpenSettings } from "../../reducers/applicationService/applicationSlice";
+import { setDrawerOpenCart } from "../../reducers/applicationService/applicationSlice";
+
 import { useTransition } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -59,17 +62,20 @@ const NavbarActionsButtons = ({ font }) => {
   const language = useSelector((state) => state.application.language);
   const fontFamilybold = useFontFamily(i18n.language, "bold");
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const cart = useSelector((state) => state.marketPlace.cartME);
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
+
   const openSettings = () => {
-    if (user.role === "admin") {
-      dispatch(setDrawerOpenSettings(true));
-    } else {
-      // Handle case where user is not admin or token is invalid
-      message.error("You do not have permission to access settings.");
-    }
+    dispatch(setDrawerOpenSettings(true));
   };
+  const openPanierDrawer = () => {
+    dispatch(setDrawerOpenCart(true));
+  };
+
   const [isPending, startTransition] = useTransition();
+
   const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
@@ -128,21 +134,41 @@ const NavbarActionsButtons = ({ font }) => {
                 />
               </div>
             ) : (
-              <CenteredContainer className={"flex-col"}>
-                <p style={{ fontSize: "var(--font-tiny-size)" }}>Mode</p>
-                <Switch
-                  onChange={onChange}
-                  checked={checked}
-                  size={"large"}
-                  checkedChildren={<p style={{ fontFamily: font }}>Admin</p>}
-                  unCheckedChildren={
-                    <p style={{ fontFamily: font }}>Visiteur</p>
-                  }
-                />
-                <p style={{ fontSize: "var(--font-tiny-size)" }}>activé</p>
-              </CenteredContainer>
+              <>
+                {" "}
+                {user?.role === "admin" && (
+                  <CenteredContainer className={"flex-col"}>
+                    <p style={{ fontSize: "var(--font-tiny-size)" }}>Mode</p>
+                    <Switch
+                      onChange={onChange}
+                      checked={checked}
+                      size={"large"}
+                      checkedChildren={
+                        <p style={{ fontFamily: font }}>Admin</p>
+                      }
+                      unCheckedChildren={
+                        <p style={{ fontFamily: font }}>Visiteur</p>
+                      }
+                    />
+                    <p style={{ fontSize: "var(--font-tiny-size)" }}>activé</p>
+                  </CenteredContainer>
+                )}
+              </>
             )}
-
+            <Badge count={cart?.length}>
+              <Button
+                onClick={openPanierDrawer}
+                className="rounded-full text-white border-none "
+                size="large"
+                style={{
+                  fontFamily: fontFamilybold,
+                  background: "var(--color-secondary)",
+                  color: "white",
+                }}
+              >
+                <FaCartArrowDown size={"20px"} />
+              </Button>
+            </Badge>
             <Button
               onClick={openSettings}
               className="rounded-full text-white border-none "

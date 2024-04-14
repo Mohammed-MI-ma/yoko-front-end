@@ -9,6 +9,7 @@ const initialState = {
   siteDirection: "rtl",
   promoVideoOpened: false,
   drawerOpenSettings: false,
+  drawerOpenCart: false,
 
   dynamicWidth: null,
 };
@@ -23,6 +24,9 @@ const applicationSlice = createSlice({
     },
     setDrawerOpenSettings: (state, action) => {
       state.drawerOpenSettings = action.payload;
+    },
+    setDrawerOpenCart: (state, action) => {
+      state.drawerOpenCart = action.payload;
     },
     setPromoVideoOpened: (state, action) => {
       state.promoVideoOpened = action.payload;
@@ -55,6 +59,7 @@ export const {
   setPromoVideoOpened,
   setDynamicWidth,
   setDrawerOpenSettings,
+  setDrawerOpenCart,
 } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

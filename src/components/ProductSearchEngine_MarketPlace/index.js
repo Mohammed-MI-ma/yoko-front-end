@@ -1,20 +1,18 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Input, Divider } from "antd";
-import { SiMeilisearch } from "react-icons/si";
+import { Input } from "antd";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { TbUrgent } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
 
-import CenteredContainer from "../CenteredContainer";
-import { searchProductMeiliSearch } from "../../reducers/applicationService/product/productActions";
 import useFontFamily from "../../utils/useFontFamily";
-import style from "./ProductSearchEngine.module.css";
-import { setIsAllowedToAddNewDeliveryBoy } from "../../reducers/applicationService/delivery/deliverySlice";
 import { setIsAllowedToAddNewProduct } from "../../reducers/applicationService/product/productSlice";
+import { searchProductMeiliSearchByCategory } from "../../reducers/applicationService/marketPlace/marketPlaceActions";
 
-const ProductSearchEngineMarketPlace = ({ searchTerm, setSearchTerm }) => {
+const ProductSearchEngineMarketPlace = ({
+  searchTerm,
+  setSearchTerm,
+  customPrefix,
+}) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
@@ -22,10 +20,27 @@ const ProductSearchEngineMarketPlace = ({ searchTerm, setSearchTerm }) => {
   const handleSearch = useCallback(
     (value) => {
       setSearchTerm(value);
-      dispatch(searchProductMeiliSearch({ query: value, t }));
+      dispatch(
+        searchProductMeiliSearchByCategory({
+          query: value,
+          t,
+          category: customPrefix,
+        })
+      );
     },
     [dispatch, t, setSearchTerm]
   );
+
+  useEffect(() => {
+    console.log("taboni");
+    dispatch(
+      searchProductMeiliSearchByCategory({
+        query: "",
+        t,
+        category: customPrefix,
+      })
+    );
+  }, [customPrefix, t]);
 
   useEffect(() => {
     // Vérifie si searchTerm est vide
@@ -49,6 +64,7 @@ const ProductSearchEngineMarketPlace = ({ searchTerm, setSearchTerm }) => {
         prefix={
           <>
             <FaSearch />
+            &nbsp;/{t(customPrefix)}
           </>
         }
         allowClear

@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import CenteredContainer from "../CenteredContainer";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import { Button } from "antd";
 import { motion } from "framer-motion";
 
-import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  HeartOutlined,
+  ShoppingCartOutlined,
+  DashboardOutlined,
+} from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import ProdutCartModal from "../ProdutCartModal";
 const CardProduct = ({ key, product }) => {
   const { i18n } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <motion.div
       whileHover={{
@@ -60,7 +72,7 @@ const CardProduct = ({ key, product }) => {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: isLoggedIn ? "space-between" : "center",
             flexGrow: "1",
             alignItems: " flex-end",
             margin: "var(--spacing-small)",
@@ -75,24 +87,41 @@ const CardProduct = ({ key, product }) => {
           >
             {product?.variants[0]?.price} MAD
           </div>
-          <CenteredContainer style={{ gap: "10px" }}>
-            <Button
-              shape="circle"
-              className="flex items-center justify-center "
-              style={{ border: "1px solid var(--color-primary)" }}
-            >
-              <HeartOutlined />
-            </Button>
-            <Button
-              shape="circle"
-              className="flex items-center justify-center "
-              style={{ border: "1px solid black" }}
-            >
-              <ShoppingCartOutlined />
-            </Button>
-          </CenteredContainer>
+          {isLoggedIn && (
+            <CenteredContainer style={{ gap: "10px" }}>
+              {user?.role === "admin" && (
+                <Button
+                  shape="circle"
+                  className="flex items-center justify-center "
+                  style={{ border: "1px solid var(--color-primary)" }}
+                >
+                  <DashboardOutlined />
+                </Button>
+              )}
+              <Button
+                shape="circle"
+                className="flex items-center justify-center "
+                style={{ border: "1px solid var(--color-primary)" }}
+              >
+                <HeartOutlined />
+              </Button>
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                shape="circle"
+                className="flex items-center justify-center "
+                style={{ border: "1px solid black" }}
+              >
+                <ShoppingCartOutlined />
+              </Button>
+            </CenteredContainer>
+          )}
         </div>
       </footer>
+      <ProdutCartModal
+        product={product}
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+      />
     </motion.div>
   );
 };

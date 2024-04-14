@@ -3,22 +3,29 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { useSelector } from "react-redux";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
+import { MdLocalGroceryStore } from "react-icons/md";
+import { GiPayMoney } from "react-icons/gi";
+import { TbBrandAbstract } from "react-icons/tb";
+import { MdFeedback } from "react-icons/md";
+
 import {
   Breadcrumb,
   Button,
   Checkbox,
   Collapse,
   ConfigProvider,
+  Flex,
   Layout,
   List,
   Slider,
 } from "antd";
 import { MdDashboard } from "react-icons/md";
-
 import { Brands } from "../../components/ProductDetails/brands";
 import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
 import { useLocation, useNavigate } from "react-router-dom";
+import style from "./marketPage.module.css";
+import ProdutCartModal from "../../components/ProdutCartModal";
 
 const MarketPage = () => {
   const { t, i18n } = useTranslation();
@@ -41,16 +48,19 @@ const MarketPage = () => {
           bordered
           dataSource={data}
           renderItem={(item) => (
-            <p
-              onClick={() =>
-                item === "market"
-                  ? navigate(`/web/guest/market`)
-                  : navigate(`/web/guest/market/${item}`)
-              }
-            >
-              {lastItem === item ? <b> {t(item)}</b> : t(item)}
+            <>
+              <Button
+                type="text"
+                onClick={() =>
+                  item === "market"
+                    ? navigate(`/web/guest/market`)
+                    : navigate(`/web/guest/market/${item}`)
+                }
+              >
+                {lastItem === item ? <b> {t(item)}</b> : t(item)}
+              </Button>
               <br />
-            </p>
+            </>
           )}
         />
       ),
@@ -126,7 +136,18 @@ const MarketPage = () => {
     margin: "0 auto",
     borderRadius: "80px",
   };
-
+  const baseStyle = {
+    width: "25%",
+    height: "45px",
+    backgroundColor: "var(--color-secondary)",
+    margin: "5px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: fontFamilyLight,
+    color: "white",
+    borderRadius: "36.25rem",
+  };
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {}, [searchTerm]);
 
@@ -196,7 +217,11 @@ const MarketPage = () => {
               }}
             >
               <Layout style={layoutStyle}>
-                <Sider width="20%" style={siderStyle}>
+                <Sider
+                  width="20%"
+                  style={siderStyle}
+                  className={style.siderStyle}
+                >
                   <Collapse
                     items={items}
                     defaultActiveKey={["1"]}
@@ -208,15 +233,74 @@ const MarketPage = () => {
                     <ProductSearchEngineMarketPlace
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
+                      customPrefix={lastItem}
                     />
                   </Header>
-                  <MarketPlaceContentContainer onSearch={searchTerm !== ""} />
+                  <MarketPlaceContentContainer
+                    onSearch={searchTerm !== ""}
+                    currentPage={lastItem}
+                  />
                 </Layout>
               </Layout>
             </ConfigProvider>
           </div>
         </div>
       </div>
+
+      <Flex
+        horizontal
+        className={`${style.mobileSiderStyle} rounded bg-white shadow-lg border`}
+      >
+        <Button
+          shape="circle"
+          key={1}
+          style={{
+            ...baseStyle,
+          }}
+        >
+          <GiPayMoney />
+        </Button>
+        <Button
+          shape="circle"
+          key={2}
+          style={{
+            ...baseStyle,
+          }}
+        >
+          <MdDashboard />
+        </Button>
+        <Button
+          key={3}
+          style={{
+            ...baseStyle,
+            height: "50px",
+            width: "170px",
+            background: "white",
+            color: "black",
+          }}
+          className="bordered"
+        >
+          Commandes
+        </Button>
+        <Button
+          shape="circle"
+          key={4}
+          style={{
+            ...baseStyle,
+          }}
+        >
+          <TbBrandAbstract />
+        </Button>
+        <Button
+          shape="circle"
+          key={5}
+          style={{
+            ...baseStyle,
+          }}
+        >
+          <MdFeedback />
+        </Button>
+      </Flex>
     </>
   );
 };
