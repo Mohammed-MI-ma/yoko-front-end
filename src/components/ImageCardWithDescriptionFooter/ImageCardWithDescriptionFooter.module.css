@@ -1,7 +1,7 @@
 .mainCard {
   background-size: cover;
   width: 12.5rem;
-  height: 12.5rem;
+  height: 16.5rem;
   position: relative;
   background-position: center;
   border: 0.015625rem solid var(--color-primary);

@@ -41,12 +41,12 @@ const CartDrawer = ({ openCart, onCloseCart }) => {
         }
       >
         <div
+          className="shadow-md"
           style={{
             height: "70%",
             overflowY: "scroll",
             alignItems: "start",
             flexDirection: "column",
-            border: " 1px solid #1d3034",
             borderRadius: "var(--border-radius-large)",
           }}
         >

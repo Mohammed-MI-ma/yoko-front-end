@@ -8,7 +8,7 @@ import { FaTrash } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { FiMinus } from "react-icons/fi";
 
-import { Button, ConfigProvider, Divider, Image, message } from "antd";
+import { Button, ConfigProvider, Divider, Empty, Image, message } from "antd";
 import { MdDashboard } from "react-icons/md";
 import style from "./cartPage.module.css";
 import useDirection from "../../utils/useDirection";
@@ -27,7 +27,21 @@ const CartPage = () => {
   const direction = useDirection(i18n.language);
 
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#65b44a",
+          borderRadius: 10,
+          fontSize: 10,
+          colorBorder: "#65b44a",
+        },
+        components: {
+          Button: {
+            defaultActiveBorderColor: "var(--color-primary)",
+          },
+        },
+      }}
+    >
       <BreadCrumb language={language}>
         <BreadCrumbContent font={fontFamilyBold} t={t} />
       </BreadCrumb>
@@ -43,38 +57,45 @@ const CartPage = () => {
                   className={`grid grid-cols-1 md:grid-cols-2 w-full flex-grow ${style.grid}`}
                   dir={direction}
                 >
-                  <ConfigProvider
-                    theme={{
-                      token: {
-                        colorPrimary: "#65b44a",
-                        borderRadius: 10,
-                        fontSize: 10,
-                        colorBorder: "#65b44a",
-                      },
-                      components: {
-                        Button: {
-                          defaultActiveBorderColor: "var(--color-primary)",
-                        },
-                      },
-                    }}
+                  <CenteredContainer
+                    className="text-center gap-2 flex-col"
+                    style={{ background: "#F4F4F4" }}
                   >
-                    <CenteredContainer className="text-center gap-2 flex-col">
-                      2Produit
-                      <div
-                        style={{
-                          height: "300px",
-                          overflowY: "scroll",
-                          alignItems: "start",
-                          flexDirection: "column",
-                          border: " 1px solid #e5e5e5",
-                        }}
-                      >
-                        {cart?.map((e) => (
-                          <CartItem item={e} />
-                        ))}
-                      </div>
-                    </CenteredContainer>
-                  </ConfigProvider>
+                    <h1
+                      style={{
+                        fontFamily: fontFamilyBold,
+                        color: "#464646",
+                        width: "100%",
+                        textAlign: "right",
+                        fontSize: "var( --font-tiny-size)",
+                      }}
+                    >
+                      {cart?.length} {t("produit(s)")}
+                    </h1>
+                    <div
+                      style={{
+                        height: "300px",
+                        overflowY: "scroll",
+                        alignItems: "start",
+                        flexDirection: "column",
+                        width: "100%",
+                      }}
+                    >
+                      {cart?.length > 0 ? (
+                        cart?.map((e) => <CartItem item={e} />)
+                      ) : (
+                        <CenteredContainer className={"h-full"}>
+                          <Empty
+                            description={
+                              <p style={{ fontFamily: fontFamilyLight }}>
+                                {t("Panier vide")}
+                              </p>
+                            }
+                          />
+                        </CenteredContainer>
+                      )}
+                    </div>
+                  </CenteredContainer>
 
                   <div
                     style={{
@@ -87,18 +108,26 @@ const CartPage = () => {
                       className={`flex justify-center relative p-10 items-start flex-col  w-full ${style.rect}`}
                     >
                       <div className="flex justify-between w-full">
-                        <div>TOTAL PRODUIT</div>
-                        <div>6</div>
+                        <div>TOTAL PRODUITS</div>
+                        <div> {cart?.length}</div>
                       </div>
                       <Divider />
-                      <p style={{}}>TOTAL PRODUIT</p>
+                      <p>TOTAL PRODUIT</p>
                       <Divider />
                       <div className="flex justify-between w-full">
                         <div>TOTAL</div>
                         <div>6</div>
                       </div>
                     </div>{" "}
-                    <Button style={{ width: "100%" }}>Commander</Button>
+                    <Button
+                      style={{
+                        width: "100%",
+                        background: "var(--color-primary)",
+                        color: "white",
+                      }}
+                    >
+                      {t("Commander")}
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -106,7 +135,7 @@ const CartPage = () => {
           </div>
         </div>
       </section>
-    </>
+    </ConfigProvider>
   );
 };
 

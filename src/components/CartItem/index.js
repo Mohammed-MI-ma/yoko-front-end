@@ -46,7 +46,7 @@ const CartItem = ({ item }) => {
   }, [item]);
 
   return (
-    <div className="border rounded flex p-5 m-2">
+    <div className="border rounded flex p-5 m-2 bg-white p-10">
       <Image
         width={60}
         src={variantRecovered?.images?.[0]?.response?.downloadURL?.[0]}
@@ -71,12 +71,11 @@ const CartItem = ({ item }) => {
             <div style={{}}>
               <Button
                 type="text"
-                icon={<FaTrash />}
+                icon={<FaTrash color="red" />}
                 onClick={() => handleRemoveFromCart(item.product._id)}
               />
               <div className="flex items-center">
                 <Button
-                  type="text"
                   icon={<FiMinus />}
                   onClick={() => {
                     if (quantity > 1) {
@@ -94,9 +93,8 @@ const CartItem = ({ item }) => {
                     }
                   }}
                 />
-                <p>{quantity}</p>
+                &nbsp;&nbsp; <p>{quantity}</p> &nbsp;&nbsp;
                 <Button
-                  type="text"
                   icon={<IoIosAdd />}
                   onClick={() => {
                     if (quantity <= 50) {
@@ -117,15 +115,8 @@ const CartItem = ({ item }) => {
             </div>
           )}
         </div>
+
         <footer
-          style={{ height: "20%" }}
-          className="flex justify-between w-full"
-        >
-          <p style={{ fontSize: "8px", fontFamily: fontFamilyLight }}>
-            Livraison entre le samedi 23 mars 2024 et le lundi 25 mars 2024
-          </p>
-        </footer>
-        <p
           style={{
             fontSize: "var(--font-large-size)",
             fontFamily: fontFamilyBold,
@@ -133,7 +124,7 @@ const CartItem = ({ item }) => {
           }}
         >
           {variantRecovered?.price} {t("MAD")}
-        </p>
+        </footer>
       </div>
     </div>
   );

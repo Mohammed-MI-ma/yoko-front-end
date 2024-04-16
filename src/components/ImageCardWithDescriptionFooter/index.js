@@ -108,11 +108,11 @@ const ImageCardWithDescriptionFooter = ({
     <HoverableDiv id={divId}>
       <Link to={`/${action}`}>
         <CenteredContainer
-          className={`${style.mainCard} shadow-lg`}
+          className={`${style.mainCard} shadow-lg rounded-lg`}
           style={containerStyles}
         >
           <CenteredContainer>
-            <p style={paragraphStyles}>
+            <p style={paragraphStyles} className="rounded-lg">
               {descriptionContent || "Description Content"}
             </p>
           </CenteredContainer>
