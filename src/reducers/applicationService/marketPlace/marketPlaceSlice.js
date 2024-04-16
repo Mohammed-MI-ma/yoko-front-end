@@ -7,7 +7,7 @@ const initialState = {
   maxPrice: 1000,
   brand: false,
   products: [],
-  cartME: 1000,
+  cartME: [],
 };
 const marketPlaceSlice = createSlice({
   name: "marketPlace",
@@ -17,6 +17,7 @@ const marketPlaceSlice = createSlice({
       state.products = action.payload.hits;
       state.totalPages = Math.ceil(action.payload.hits.length / ITEMS_PER_PAGE);
     },
+
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
@@ -54,6 +55,32 @@ const marketPlaceSlice = createSlice({
     },
     setCart: (state, action) => {
       state.cartME = action.payload;
+    },
+
+    updateProductQuantity: (state, action) => {
+      const { quantity, productId } = action.payload;
+
+      // Find the index of the product in the products array
+      const productIndex = state.cartME.findIndex(
+        (product) => product?._id === productId
+      );
+
+      // If the product exists, update its quantity
+      if (productIndex !== -1) {
+        const updatedProducts = [...state.products];
+        updatedProducts[productIndex] = {
+          ...updatedProducts[productIndex],
+          quantity: quantity,
+        };
+
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      }
+
+      // If the product does not exist, return the current state
+      return state;
     },
   },
   extraReducers: (builder) => {
@@ -97,6 +124,7 @@ export const {
   setPopular4SportsProducts,
   setProductInCart,
   setCart,
+  updateProductQuantity,
 } = marketPlaceSlice.actions;
 
 export default marketPlaceSlice.reducer;

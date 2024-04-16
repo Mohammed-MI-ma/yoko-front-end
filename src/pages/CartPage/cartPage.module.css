@@ -1,0 +1,78 @@
+.container {
+  padding: 20px;
+  min-height: calc(100vh - 100px);
+  text-align: center;
+}
+
+.rect {
+  border-radius: 1.875rem;
+  gap: var(--spacing-small);
+  direction: initial;
+}
+.rect .bike {
+  position: absolute;
+  transform: translate(50%, 10%);
+}
+.grid {
+  column-gap: 1rem;
+}
+@media only screen and (max-width: 388px) {
+  .grid {
+    row-gap: 1rem;
+  }
+  .rect {
+    overflow: "hidden";
+  }
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
+  }
+  .rect {
+    overflow: hidden;
+  }
+}
+
+/* Small devices (389px to 575px) */
+@media only screen and (min-width: 389px) and (max-width: 575px) {
+  .grid {
+    row-gap: 2.5rem;
+  }
+  .rect {
+    overflow: "hidden";
+  }
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
+  }
+  .rect {
+    overflow: hidden;
+  }
+}
+
+/* Medium devices (576px to 767px) */
+@media only screen and (min-width: 576px) and (max-width: 770px) {
+  .grid {
+    row-gap: 2.5rem;
+  }
+  .rect .bike {
+    position: absolute;
+    transform: translate(10%, 10%);
+  }
+}
+
+/* Large devices (768px to 991px) */
+@media only screen and (min-width: 771px) and (max-width: 991px) {
+}
+
+/* Extra large devices (992px to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+}
+
+/* Extra extra large devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+  .container {
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+  }
+}

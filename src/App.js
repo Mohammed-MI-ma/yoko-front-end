@@ -43,6 +43,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPage = lazy(() => import("./pages/MarketPage"));
 const MarketPageBeauty = lazy(() => import("./pages/MarketPageBeauty"));
 const MarketPageKitchen = lazy(() => import("./pages/MarketPageKitchen"));
+const CartPage = lazy(() => import("./pages/CartPage"));
 
 const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFoodPage"));
 const YOKOEatPage = lazy(() => import("./pages/YOKOEatPage"));
@@ -233,6 +234,24 @@ function App() {
                   }
                 >
                   <YOKOEatPage language={language} />
+                </Suspense>
+              }
+            />{" "}
+            <Route
+              path={`/web/guest/cart`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <CartPage language={language} />
                 </Suspense>
               }
             />
