@@ -17,8 +17,8 @@ const initialState = {
   specificObject: {
     name: "",
     description: "",
-    category: "Kitchen",
-    brand: "Lesieur",
+    category: "Grocery Essentials",
+    brand: "Afia",
     variants: [
       {
         attributes: {},
@@ -89,7 +89,7 @@ const productSlice = createSlice({
         state.error = null;
         state.products = action.payload;
         state.totalPages = Math.ceil(
-          action.payload.data.length / ITEMS_PER_PAGE
+          action.payload.data?.length / ITEMS_PER_PAGE
         );
       })
       .addCase(searchProductMeiliSearch.rejected, (state, action) => {

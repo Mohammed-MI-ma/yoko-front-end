@@ -10,7 +10,6 @@ import CenteredContainer from "../CenteredContainer";
 import { searchProductMeiliSearch } from "../../reducers/applicationService/product/productActions";
 import useFontFamily from "../../utils/useFontFamily";
 import style from "./ProductSearchEngine.module.css";
-import { setIsAllowedToAddNewDeliveryBoy } from "../../reducers/applicationService/delivery/deliverySlice";
 import { setIsAllowedToAddNewProduct } from "../../reducers/applicationService/product/productSlice";
 
 const ProductSearchEngine = ({ searchTerm, setSearchTerm }) => {

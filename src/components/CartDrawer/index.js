@@ -50,7 +50,7 @@ const CartDrawer = ({ openCart, onCloseCart }) => {
             borderRadius: "var(--border-radius-large)",
           }}
         >
-          {cart.length > 0 ? (
+          {cart?.length > 0 ? (
             cart?.map((e) => {
               let variantRecovered = {};
               for (let i = 0; i < e.product?.variants?.length; i++) {
@@ -58,7 +58,6 @@ const CartDrawer = ({ openCart, onCloseCart }) => {
                   variantRecovered = e?.product?.variants[i];
                 }
               }
-              console.log("variantRecovered", variantRecovered?.images);
               return (
                 <>
                   <div className="border rounded flex gap-5 p-5 m-2">

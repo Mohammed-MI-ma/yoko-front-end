@@ -1,16 +1,32 @@
 import { Avatar } from "antd";
+/*
+FRUITS: "Fruits",
+  VEGETABLES_HERBS: "Vegetables & Herbs",
+  BUTCHERY_POULTRY: "Butchery & Poultry",
+  FISHERY: "Fishery",
+  BREAD: "Bread",
+  BAKERY: "Bakery",
+  GROCERY: "Grocery Essentials",
+  DAIRY_EGGS: "Dairy & Eggs",
+  CHEESE_CHARCUTERIE: "Cheese & Charcuterie",
+  SODAS_APPETIZERS: "Sodas & Non-Alcoholic Appetizers",
+  WATERS_COLD_DRINKS: "Waters & Cold Drinks",
+  HEALTHY_LIFESTYLE: "Healthy Lifestyle",
+  SALTY_SNACKS: "Salty Snacks",
+  SWEET_TREATS: "Sweet Treats",
+  ICE_CREAM_ICE_CUBES: "Ice Cream & Ice Cubes",*/
 
 export const productOptions = [
-  { value: "Clothing", index: 1, disabled: true },
-  { value: "Kitchen", index: 2, disabled: false },
-  { value: "Books", index: 3, disabled: false },
-  { value: "Beauty", index: 4, disabled: false },
+  { value: "Fruits", index: 1, disabled: false },
+  { value: "Vegetables & Herbs", index: 2, disabled: false },
+  { value: "Butchery & Poultry", index: 3, disabled: false },
+  { value: "Fishery", index: 4, disabled: false },
 ];
 export const productOptionsExtension = [
-  { value: "Electronics", index: 5, disabled: true },
-  { value: "Decor", index: 6, disabled: true },
-  { value: "Toys", index: 7, disabled: true },
-  { value: "Sports", index: 8, disabled: true },
+  { value: "Bread", index: 5, disabled: false },
+  { value: "Bakery", index: 6, disabled: false },
+  { value: "Grocery Essentials", index: 7, disabled: false },
+  { value: "Dairy & Eggs", index: 8, disabled: false },
 ];
 
 export const TemplateProduct = ({ text, icon }) => {

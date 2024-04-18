@@ -3,12 +3,8 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { useSelector } from "react-redux";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { FaTrash } from "react-icons/fa";
-import { IoIosAdd } from "react-icons/io";
-import { FiMinus } from "react-icons/fi";
 
-import { Button, ConfigProvider, Divider, Empty, Image, message } from "antd";
+import { Button, ConfigProvider, Divider, Empty } from "antd";
 import { MdDashboard } from "react-icons/md";
 import style from "./cartPage.module.css";
 import useDirection from "../../utils/useDirection";

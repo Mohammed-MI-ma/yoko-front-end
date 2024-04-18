@@ -106,7 +106,7 @@ const AdminLoginPage = ({ fixedHeight }) => {
   };
 
   useEffect(() => {
-    if (otp.length === 6) {
+    if (otp?.length === 6) {
       dispatch(setUserLoginPending());
 
       axios

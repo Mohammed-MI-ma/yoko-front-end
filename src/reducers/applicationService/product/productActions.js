@@ -12,7 +12,8 @@ export const searchProductMeiliSearch = createAsyncThunk(
     };
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/search?query=${query}`,
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/product/search`,
+        { query, category: "market" },
         config
       );
 

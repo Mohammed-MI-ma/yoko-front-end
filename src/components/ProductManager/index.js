@@ -1,48 +1,49 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Button, ConfigProvider, List, Tabs, Avatar } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+
 import ProductSearchEngine from "../ProductSearchEngine";
 import CenteredContainer from "../CenteredContainer";
-import { useDispatch, useSelector } from "react-redux";
-import { PlusOutlined } from "@ant-design/icons";
+
 import useFontFamily from "../../utils/useFontFamily";
-import style from "./ProductManager.module.css";
 import { searchProductMeiliSearch } from "../../reducers/applicationService/product/productActions";
 import ProductEditionDrawer from "../ProductEditionDrawer";
 import ProductAddDrawer from "../ProductAddDrawer";
 
+import style from "./ProductManager.module.css";
+
 const ProductManager = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const handleClearSearch = () => {
-    setSearchTerm("");
-  };
   const { data } = useSelector((state) => state.product.products);
 
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
+  //___IS ALLOWED TO ADD NEW PRODUCT__STATE
+  const [searchTerm, setSearchTerm] = useState("");
   const isAllowedToAddNewProduct = useSelector(
     (state) => state.product.isAllowedToAddNewProduct
   );
+  const handleClearSearch = () => setSearchTerm("");
 
-  const [childrenDrawer, setChildrenDrawer] = useState(false);
-
-  const [childrenDrawerNewProduct, setChildrenDrawerNewProduct] =
-    useState(false);
-  const closeDrawerEDitFunction = () => {
-    setChildrenDrawer(false);
-  };
   const onChildrenDrawerClose = () => {
     window.history.replaceState(null, "", `/yoko/account/dashboard`);
-
     setChildrenDrawer(false);
   };
+
   const closeDrawerFunction = () => {
     setChildrenDrawerNewProduct(false);
   };
+
+  //____ADD
+  const [childrenDrawerNewProduct, setChildrenDrawerNewProduct] =
+    useState(false);
+
+  //Handler For showing drawer add new product
   const showChildrenDrawerNewProduct = (e) => {
     window.history.replaceState(
       null,
@@ -51,14 +52,21 @@ const ProductManager = () => {
     );
     setChildrenDrawerNewProduct(true);
   };
+
+  //Handler For hiding drawer add new product
   const onChildrenDrawerNewProductClose = () => {
     window.history.replaceState(null, "", `/yoko/account/dashboard`);
     setChildrenDrawerNewProduct(false);
   };
+
+  //____UPDATE
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
+  const closeDrawerEDitFunction = () => setChildrenDrawer(false);
+
+  //SearchProduct
   const searchProduct = useCallback(() => {
     dispatch(searchProductMeiliSearch({ query: "", t }));
   }, [dispatch, t]);
-
   useEffect(() => {
     searchProduct();
   }, [searchProduct]);
@@ -165,7 +173,7 @@ const ProductManager = () => {
               </p>
             </footer>
           </CenteredContainer>
-        </div>{" "}
+        </div>
         <div className="flex-grow w-full ">
           <Tabs defaultActiveKey={1} items={items} />
         </div>

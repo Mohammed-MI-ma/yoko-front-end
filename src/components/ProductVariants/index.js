@@ -61,7 +61,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
       const updatedVariants = [...prevVariants];
       console.log("old", prevVariants);
       const removedElt = updatedVariants.splice(index, 1);
-      if (removedElt[0]?.images.length !== 0)
+      if (removedElt[0]?.images?.length !== 0)
         for (let i = 0; i < removedElt[0]?.images.length; i++) {
           const elt = removedElt[0]?.images[i];
           let config = {
@@ -92,7 +92,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
           marginTop: "var(--spacing-medium)",
         }}
       >
-        {variantsProduct.length}&nbsp; {t("variantes")}
+        {variantsProduct?.length}&nbsp; {t("variantes")}
       </Divider>
       <div className="border p-5 rounded ">
         {variantsProduct.map((variant, index) => (

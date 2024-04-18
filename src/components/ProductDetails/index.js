@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../utils/useFontFamily";
 import { useSelector } from "react-redux";
-
-import { GiClothes } from "react-icons/gi";
-import { MdSoupKitchen } from "react-icons/md";
-import { SiBookstack } from "react-icons/si";
-import { GiHealthNormal } from "react-icons/gi";
-import { MdOutlineSportsGymnastics } from "react-icons/md";
-import { MdToys } from "react-icons/md";
-import { FaCouch } from "react-icons/fa6";
+import {
+  GiFruitBowl,
+  GiHerbsBundle,
+  GiMeat,
+  GiAnglerFish,
+  GiSlicedBread,
+  GiOpenedFoodCan,
+  GiFriedEggs,
+} from "react-icons/gi";
 import { VscCircuitBoard } from "react-icons/vsc";
 
 import {
@@ -21,7 +22,7 @@ import {
 } from "../../utils/productUtils";
 import { Select } from "antd";
 import ProductsVariants from "../ProductVariants";
-import { Brands } from "./brands";
+import { Brands, UnBranded } from "./brands";
 
 const { TextArea } = Input;
 
@@ -67,12 +68,10 @@ const ProductDetails = ({ onSave, flag }) => {
   const options = productOptions.map((option) => ({
     label: getCategories(option.index, t),
     value: option.value,
-    disabled: option.disabled,
   }));
   const optionsExtension = productOptionsExtension.map((option) => ({
     label: getCategories(option.index, t),
     value: option.value,
-    disabled: option.disabled,
   }));
 
   useEffect(() => {
@@ -168,17 +167,32 @@ const ProductDetails = ({ onSave, flag }) => {
       <Label>{t("brand")}</Label>
       <Select
         name="brand"
-        defaultValue="Lesieur"
+        defaultValue="Afia"
         style={{
           width: "100%",
           fontFamily: fontFamilyLight,
         }}
         onChange={handleChange}
-        options={Brands.map((brand) => ({
-          value: brand.value,
-          label: brand.label,
-          disabled: brand.disabled,
-        }))}
+        options={[
+          {
+            label: <span>marqué</span>,
+            title: "marqué",
+            options: Brands.map((brand) => ({
+              value: brand.value,
+              label: brand.label,
+              disabled: brand.disabled,
+            })),
+          },
+          {
+            label: <span>produit sans marque</span>,
+            title: "produit sans marque",
+            options: UnBranded.map((brand) => ({
+              value: brand.value,
+              label: brand.label,
+              disabled: brand.disabled,
+            })),
+          },
+        ]}
       />
       <Label>{t("productName")}</Label>
       <Input
@@ -218,7 +232,6 @@ const ProductDetails = ({ onSave, flag }) => {
           options={options}
         />
         <Segmented
-          disabled
           name="category"
           value={product.category}
           onChange={handleChangeCategory}
@@ -252,27 +265,34 @@ export default ProductDetails;
 const getCategories = (id, t) => {
   switch (id) {
     case 1:
-      return <TemplateProduct text={t("Clothing")} icon={<GiClothes />} />;
+      return <TemplateProduct text={t("Fruits")} icon={<GiFruitBowl />} />;
     case 2:
-      return <TemplateProduct text={t("Kitchen")} icon={<MdSoupKitchen />} />;
-    case 3:
-      return <TemplateProduct text={t("Books")} icon={<SiBookstack />} />;
-    case 4:
-      return <TemplateProduct text={t("Beauty")} icon={<VscCircuitBoard />} />;
-    case 5:
-      return (
-        <TemplateProduct text={t("Electronics")} icon={<VscCircuitBoard />} />
-      );
-    case 6:
-      return <TemplateProduct text={t("Decor")} icon={<FaCouch />} />;
-    case 7:
-      return <TemplateProduct text={t("Toys")} icon={<MdToys />} />;
-    case 8:
       return (
         <TemplateProduct
-          text={t("Sports")}
-          icon={<MdOutlineSportsGymnastics />}
+          text={t("Vegetables & Herbs")}
+          icon={<GiHerbsBundle />}
         />
+      );
+    case 3:
+      return (
+        <TemplateProduct text={t("Butchery & Poultry")} icon={<GiMeat />} />
+      );
+    case 4:
+      return <TemplateProduct text={t("Fishery")} icon={<GiAnglerFish />} />;
+    case 5:
+      return <TemplateProduct text={t("Bread")} icon={<VscCircuitBoard />} />;
+    case 6:
+      return <TemplateProduct text={t("Bakery")} icon={<GiSlicedBread />} />;
+    case 7:
+      return (
+        <TemplateProduct
+          text={t("Grocery Essentials")}
+          icon={<GiOpenedFoodCan />}
+        />
+      );
+    case 8:
+      return (
+        <TemplateProduct text={t("Dairy & Eggs")} icon={<GiFriedEggs />} />
       );
     default:
       return "";

@@ -55,7 +55,7 @@ const deliverySlice = createSlice({
         state.error = null;
         state.deliveryBoys = action.payload;
         state.totalPages = Math.ceil(
-          action.payload.data.length / ITEMS_PER_PAGE
+          action.payload.data?.length / ITEMS_PER_PAGE
         );
       })
       .addCase(searchDeliveryBoyMeiliSearch.rejected, (state, action) => {

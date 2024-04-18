@@ -35,7 +35,7 @@ const TruncatedText = ({
   };
 
   const truncatedText = text.slice(0, maxLength);
-  const shouldDisplayButton = text.length > maxLength;
+  const shouldDisplayButton = text?.length > maxLength;
   const onChangeCheckBox = (e) => onChangeCheckBoxHandler(e.target.checked);
   return (
     <div>
