@@ -6,11 +6,10 @@ import { useTranslation } from "react-i18next";
 import { Carousel, ConfigProvider } from "antd";
 
 import FirstPage from "./FirstPage";
-
-//Styles
-import styles from "./CustomheroSection.module.css";
 import SecondPage from "./SecondPage";
 import ThirdPage from "./ThirdPage";
+
+import styles from "./CustomheroSection.module.css";
 
 const EnhancedHeroSection = () => {
   const language = useSelector((state) => state.application.language);
@@ -21,17 +20,16 @@ const EnhancedHeroSection = () => {
       if (!language || !t) return [];
       return [
         {
-          id: "yokoInCasa",
+          id: "FirstPage",
           component: <FirstPage />,
         },
         {
-          id: "yokoInCasa2",
+          id: "SecondPage",
           component: <SecondPage />,
         },
         {
-          id: "yokoInCasa3",
+          id: "ThirdPage",
           component: <ThirdPage />,
-          color: "var(--color-secondary)",
         },
       ];
     } catch (error) {
@@ -50,8 +48,8 @@ const EnhancedHeroSection = () => {
         },
       }}
     >
-      <section className="w-full mb-10">
-        <Carousel infinite autoplaySpeed={5000} autoplay>
+      <section className="w-full mb-10 ">
+        <Carousel infinite>
           {memoizedPages.map((page) => (
             <CarouselPage key={page.id}>{page.component}</CarouselPage>
           ))}

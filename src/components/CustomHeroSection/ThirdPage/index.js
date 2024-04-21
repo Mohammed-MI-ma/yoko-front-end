@@ -5,39 +5,34 @@ import CenteredContainer from "../../CenteredContainer";
 import { motion } from "framer-motion";
 import { LogoB } from "../../../images";
 import bucket2 from "../../../assets/images/bucket2.webp";
-import style from "./SecondPage.module.css";
+import style from "./ThirdPage.module.css";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
+import useFontFamily from "../../../utils/useFontFamily";
 
 const ThirdPage = () => {
   const language = useSelector((state) => state.application.language);
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
   const HeaderHeroMemoized = React.memo(() => (
-    <HeaderHero>
-      <div
-        style={{
-          maxWidth: "21.25rem",
-          textAlign: "center",
-          marginBottom: "2rem",
-        }}
-      >
-        {t("we have all you need")}
-      </div>
-    </HeaderHero>
+    <div
+      style={{
+        maxWidth: "21.25rem",
+        textAlign: "center",
+        fontSize: "1.5rem",
+        fontFamily: fontFamilyLight,
+        marginBottom: "2rem",
+        color: "white",
+      }}
+    >
+      {t("we have all you need")}
+    </div>
   ));
 
   return (
-    <HeroContainer
-      language={language}
-      style={{
-        overflow: "hidden",
-        position: "relative",
-        maxWidth: "75rem",
-        width: "100%",
-      }}
-    >
+    <HeroContainer language={language} className={style.heroContainer}>
       <CenteredContainer
         style={{
           height: "100%",
@@ -45,7 +40,7 @@ const ThirdPage = () => {
         }}
         className={style.imageContainer}
       >
-        <AnimatedImage src={bucket2} className={style.van}></AnimatedImage>
+        <img src={bucket2} alt="bucket2" style={{ width: "80%" }} />
       </CenteredContainer>
       <div
         style={{ background: "var(--color-secondary)" }}
