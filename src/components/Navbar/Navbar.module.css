@@ -16,8 +16,7 @@
   display: none;
 }
 .logoImage {
-  width: 140px;
-  height: 46px;
+  width: 120px;
 }
 .reverse {
   flex-direction: row-reverse;

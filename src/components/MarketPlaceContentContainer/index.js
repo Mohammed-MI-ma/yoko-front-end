@@ -64,25 +64,30 @@ const MarketPlaceContentContainer = ({ onSearch, currentPage }) => {
                   category: null,
                 },
                 {
-                  title: t("Cuisine"),
-                  category: "Kitchen",
-                  toPage: "/web/guest/market/Kitchen",
+                  title: t("Fruits"),
+                  category: "Fruits",
+                  toPage: "/web/guest/market/Fruits",
                 },
 
                 {
-                  title: t("Hygiéne, Beauté"),
-                  category: "Beauty",
-                  toPage: "/web/guest/market/Beauty",
+                  title: t("Vegetables&Herbs"),
+                  category: "Vegetables&Herbs",
+                  toPage: "/web/guest/market/Vegetables&Herbs",
                 },
                 {
-                  title: t("Entretien De La Maison"),
-                  category: "home",
-                  toPage: "/web/guest/market/Home",
+                  title: t("Hygiene&Beauty"),
+                  category: "Hygiene&Beauty",
+                  toPage: "/web/guest/market/Hygiene&Beauty",
                 },
                 {
-                  title: t("Healthy Lifestyle"),
-                  category: "sports",
-                  toPage: "/web/guest/market/Sports",
+                  title: t("Housekeeping"),
+                  category: "Housekeeping",
+                  toPage: "/web/guest/market/Housekeeping",
+                },
+                {
+                  title: t("HealthyLifestyle"),
+                  category: "HealthyLifestyle",
+                  toPage: "/web/guest/market/HealthyLifestyle",
                 },
               ].map((props, index) => (
                 <MarketPlaceBriksComponent key={index} {...props} />

@@ -43,7 +43,7 @@ const Navbar = () => {
                 fontFamily: fontFamilylight,
               }}
             >
-              <Avatar
+              <img
                 className={style.logoImage}
                 src={Logo}
                 shape="square"

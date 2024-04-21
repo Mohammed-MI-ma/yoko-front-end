@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Divider, Input, Button, message } from "antd";
+import { Divider, Input, Button, message, Select } from "antd";
 import useFontFamily from "../../utils/useFontFamily";
 import { useTranslation } from "react-i18next";
 import { Label } from "../../utils/productUtils";
 import PicturesWall from "../PicturesWall";
 import axios from "axios";
 
-const ProductsVariants = ({ pushVariantsProduct, category }) => {
+const ProductsVariants = ({ pushVariantsProduct }) => {
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
@@ -28,7 +28,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
         "category",
         "brand",
         "sku",
-        "quantity",
+        // "quantity",
         "images",
         "price",
       ];
@@ -108,7 +108,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
               </h1>
             </div>
             <div>
-              <Label htmlFor={`sku-${index}`}>{t("SKU")}</Label>
+              <Label htmlFor={`sku-${index}`}>{t("SKU")}/référence</Label>
 
               <Input
                 id={`sku-${index}`}
@@ -120,10 +120,8 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
                 cols={50}
               />
             </div>
-
             <div>
               <Label>{t("Price")}</Label>
-
               <Input
                 type="number"
                 allowClear
@@ -136,7 +134,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
                 cols={50}
               />
             </div>
-            <div>
+            {/*<div>
               <Label>{t("Quantité en stock")}</Label>
               <Input
                 name="quantity"
@@ -148,7 +146,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
                 rows={4}
                 cols={50}
               />
-            </div>
+              </div>*/}
             <Divider
               style={{
                 fontFamily: fontFamilyLight,
@@ -158,6 +156,27 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
             >
               Attributs
             </Divider>
+            <div>
+              <Label>{t("unité")}</Label>
+              <Select
+                name="unit"
+                defaultValue="gramme"
+                style={{
+                  width: "100%",
+                }}
+                onChange={(value) => handleVariantChange(index, "unit", value)}
+                options={[
+                  {
+                    value: "gramme",
+                    label: "gramme",
+                  },
+                  {
+                    value: "litre",
+                    label: "litre",
+                  },
+                ]}
+              />
+            </div>
             <div>
               <Label>{t("capacité")}</Label>
               <Input
@@ -171,6 +190,7 @@ const ProductsVariants = ({ pushVariantsProduct, category }) => {
                 cols={50}
               />
             </div>
+
             <Label>
               {t("Images du produit ( au maximum 3, au plus 300kb chacune )")}
             </Label>

@@ -8,6 +8,10 @@
   font-family: "MontserratSemiBold";
   font-size: 10px;
 }
+
+.city {
+  display: block;
+}
 .largeScreens {
   display: none !important;
 }
@@ -20,6 +24,9 @@
   .smallScreens {
     display: block !important;
   }
+  .city {
+    display: none;
+  }
 }
 
 /* Styles for small devices (tablets) */
@@ -27,6 +34,9 @@
   /* Your CSS styles here */
   .smallScreens {
     display: block !important;
+  }
+  .city {
+    display: none;
   }
 }
 
@@ -37,6 +47,9 @@
   }
   .smallScreens {
     display: none !important;
+  }
+  .city {
+    display: none;
   }
 }
 

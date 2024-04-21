@@ -10,7 +10,6 @@ import {
   Collapse,
   ConfigProvider,
   Layout,
-  List,
   Slider,
 } from "antd";
 import { MdDashboard } from "react-icons/md";
@@ -18,45 +17,25 @@ import { MdDashboard } from "react-icons/md";
 import { Brands } from "../../components/ProductDetails/brands";
 import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import SideList from "../../components/SideList";
+import BreadCrumbContent from "../../components/BreadCrumbContent";
 
-const MarketPageKitchen = () => {
+const MarketPageButcheryPoultry = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  const { Header, Sider, Content } = Layout;
+  const { Header, Sider } = Layout;
   const location = useLocation();
   const path = location.pathname;
   const lastItem = path.substring(path.lastIndexOf("/") + 1);
-  const data = ["market", "Kitchen", "Beauty"];
-  const navigate = useNavigate();
   const items = [
     {
       key: "1",
       label: <SiderStyleLabel font={fontFamilyBold}>Sections</SiderStyleLabel>,
-      children: (
-        <List
-          bordered
-          dataSource={data}
-          renderItem={(item) => (
-            <>
-              <Button
-                type="text"
-                onClick={() =>
-                  item === "market"
-                    ? navigate(`/web/guest/market`)
-                    : navigate(`/web/guest/market/${item}`)
-                }
-              >
-                {lastItem === item ? <b> {t(item)}</b> : t(item)}
-              </Button>
-              <br />
-            </>
-          )}
-        />
-      ),
+      children: <SideList />,
     },
     {
       key: "2",
@@ -102,11 +81,6 @@ const MarketPageKitchen = () => {
     height: 64,
     backgroundColor: "white",
   };
-  const contentStyle = {
-    textAlign: "center",
-    color: "#fff",
-    background: "white",
-  };
   const siderStyle = {
     color: "#fff",
     backgroundColor: "white",
@@ -131,29 +105,11 @@ const MarketPageKitchen = () => {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {}, [searchTerm]);
 
   return (
     <>
       <BreadCrumb language={language}>
-        <h1
-          style={{
-            fontSize: "2rem",
-            color: "var(--color-accent)",
-            fontWeight: 700,
-            fontFamily: fontFamilyBold,
-          }}
-        >
-          <span
-            style={{
-              color: "var(--color-primary)",
-            }}
-          >
-            {t("YOKO")}
-          </span>
-          &nbsp;{t("Market")}
-          <small> - {t(lastItem)}</small>
-        </h1>
+        <BreadCrumbContent />
       </BreadCrumb>
       <div className={`flex flex-col`} style={containerStyles}>
         <Breadcrumb
@@ -199,7 +155,7 @@ const MarketPageKitchen = () => {
                 },
               }}
             >
-              <Layout style={layoutStyle}>
+              <Layout style={{ ...layoutStyle, backgroundColor: "white" }}>
                 <Sider width="20%" style={siderStyle}>
                   <Collapse
                     items={items}
@@ -229,7 +185,8 @@ const MarketPageKitchen = () => {
   );
 };
 
-export default MarketPageKitchen;
+export default MarketPageButcheryPoultry;
+
 export const SiderStyleLabel = ({ font, children }) => {
   return (
     <div

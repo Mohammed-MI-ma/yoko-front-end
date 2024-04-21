@@ -1,36 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-
 import BreadCrumb from "../../components/BreadCrumb";
+import { useSelector } from "react-redux";
 import useFontFamily from "../../utils/useFontFamily";
-
-//ICONS
-import { GiPayMoney } from "react-icons/gi";
-import { TbBrandAbstract } from "react-icons/tb";
-import { MdFeedback, MdDashboard } from "react-icons/md";
-
+import { useTranslation } from "react-i18next";
 import {
   Breadcrumb,
   Button,
   Checkbox,
   Collapse,
   ConfigProvider,
-  Flex,
   Layout,
   Slider,
 } from "antd";
+import { MdDashboard } from "react-icons/md";
+
 import { Brands } from "../../components/ProductDetails/brands";
 import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
-import BreadCrumbContent from "../../components/BreadCrumbContent";
+import { useLocation } from "react-router-dom";
 import SideList from "../../components/SideList";
+import BreadCrumbContent from "../../components/BreadCrumbContent";
 
-import style from "./marketPage.module.css";
-import MarketMenuMobile from "../../components/MarketMenuMobile";
-
-const MarketPage = () => {
+const MarketPageFruits = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
@@ -40,7 +31,6 @@ const MarketPage = () => {
   const location = useLocation();
   const path = location.pathname;
   const lastItem = path.substring(path.lastIndexOf("/") + 1);
-
   const items = [
     {
       key: "1",
@@ -62,7 +52,7 @@ const MarketPage = () => {
             onChange={null}
             onChangeComplete={null}
           />
-          <Button style={{ width: "100%" }}>Filtrer</Button>
+          <Button style={{ width: "100%" }}> Filtrer</Button>
         </>
       ),
     },
@@ -91,7 +81,6 @@ const MarketPage = () => {
     height: 64,
     backgroundColor: "white",
   };
-
   const siderStyle = {
     color: "#fff",
     backgroundColor: "white",
@@ -116,7 +105,6 @@ const MarketPage = () => {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {}, [searchTerm]);
 
   return (
     <>
@@ -168,11 +156,7 @@ const MarketPage = () => {
               }}
             >
               <Layout style={{ ...layoutStyle, backgroundColor: "white" }}>
-                <Sider
-                  width="20%"
-                  style={siderStyle}
-                  className={style.siderStyle}
-                >
+                <Sider width="20%" style={siderStyle}>
                   <Collapse
                     items={items}
                     defaultActiveKey={["1"]}
@@ -197,13 +181,11 @@ const MarketPage = () => {
           </div>
         </div>
       </div>
-      {/**Mobile menu */}
-      <MarketMenuMobile />
     </>
   );
 };
 
-export default MarketPage;
+export default MarketPageFruits;
 export const SiderStyleLabel = ({ font, children }) => {
   return (
     <div

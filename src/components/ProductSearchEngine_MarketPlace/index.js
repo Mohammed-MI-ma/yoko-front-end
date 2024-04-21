@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Input } from "antd";
 import { useDispatch } from "react-redux";
+
+import { Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { FaSearch } from "react-icons/fa";
 
@@ -32,7 +33,6 @@ const ProductSearchEngineMarketPlace = ({
   );
 
   useEffect(() => {
-    console.log("taboni");
     dispatch(
       searchProductMeiliSearchByCategory({
         query: "",
@@ -43,14 +43,12 @@ const ProductSearchEngineMarketPlace = ({
   }, [customPrefix, t]);
 
   useEffect(() => {
-    // Vérifie si searchTerm est vide
     if (searchTerm === "") {
-      // Dispatchez votre action ici lorsque searchTerm est vide
       dispatch(setIsAllowedToAddNewProduct(false));
     } else {
       dispatch(setIsAllowedToAddNewProduct(true));
     }
-  }, [dispatch, searchTerm]); // searchTerm est une dépendance de l'effet useEffect
+  }, [dispatch, searchTerm]);
 
   const memoizedTranslations = useMemo(() => {
     return {
@@ -58,20 +56,21 @@ const ProductSearchEngineMarketPlace = ({
       poweredByMeiliSearch: t("poweredByMeiliSearch"),
     };
   }, [t]);
+
   return (
     <section className={"w-full"}>
       <Input
         prefix={
           <>
             <FaSearch />
-            &nbsp;/{t(customPrefix)}
+            &nbsp;<p style={{ fontSize: ".75rem" }}>/{t(customPrefix)}</p>
           </>
         }
         allowClear
         size="large"
         placeholder={memoizedTranslations.placeholder}
         style={{
-          borderRadius: "100px",
+          borderRadius: "6.25rem",
           fontFamily: fontFamilyLight,
         }}
         onChange={(e) => handleSearch(e.target.value)}

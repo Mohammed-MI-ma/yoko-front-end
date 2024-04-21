@@ -41,8 +41,17 @@ import { setCart } from "./reducers/applicationService/marketPlace/marketPlaceSl
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPage = lazy(() => import("./pages/MarketPage"));
-const MarketPageBeauty = lazy(() => import("./pages/MarketPageBeauty"));
-const MarketPageKitchen = lazy(() => import("./pages/MarketPageKitchen"));
+
+//MARKET_PLACE
+const MarketPageFruits = lazy(() => import("./pages/MarketPageFruits"));
+const MarketPageVegetablesHerbs = lazy(() =>
+  import("./pages/MarketPageVegetables&Herbs")
+);
+const MarketPageButcheryPoultry = lazy(() =>
+  import("./pages/MarketPageButchery&Poultry")
+);
+const MarketPageFishery = lazy(() => import("./pages/MarketPageFishery"));
+
 const CartPage = lazy(() => import("./pages/CartPage"));
 
 const TraditionalFoodPage = lazy(() => import("./pages/TraditionalFoodPage"));
@@ -277,6 +286,7 @@ function App() {
                 </Suspense>
               }
             />
+            {/**___MARKET_PLACE___ */}
             <Route
               path={`/web/guest/market`}
               element={
@@ -303,8 +313,9 @@ function App() {
                 </Suspense>
               }
             />
+            {/**___FRUITS___ */}
             <Route
-              path={`/web/guest/market/beauty`}
+              path={`/web/guest/market/Fruits`}
               element={
                 <Suspense
                   fallback={
@@ -317,20 +328,20 @@ function App() {
                     />
                   }
                 >
-                  {" "}
                   <motion.div
                     initial={{ opacity: 0 }} // Initial animation state
                     animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
                     exit={{ opacity: 0 }} // Animation when component exits
-                    key="beauty" // Add a unique key
+                    key="Fruits"
                   >
-                    <MarketPageBeauty />
+                    <MarketPageFruits />
                   </motion.div>
                 </Suspense>
               }
-            />{" "}
+            />
+            {/**___Vegetables&Herbs___ */}
             <Route
-              path={`/web/guest/market/Kitchen`}
+              path={`/web/guest/market/Vegetables&Herbs`}
               element={
                 <Suspense
                   fallback={
@@ -348,9 +359,62 @@ function App() {
                     initial={{ opacity: 0 }} // Initial animation state
                     animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
                     exit={{ opacity: 0 }} // Animation when component exits
-                    key="Kitchen" // Add a unique key
+                    key="VegetablesHerbs" // Add a unique key
                   >
-                    <MarketPageKitchen />
+                    <MarketPageVegetablesHerbs />
+                  </motion.div>
+                </Suspense>
+              }
+            />
+            {/**___Butchery&Poultry___ */}
+            <Route
+              path={`/web/guest/market/Butchery&Poultry`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  {" "}
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="VegetablesHerbs" // Add a unique key
+                  >
+                    <MarketPageButcheryPoultry />
+                  </motion.div>
+                </Suspense>
+              }
+            />
+            {/**___Fishery___ */}
+            <Route
+              path={`/web/guest/market/Fishery`}
+              element={
+                <Suspense
+                  fallback={
+                    <Spin
+                      spinning
+                      fullscreen
+                      indicator={
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                      }
+                    />
+                  }
+                >
+                  <motion.div
+                    initial={{ opacity: 0 }} // Initial animation state
+                    animate={{ opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+                    exit={{ opacity: 0 }} // Animation when component exits
+                    key="VegetablesHerbs" // Add a unique key
+                  >
+                    <MarketPageFishery />
                   </motion.div>
                 </Suspense>
               }

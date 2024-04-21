@@ -15,6 +15,8 @@ import ProdutCartModal from "../ProdutCartModal";
 const CardProduct = ({ key, product }) => {
   const { i18n } = useTranslation();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
 
@@ -61,8 +63,16 @@ const CardProduct = ({ key, product }) => {
       >
         <p
           style={{
-            margin: "1rem",
             fontFamily: fontFamilyBold,
+            fontSize: "var(--font-small-size)",
+          }}
+        >
+          {product?.name.slice(0, 60)}
+        </p>
+        <p
+          style={{
+            margin: "1rem",
+            fontFamily: fontFamilyLight,
             fontSize: "var(--font-small-size)",
           }}
         >
@@ -98,21 +108,25 @@ const CardProduct = ({ key, product }) => {
                   <DashboardOutlined />
                 </Button>
               )}
-              <Button
-                shape="circle"
-                className="flex items-center justify-center "
-                style={{ border: "1px solid var(--color-primary)" }}
-              >
-                <HeartOutlined />
-              </Button>
-              <Button
-                onClick={() => setIsModalOpen(true)}
-                shape="circle"
-                className="flex items-center justify-center "
-                style={{ border: "1px solid black" }}
-              >
-                <ShoppingCartOutlined />
-              </Button>
+              {user?.role !== "admin" && (
+                <>
+                  <Button
+                    shape="circle"
+                    className="flex items-center justify-center "
+                    style={{ border: "1px solid var(--color-primary)" }}
+                  >
+                    <HeartOutlined />
+                  </Button>
+                  <Button
+                    onClick={() => setIsModalOpen(true)}
+                    shape="circle"
+                    className="flex items-center justify-center "
+                    style={{ border: "1px solid black" }}
+                  >
+                    <ShoppingCartOutlined />
+                  </Button>
+                </>
+              )}
             </CenteredContainer>
           )}
         </div>

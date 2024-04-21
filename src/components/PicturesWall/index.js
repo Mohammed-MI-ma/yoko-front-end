@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Image, Upload, message } from "antd";
-import { useTranslation } from "react-i18next";
-import useFontFamily from "../../utils/useFontFamily";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -12,11 +10,8 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 const PicturesWall = ({ handleVariantChange, index }) => {
-  const { t, i18n } = useTranslation();
   const [previewOpen, setPreviewOpen] = useState(false);
-  const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const [previewImage, setPreviewImage] = useState("");
-  const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
 
   const handlePreview = async (file) => {
@@ -28,7 +23,6 @@ const PicturesWall = ({ handleVariantChange, index }) => {
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   useEffect(() => {
-    console.log(fileList);
     handleVariantChangeHandler();
   }, [fileList]);
 
@@ -56,20 +50,22 @@ const PicturesWall = ({ handleVariantChange, index }) => {
   const onRemove = (file) => {
     const index = fileList.indexOf(file);
     const newFileList = fileList.slice();
-    console.log("qsdqsds", file.name);
     newFileList.splice(index, 1);
     setFileList(newFileList);
   };
   const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+    const isJpgOrPngOrWebp =
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/webp";
+    if (!isJpgOrPngOrWebp) {
+      message.error("You can only upload JPG/PNG/Webp file!");
     }
     const isLt300Kb = file.size / 1024 < 300;
     if (!isLt300Kb) {
       message.error("Image must be smaller than 300KB!");
     }
-    return isJpgOrPng && isLt300Kb;
+    return isJpgOrPngOrWebp && isLt300Kb;
   };
   return (
     <>

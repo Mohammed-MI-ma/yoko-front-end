@@ -100,13 +100,25 @@ const ProductManager = () => {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    <Avatar
-                      src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
-                    />
+                    <>
+                      <img
+                        width={"50px"}
+                        src={
+                          item?.variants[0]?.images[0]?.response?.downloadURL
+                        }
+                        alt={`product thumnail ${index}`}
+                        className="rounded"
+                      />
+                    </>
                   }
                   title={
                     <h1 style={{ fontFamily: fontFamilyBold }}>
-                      {item?.brand}&nbsp;
+                      {item?.brand === "Sans Marque" ? (
+                        <>{item?.category}</>
+                      ) : (
+                        item?.brand
+                      )}
+                      &nbsp;
                     </h1>
                   }
                   description={<>{item?.name}</>}

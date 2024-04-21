@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import { useSelector } from "react-redux";
 import useFontFamily from "../../utils/useFontFamily";
@@ -10,6 +10,7 @@ import style from "./cartPage.module.css";
 import useDirection from "../../utils/useDirection";
 import CenteredContainer from "../../components/CenteredContainer";
 import CartItem from "../../components/CartItem";
+import ProgressComponent from "../../components/ProgressComponent";
 
 const CartPage = () => {
   const { t, i18n } = useTranslation();
@@ -21,7 +22,16 @@ const CartPage = () => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
   const direction = useDirection(i18n.language);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <ConfigProvider
       theme={{
@@ -114,8 +124,9 @@ const CartPage = () => {
                         <div>TOTAL</div>
                         <div>6</div>
                       </div>
-                    </div>{" "}
+                    </div>
                     <Button
+                      onClick={showModal}
                       style={{
                         width: "100%",
                         background: "var(--color-primary)",
@@ -131,6 +142,11 @@ const CartPage = () => {
           </div>
         </div>
       </section>
+      <ProgressComponent
+        isModalOpen={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </ConfigProvider>
   );
 };

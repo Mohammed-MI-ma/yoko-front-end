@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Spin, Button, ConfigProvider, Space, Badge } from "antd";
+import {
+  Spin,
+  Button,
+  ConfigProvider,
+  Space,
+  Badge,
+  Dropdown,
+  Divider,
+} from "antd";
 import { useLocation } from "react-router-dom";
 import { FaCartArrowDown } from "react-icons/fa";
+import { FiMessageSquare } from "react-icons/fi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,7 +25,7 @@ import { setDrawerOpenSettings } from "../../reducers/applicationService/applica
 import { setDrawerOpenCart } from "../../reducers/applicationService/applicationSlice";
 
 import { useTransition } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 
 const SignUpButton = ({ text, font, icon }) => {
   return (
@@ -63,10 +72,10 @@ const NavbarActionsButtons = ({ font }) => {
   const fontFamilybold = useFontFamily(i18n.language, "bold");
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const cart = useSelector((state) => state.marketPlace.cartME);
-
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
 
+  const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const openSettings = () => {
     dispatch(setDrawerOpenSettings(true));
   };
@@ -108,7 +117,26 @@ const NavbarActionsButtons = ({ font }) => {
         break;
     }
   }, [location]);
-
+  const items = [
+    {
+      key: "1",
+      label: <p style={{ fontFamily: fontFamilyLight }}>{t("french")}</p>,
+    },
+    {
+      key: "2",
+      label: <p style={{ fontFamily: fontFamilyLight }}>{t("arabic")}</p>,
+    },
+  ];
+  const onClick = ({ key }) => {
+    switch (key) {
+      case "1":
+        break;
+      case "2":
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <Space>
       {isLoggedIn && (
@@ -135,7 +163,29 @@ const NavbarActionsButtons = ({ font }) => {
               </div>
             ) : (
               <>
-                {" "}
+                <div className={style.city}>
+                  <Dropdown
+                    menu={{
+                      items,
+                      onClick,
+                    }}
+                  >
+                    <Space
+                      style={{
+                        border: "1px solid black",
+                        padding: "15px",
+                        width: 146,
+                        height: 30,
+                        borderRadius: "100px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {true ? t("CASABLANCA") : t("french")}
+                      <DownOutlined />
+                    </Space>
+                  </Dropdown>
+                </div>
                 {user?.role === "admin" && (
                   <CenteredContainer className={"flex-col"}>
                     <p style={{ fontSize: "var(--font-tiny-size)" }}>Mode</p>
@@ -155,20 +205,38 @@ const NavbarActionsButtons = ({ font }) => {
                 )}
               </>
             )}
-            <Badge count={cart?.length}>
-              <Button
-                onClick={openPanierDrawer}
-                className="rounded-full text-white border-none "
-                size="large"
-                style={{
-                  fontFamily: fontFamilybold,
-                  background: "var(--color-secondary)",
-                  color: "white",
-                }}
-              >
-                <FaCartArrowDown size={"20px"} />
-              </Button>
-            </Badge>
+            {user?.role !== "admin" && (
+              <>
+                <Badge count={cart?.length}>
+                  <Button
+                    onClick={openPanierDrawer}
+                    className="rounded-full text-white border-none "
+                    size="large"
+                    style={{
+                      fontFamily: fontFamilybold,
+                      background: "var(--color-secondary)",
+                      color: "white",
+                    }}
+                  >
+                    <FaCartArrowDown size={"20px"} />
+                  </Button>
+                </Badge>
+                <Badge count={1}>
+                  <Button
+                    className="rounded-full text-white border-none "
+                    size="large"
+                    style={{
+                      fontFamily: fontFamilybold,
+                      background: "white",
+                      color: "var(--color-secondary)",
+                      border: "1px solid var(--color-secondary)",
+                    }}
+                  >
+                    <FiMessageSquare size={"20px"} />
+                  </Button>
+                </Badge>
+              </>
+            )}
             <Button
               onClick={openSettings}
               className="rounded-full text-white border-none "

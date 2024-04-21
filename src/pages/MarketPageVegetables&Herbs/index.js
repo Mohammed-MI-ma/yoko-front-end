@@ -9,58 +9,33 @@ import {
   Checkbox,
   Collapse,
   ConfigProvider,
-  Flex,
   Layout,
-  List,
   Slider,
 } from "antd";
 import { MdDashboard } from "react-icons/md";
-import { GiPayMoney } from "react-icons/gi";
-import { TbBrandAbstract } from "react-icons/tb";
-import { MdFeedback } from "react-icons/md";
+
 import { Brands } from "../../components/ProductDetails/brands";
 import ProductSearchEngineMarketPlace from "../../components/ProductSearchEngine_MarketPlace";
 import MarketPlaceContentContainer from "../../components/MarketPlaceContentContainer";
-import { useLocation, useNavigate } from "react-router-dom";
-import style from "./marketPage.module.css";
+import { useLocation } from "react-router-dom";
+import SideList from "../../components/SideList";
+import BreadCrumbContent from "../../components/BreadCrumbContent";
 
-const MarketPageBeauty = () => {
+const MarketPageVegetablesHerbs = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const dynamicWidth = useSelector((state) => state.application.dynamicWidth);
-  const { Header, Sider, Content } = Layout;
+  const { Header, Sider } = Layout;
   const location = useLocation();
   const path = location.pathname;
   const lastItem = path.substring(path.lastIndexOf("/") + 1);
-  const data = ["market", "Kitchen", "Beauty"];
-  const navigate = useNavigate();
   const items = [
     {
       key: "1",
       label: <SiderStyleLabel font={fontFamilyBold}>Sections</SiderStyleLabel>,
-      children: (
-        <List
-          bordered
-          dataSource={data}
-          renderItem={(item) => (
-            <>
-              <Button
-                type="text"
-                onClick={() =>
-                  item === "market"
-                    ? navigate(`/web/guest/market`)
-                    : navigate(`/web/guest/market/${item}`)
-                }
-              >
-                {lastItem === item ? <b> {t(item)}</b> : t(item)}
-              </Button>
-              <br />
-            </>
-          )}
-        />
-      ),
+      children: <SideList />,
     },
     {
       key: "2",
@@ -106,11 +81,6 @@ const MarketPageBeauty = () => {
     height: 64,
     backgroundColor: "white",
   };
-  const contentStyle = {
-    textAlign: "center",
-    color: "#fff",
-    background: "white",
-  };
   const siderStyle = {
     color: "#fff",
     backgroundColor: "white",
@@ -133,42 +103,13 @@ const MarketPageBeauty = () => {
     margin: "0 auto",
     borderRadius: "80px",
   };
-  const baseStyle = {
-    width: "25%",
-    height: "45px",
-    backgroundColor: "var(--color-secondary)",
-    margin: "5px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontFamily: fontFamilyLight,
-    color: "white",
-    borderRadius: "36.25rem",
-  };
+
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {}, [searchTerm]);
 
   return (
     <>
       <BreadCrumb language={language}>
-        <h1
-          style={{
-            fontSize: "2rem",
-            color: "var(--color-accent)",
-            fontWeight: 700,
-            fontFamily: fontFamilyBold,
-          }}
-        >
-          <span
-            style={{
-              color: "var(--color-primary)",
-            }}
-          >
-            {t("YOKO")}
-          </span>
-          &nbsp;{t("Market")}
-          <small> - {t(lastItem)}</small>
-        </h1>
+        <BreadCrumbContent />
       </BreadCrumb>
       <div className={`flex flex-col`} style={containerStyles}>
         <Breadcrumb
@@ -214,7 +155,7 @@ const MarketPageBeauty = () => {
                 },
               }}
             >
-              <Layout style={layoutStyle}>
+              <Layout style={{ ...layoutStyle, backgroundColor: "white" }}>
                 <Sider width="20%" style={siderStyle}>
                   <Collapse
                     items={items}
@@ -239,66 +180,13 @@ const MarketPageBeauty = () => {
             </ConfigProvider>
           </div>
         </div>
-      </div>{" "}
-      <Flex
-        horizontal
-        className={`${style.mobileSiderStyle} rounded bg-white shadow-lg border`}
-      >
-        <Button
-          shape="circle"
-          key={1}
-          style={{
-            ...baseStyle,
-          }}
-        >
-          <GiPayMoney />
-        </Button>
-        <Button
-          shape="circle"
-          key={2}
-          style={{
-            ...baseStyle,
-          }}
-        >
-          <MdDashboard />
-        </Button>
-        <Button
-          key={3}
-          style={{
-            ...baseStyle,
-            height: "50px",
-            width: "170px",
-            background: "white",
-            color: "black",
-          }}
-          className="bordered"
-        >
-          Commandes
-        </Button>
-        <Button
-          shape="circle"
-          key={4}
-          style={{
-            ...baseStyle,
-          }}
-        >
-          <TbBrandAbstract />
-        </Button>
-        <Button
-          shape="circle"
-          key={5}
-          style={{
-            ...baseStyle,
-          }}
-        >
-          <MdFeedback />
-        </Button>
-      </Flex>
+      </div>
     </>
   );
 };
 
-export default MarketPageBeauty;
+export default MarketPageVegetablesHerbs;
+
 export const SiderStyleLabel = ({ font, children }) => {
   return (
     <div

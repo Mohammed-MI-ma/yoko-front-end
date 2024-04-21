@@ -6,6 +6,8 @@ import { Breadcrumb, Divider, List, ConfigProvider, Result } from "antd";
 import useFontFamily from "../../utils/useFontFamily";
 
 import BreadCrumb from "../../components/BreadCrumb";
+import BreadCrumbContent from "../../components/BreadCrumbContent";
+import LeafletMap from "../../components/LeafletMap";
 
 const DeliveryBoyPage = ({
   fixedHeight,
@@ -53,7 +55,6 @@ const DeliveryBoyPage = ({
     width: dynamicWidth,
     height: fixedHeight || "auto",
     position: "relative",
-    backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${imageUrl})`,
     minHeight: "75vh",
     margin: "0 auto",
     borderRadius: "80px",
@@ -72,23 +73,7 @@ const DeliveryBoyPage = ({
   return (
     <>
       <BreadCrumb language={language}>
-        <h1
-          style={{
-            fontSize: "2rem",
-            color: "var(--color-accent)",
-            fontWeight: 700,
-            fontFamily: fontFamilyBold,
-          }}
-        >
-          <span
-            style={{
-              color: "var(--color-primary)",
-            }}
-          >
-            {t("YOKO")}
-          </span>
-          &nbsp;{t("livreur")}
-        </h1>
+        <BreadCrumbContent />
       </BreadCrumb>
       {isLoggedIn ? (
         <div className={`flex flex-col`} style={containerStyles}>
@@ -122,8 +107,11 @@ const DeliveryBoyPage = ({
           >
             <div
               style={{
+                position: "absolute",
                 display: "flex",
                 fontSize: "30px",
+                zIndex: 99999,
+                top: "1rem",
                 flexDirection: "column",
                 height: "max-content",
                 alignItems: "center",
@@ -143,10 +131,7 @@ const DeliveryBoyPage = ({
               </div>
             </div>
 
-            <div
-              className="flex-grow"
-              style={{ width: "inherit", padding: "5vw" }}
-            >
+            <div className="flex-grow" style={{ width: "100%" }}>
               <ConfigProvider
                 theme={{
                   token: {
@@ -160,23 +145,7 @@ const DeliveryBoyPage = ({
                   },
                 }}
               >
-                <List
-                  size={"small"}
-                  bordered
-                  pagination={{
-                    position: "bottom",
-                    align: "center",
-                  }}
-                  dataSource={data}
-                  renderItem={(item, index) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={<a>{item.title}</a>}
-                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                      />
-                    </List.Item>
-                  )}
-                />
+                <LeafletMap></LeafletMap>
               </ConfigProvider>
             </div>
           </div>
