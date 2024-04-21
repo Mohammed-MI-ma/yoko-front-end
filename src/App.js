@@ -13,6 +13,7 @@ import { loadFonts, loadImages } from "./services/functions/functions";
 import {
   ImageConfigsDelivery,
   ImageConfigsGeneral,
+  ImageConfigsAtterrissage,
   ImageConfigsHome,
   ImageConfigsLogin,
 } from "./config.dev";
@@ -38,9 +39,11 @@ import style from "./App.module.css";
 import { ROLE } from "./utils/roles";
 import CartDrawer from "./components/CartDrawer";
 import { setCart } from "./reducers/applicationService/marketPlace/marketPlaceSlice";
+import CustomSuspense from "./components/CustomSuspense";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPage = lazy(() => import("./pages/MarketPage"));
+const AtterrissagePage = lazy(() => import("./pages/AtterrissagePage"));
 
 //MARKET_PLACE
 const MarketPageFruits = lazy(() => import("./pages/MarketPageFruits"));
@@ -121,6 +124,9 @@ function App() {
           case "/":
             await Promise.all([loadImages(ImageConfigsHome)]);
             break;
+          case "web/guest/pageAtterrissage":
+            await Promise.all([loadImages(ImageConfigsAtterrissage)]);
+            break;
           case "/web/guest/acceuil":
             await Promise.all([loadImages(ImageConfigsHome)]);
             break;
@@ -181,33 +187,28 @@ function App() {
           <Navbar />
         </header>
         <AnimatePresence mode="wait">
-          {" "}
-          {/* Add AnimatePresence */}
           <Routes>
-            <Route path="/" element={<Navigate to={`/web/guest/acceuil`} />} />
+            {/**AtterissageRoute */}
+            <Route
+              path="/"
+              element={<Navigate to={`/web/guest/pageAtterrissage`} />}
+            />
+            {/**AtterissageRoute */}
+            <Route
+              path={`/web/guest/pageAtterrissage`}
+              element={
+                <CustomSuspense>
+                  <AtterrissagePage />
+                </CustomSuspense>
+              }
+            />
+            {/**Acceuil Route */}
             <Route
               path={`/web/guest/acceuil`}
               element={
-                <Suspense
-                  fallback={
-                    <Spin
-                      spinning
-                      fullscreen
-                      indicator={
-                        <LoadingOutlined style={{ fontSize: 24 }} spin />
-                      }
-                    />
-                  }
-                >
-                  <motion.div
-                    initial={{ opacity: 0 }} // Initial animation state
-                    animate={{ opacity: 1 }} // Animation when component enters
-                    exit={{ opacity: 0 }} // Animation when component exits
-                    key="homepage" // Add a unique key
-                  >
-                    <HomePage language={language} />
-                  </motion.div>{" "}
-                </Suspense>
+                <CustomSuspense>
+                  <HomePage language={language} />
+                </CustomSuspense>
               }
             />
             <Route
@@ -444,30 +445,22 @@ function App() {
             <Route
               path={`/yoko/account/log-in-admin`}
               element={
-                <Suspense
-                  fallback={
-                    <Spin
-                      spinning
-                      fullscreen
-                      indicator={
-                        <LoadingOutlined style={{ fontSize: 24 }} spin />
-                      }
-                    />
-                  }
-                >
+                <CustomSuspense>
                   <AdminLoginPage
                     language={language}
                     highDefinitionImgUrl={Rue_high}
                     backgroundImageUrl={Rue_low}
                   />
-                </Suspense>
+                </CustomSuspense>
               }
             />
             <Route
               path={`/yoko/account/dashboard`}
               element={
                 isAdminAuthenticated() ? (
-                  <DashboardPage />
+                  <CustomSuspense>
+                    <DashboardPage />
+                  </CustomSuspense>
                 ) : (
                   <Navigate to="/" replace />
                 )
@@ -476,22 +469,12 @@ function App() {
             <Route
               path="*"
               element={
-                <Suspense
-                  fallback={
-                    <Spin
-                      spinning
-                      fullscreen
-                      indicator={
-                        <LoadingOutlined style={{ fontSize: 24 }} spin />
-                      }
-                    />
-                  }
-                >
+                <CustomSuspense>
                   <NotFoundPage />
-                </Suspense>
+                </CustomSuspense>
               }
             />
-          </Routes>{" "}
+          </Routes>
         </AnimatePresence>
 
         <FloatButton.BackTop visibilityHeight={0} style={{ bottom: "100px" }} />

@@ -1,0 +1,112 @@
+.imageContainer {
+  width: 50%;
+  background-position: top;
+}
+.scooter {
+  position: absolute;
+  z-index: 99999;
+}
+.van {
+  width: 100%;
+}
+
+.yokoLogo {
+  transform: translateY(-50px);
+}
+.textContainer {
+  width: 50%;
+}
+@media only screen and (max-width: 388px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: bottom !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50% !important;
+    bottom: 0% !important;
+    transform: translate(-50%, -35%) !important;
+  }
+}
+
+/* Small devices (389px to 575px) */
+@media only screen and (min-width: 389px) and (max-width: 575px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: bottom !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, -35%) !important;
+  }
+}
+
+/* Medium devices (576px to 767px) */
+@media only screen and (min-width: 576px) and (max-width: 770px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: bottom !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, -35%) !important;
+  }
+}
+
+/* Large devices (768px to 991px) */
+@media only screen and (min-width: 771px) and (max-width: 991px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: right !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0%) !important;
+  }
+}
+
+/* Extra large devices (992px to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: right !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0%) !important;
+  }
+}
+
+/* Extra extra large devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+  .imageContainer {
+    width: 100% !important;
+    background-position: right !important;
+  }
+  .textContainer {
+    width: 100% !important;
+  }
+  .scooter {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -35%) !important;
+  }
+}

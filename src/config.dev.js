@@ -51,6 +51,14 @@ const ImageConfig = [
 ];
 //"/web/guest/acceuil"
 export const ImageConfigsGeneral = [{ uri: Logo }, { uri: LogoB }];
+
+//"/web/guest/pageAtterrissage"
+export const ImageConfigsAtterrissage = [
+  { uri: casablanca },
+  { uri: Bike_low },
+  { uri: LogoB },
+];
+
 //"/web/guest/acceuil"
 export const ImageConfigsHome = [
   { uri: glow },
