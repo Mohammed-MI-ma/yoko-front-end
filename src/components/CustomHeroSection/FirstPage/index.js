@@ -35,10 +35,7 @@ const FirstPage = () => {
 
   const HeroActionButtonMemoized = React.memo(() => (
     <Link to="/web/guest/market">
-      <ActionButton
-        font={fontFamilyBold}
-        style={{ background: "white", color: "var(--color-primary)" }}
-      >
+      <ActionButton font={fontFamilyLight}>
         {t("order delivery now")}
       </ActionButton>
     </Link>

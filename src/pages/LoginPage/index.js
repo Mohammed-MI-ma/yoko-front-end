@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { auth, provider } from "../../firebase";
+
 import { useTranslation } from "react-i18next";
 
 import { useNavigate } from "react-router-dom";
@@ -24,7 +26,8 @@ import {
 import useDirection from "../../utils/useDirection";
 import CenteredContainer from "../../components/CenteredContainer";
 import useFontFamily from "../../utils/useFontFamily";
-import { FaGoogle, FaFacebookF } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa6";
+
 import {
   setIsLoggedIn,
   setUserLoginFulfilled,
@@ -45,17 +48,21 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  const fontFamilylight = useFontFamily(i18n.language, "normal");
-  const fontFamilyBold = useFontFamily(i18n.language, "bold");
-  const direction = useDirection(i18n.language);
-
-  const [, setEmailExists] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  //__states
   const [email, setEmail] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [otp, setOtp] = useState("");
+
+  //__isLoggedIn
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  //__fonts
+  const fontFamilylight = useFontFamily(i18n.language, "normal");
+  const fontFamilyBold = useFontFamily(i18n.language, "bold");
+
+  //__direction
+  const direction = useDirection(i18n.language);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -63,26 +70,36 @@ const LoginPage = () => {
     }
   }, [isLoggedIn, navigate]);
 
-  const closeModal = () => {
-    setOtp("");
-    setModalOpen(false);
-  };
+  //__functions
 
+  //__1__InputEmail
   const handleEmailChange = (e) => {
     const { value } = e.target;
     setEmail(value);
     setIsValidEmail(validator.isEmail(value));
   };
 
-  const searchEmailInDatabase = async () => {
+  //__2__modalOTP
+  const closeModal = () => {
+    setOtp("");
+    setModalOpen(false);
+  };
+  //__3__sendOTP2Mail
+  const sendOtp = () => {
+    dispatch(sendOTP({ email, t }));
+  };
+
+  const isEmailExists = async () => {
     try {
+      //__Post_request (params: email,role:"user")
+
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
-        { email, role: "user" }
+        { email: email, role: "user" }
       );
+
       if (response.status === 200) {
         if (response.data.result) {
-          setEmailExists(true);
           message.success(t("userFoundSuccess"));
           sendOtp();
           setModalOpen(true);
@@ -110,11 +127,125 @@ const LoginPage = () => {
         // Something happened in setting up the request that triggered an error
         message.error("An error occurred", error.request);
       }
-      setEmailExists(false);
     }
   };
-  const sendOtp = () => {
-    dispatch(sendOTP({ email, t }));
+
+  const simpleSearchEmailInDatabase = async (myEmail) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
+        { email: myEmail, role: "user" }
+      );
+      if (response.status === 200) {
+        if (response.data.result) {
+          message.success(t("sorry alreadt existed"));
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          return false;
+        } else if (error.response.status === 429) {
+          // Too many requests
+          message.error(t("tooManyRequests"));
+          return false;
+        } else {
+          // Other server error
+          message.error(t("serverError", { status: error.response.status }));
+          return false;
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        message.error(t("serverUnreachable"));
+        return false;
+      } else {
+        // Something happened in setting up the request that triggered an error
+        message.error("An error occurred", error.request);
+        return false;
+      }
+    }
+  };
+  const revokeRefreshToken = async (accessToken) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/revokeRefreshTokens`,
+        { accessToken: accessToken }
+      );
+      if (response.status === 200) {
+        if (response.data.result) {
+          message.success(t("sorry alreadt existed"));
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          return false;
+        } else if (error.response.status === 429) {
+          // Too many requests
+          message.error(t("tooManyRequests"));
+          return false;
+        } else {
+          // Other server error
+          message.error(t("serverError", { status: error.response.status }));
+          return false;
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        message.error(t("serverUnreachable"));
+        return false;
+      } else {
+        // Something happened in setting up the request that triggered an error
+        message.error("An error occurred", error.request);
+        return false;
+      }
+    }
+  };
+
+  const signInWithGoogle = () => {
+    auth
+      .signInWithPopup(provider)
+      .then(async (result) => {
+        const accessToken = result.credential.accessToken;
+        console.log("Access Token:", accessToken);
+        const user = result.user;
+        console.log("User:", user);
+        const retrievedEmail = user?.email;
+
+        try {
+          const res = await simpleSearchEmailInDatabase(retrievedEmail);
+          if (res === true) {
+            const idToken = await user.getIdToken();
+            console.log("ID Token:", idToken);
+            const rsul = await revokeRefreshToken(idToken);
+
+            //revoke the access token on the backend endpoint so the token wont be reutilsbale elsewhere
+            //setLogin(false)
+          } else {
+            //add the user to the databse insert it and return a serialized user
+            //setLogin(true)
+          }
+        } catch (error) {
+          console.error("Error searching email in database:", error);
+        }
+
+        try {
+          const idToken = await user.getIdToken();
+          console.log("ID Token:", idToken);
+          // Use the ID token as needed
+        } catch (error) {
+          console.error("Error getting ID token:", error);
+        }
+      })
+      .catch((error) => {
+        // Handle sign-in errors
+        console.error("Sign-in error:", error);
+      });
   };
 
   useEffect(() => {
@@ -218,7 +349,7 @@ const LoginPage = () => {
                           fontFamily: fontFamilyBold,
                           color: "white",
                         }}
-                        onClick={searchEmailInDatabase} // Call searchEmailInDatabase function on button click
+                        onClick={isEmailExists} // Call searchEmailInDatabase function on button click
                       >
                         {t("continue")}
                       </Button>
@@ -231,6 +362,7 @@ const LoginPage = () => {
                         {t("orWith")}
                       </Divider>
                       <ButtonWithStyles
+                        onClickHandler={() => signInWithGoogle()}
                         icon={<FaGoogle />}
                         style={{
                           fontFamily: fontFamilylight,

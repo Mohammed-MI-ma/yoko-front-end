@@ -1,9 +1,7 @@
 import React from "react";
 import HeroContainer from "../HeroContainer";
-import HeaderHero from "../HeaderHero";
 import CenteredContainer from "../../CenteredContainer";
-import { LogoB, Bike_low } from "../../../images";
-import van from "../../../assets/images/Left.png";
+import { LogoB, Bike_low, Van } from "../../../images";
 import style from "./SecondPage.module.css";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -32,7 +30,7 @@ const SecondPage = () => {
   return (
     <HeroContainer language={language} className={style.heroContainer}>
       <CenteredContainer className={style.imageContainer}>
-        <img src={van} className={style.van} alt="van yoko" />
+        <img src={Van} className={style.van} alt="van yoko" />
       </CenteredContainer>
       <div
         style={{ background: "var(--color-secondary)" }}

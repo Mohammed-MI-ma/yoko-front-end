@@ -38,11 +38,7 @@ const CeravePage = () => {
     </HeroActionButton>
   ));
   return (
-    <HeroContainer
-      language={language}
-      bgColor={"rgb(134 255 93)"}
-      isGlow={false}
-    >
+    <HeroContainer language={language} bgColor={"rgb(134 255 93)"}>
       <main
         className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer}`}
       >

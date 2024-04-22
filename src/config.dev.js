@@ -1,10 +1,9 @@
 import {
   Logo,
-  glow,
   bucket,
   LogoB,
   casablanca,
-  scooter,
+  Van,
   basket,
   bucketMobile,
   YokoEat_low,
@@ -20,12 +19,12 @@ import {
   airfryer,
   ceraveLogo_low,
   cerave,
+  bucket3,
 } from "./images.js";
 
 const ImageConfig = [
   { uri: Logo },
-  //
-  { uri: glow },
+
   { uri: ceraveLogo_low },
   { uri: cerave },
 
@@ -35,7 +34,6 @@ const ImageConfig = [
   { uri: bucket },
   { uri: LogoB },
   { uri: casablanca },
-  { uri: scooter },
   { uri: basket },
   { uri: bucketMobile },
   { uri: YokoEat_low },
@@ -57,11 +55,12 @@ export const ImageConfigsAtterrissage = [
   { uri: casablanca },
   { uri: Bike_low },
   { uri: LogoB },
+  { uri: Van },
+  { uri: bucket3 },
 ];
 
 //"/web/guest/acceuil"
 export const ImageConfigsHome = [
-  { uri: glow },
   { uri: ceraveLogo_low },
   { uri: cerave },
   { uri: philips },

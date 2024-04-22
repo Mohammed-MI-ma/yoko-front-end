@@ -49,7 +49,7 @@ const EnhancedHeroSection = () => {
       }}
     >
       <section className="w-full mb-10 ">
-        <Carousel infinite>
+        <Carousel infinite autoplay>
           {memoizedPages.map((page) => (
             <CarouselPage key={page.id}>{page.component}</CarouselPage>
           ))}

@@ -11,7 +11,7 @@ const ProductsVariants = ({ pushVariantsProduct }) => {
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
   const [variantsProduct, setVariantsProduct] = useState([
-    { sku: "", attributes: {}, quantity: 0, images: [], price: "" },
+    { sku: "", attributes: {}, images: [], price: "" },
   ]);
 
   const addVariant = () => {
@@ -28,7 +28,6 @@ const ProductsVariants = ({ pushVariantsProduct }) => {
         "category",
         "brand",
         "sku",
-        // "quantity",
         "images",
         "price",
       ];
@@ -134,19 +133,7 @@ const ProductsVariants = ({ pushVariantsProduct }) => {
                 cols={50}
               />
             </div>
-            {/*<div>
-              <Label>{t("Quantité en stock")}</Label>
-              <Input
-                name="quantity"
-                allowClear
-                value={variant.size}
-                onChange={(e) =>
-                  handleVariantChange(index, "quantity", e.target.value)
-                }
-                rows={4}
-                cols={50}
-              />
-              </div>*/}
+
             <Divider
               style={{
                 fontFamily: fontFamilyLight,

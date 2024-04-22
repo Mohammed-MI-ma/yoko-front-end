@@ -222,7 +222,7 @@ const Footer = () => {
     >
       <footer
         className={`w-full `}
-        style={{ background: "var(--color-secondary)" }}
+        style={{ background: "var(--color-secondary)", marginTop: "200px" }}
       >
         <div>
           <div className={style.container}>

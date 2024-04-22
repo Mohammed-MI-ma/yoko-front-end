@@ -4,9 +4,6 @@ export const Logo =
 export const LogoB =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/logoB.png";
 
-// TODO: 137 kB
-export const glow =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/myGlow_low.png";
 // TODO: 28.2 kB
 export const ceraveLogo_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/yoko_assets/main/cerave_logo_low.png";
@@ -27,11 +24,13 @@ export const bucket =
 export const bucketMobile =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/basketMobileSquare.png";
 
+export const Van =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Left.webp";
+export const bucket3 =
+  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/bucket3.webp";
+
 export const casablanca =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/CASa.png";
-
-export const scooter =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/scooter.png";
 
 export const basket =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/54c86c0695344020b39470c6bdfdd967.jpeg";
@@ -79,6 +78,3 @@ export const Rue_high =
 
 export const Bike_low =
   "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Bike-low.png";
-
-export const Bike =
-  "https://raw.githubusercontent.com/Mohammed-MI-ma/assets-YOKO/main/Bike.png";

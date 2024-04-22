@@ -48,7 +48,6 @@ const ProductDetails = ({ onSave, flag }) => {
       {
         sku: "",
         attributes: {},
-        quantity: 0,
         price: 0,
         images: [],
       },
@@ -96,7 +95,6 @@ const ProductDetails = ({ onSave, flag }) => {
         {
           attributes: {},
           sku: "",
-          quantity: 0,
           images: [],
         },
       ],

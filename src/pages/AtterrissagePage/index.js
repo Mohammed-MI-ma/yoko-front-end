@@ -26,7 +26,7 @@ const AtterrissagePage = () => {
               fontFamily: fontFamilyBold,
               color: "var(--color-accent)",
               borderRadius: "3rem",
-              fontSize: "1.5rem",
+              fontSize: "1rem",
             }}
           >
             {t("SEE MORE")}

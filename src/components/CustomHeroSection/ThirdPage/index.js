@@ -1,10 +1,8 @@
 import React from "react";
 import HeroContainer from "../HeroContainer";
-import HeaderHero from "../HeaderHero";
 import CenteredContainer from "../../CenteredContainer";
 import { motion } from "framer-motion";
-import { LogoB } from "../../../images";
-import bucket2 from "../../../assets/images/bucket2.webp";
+import { LogoB, bucket3 } from "../../../images";
 import style from "./ThirdPage.module.css";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -40,7 +38,7 @@ const ThirdPage = () => {
         }}
         className={style.imageContainer}
       >
-        <img src={bucket2} alt="bucket2" style={{ width: "80%" }} />
+        <img src={bucket3} alt="bucket2" style={{ width: "80%" }} />
       </CenteredContainer>
       <div
         style={{ background: "var(--color-secondary)" }}

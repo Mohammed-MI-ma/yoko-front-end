@@ -25,11 +25,7 @@ const PhilipsPage = () => {
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
 
   return (
-    <HeroContainer
-      language={language}
-      bgColor={"var(--color-accent)"}
-      isGlow={false}
-    >
+    <HeroContainer language={language} bgColor={"var(--color-accent)"}>
       <main
         className={`lg:w-1/2 p-4 items-center flex gap-1 flex-col ${style.mainContainer} ${style.smallScreenHeight}`}
       >

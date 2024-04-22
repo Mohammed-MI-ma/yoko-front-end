@@ -23,7 +23,6 @@ const initialState = {
       {
         attributes: {},
         sku: "",
-        quantity: 0,
         price: 0,
         images: [],
       },
