@@ -22,36 +22,11 @@ import {
   bucket3,
 } from "./images.js";
 
-const ImageConfig = [
-  { uri: Logo },
-
-  { uri: ceraveLogo_low },
-  { uri: cerave },
-
-  { uri: philips },
-  { uri: airfryer },
-
-  { uri: bucket },
-  { uri: LogoB },
-  { uri: casablanca },
-  { uri: basket },
-  { uri: bucketMobile },
-  { uri: YokoEat_low },
-  { uri: YOKOMarket_low },
-  { uri: Tagine_low },
-  { uri: Delivery_low },
-  { uri: Traditional_low },
-  { uri: Rue_low },
-  { uri: YOKO_EAT_low },
-  { uri: YOKO_Rest_low },
-
-  // { uri: Traditional },
-];
-//"/web/guest/acceuil"
-export const ImageConfigsGeneral = [{ uri: Logo }, { uri: LogoB }];
-
 //"/web/guest/pageAtterrissage"
 export const ImageConfigsAtterrissage = [
+  //__logos
+  { uri: Logo },
+  { uri: LogoB },
   { uri: casablanca },
   { uri: Bike_low },
   { uri: LogoB },
@@ -60,12 +35,22 @@ export const ImageConfigsAtterrissage = [
 ];
 
 //"/web/guest/acceuil"
+export const ImageConfigsGeneral = [{ uri: Logo }, { uri: LogoB }];
+
+//"/web/guest/acceuil"
 export const ImageConfigsHome = [
-  { uri: ceraveLogo_low },
-  { uri: cerave },
-  { uri: philips },
-  { uri: airfryer },
+  //__logos
+  { uri: Logo },
+  { uri: LogoB },
+  //__hero_section_products
   { uri: bucket },
+
+  { uri: airfryer },
+  { uri: philips },
+
+  { uri: cerave },
+  { uri: ceraveLogo_low },
+
   { uri: basket },
   { uri: bucketMobile },
   { uri: YokoEat_low },

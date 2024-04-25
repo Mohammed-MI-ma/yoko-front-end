@@ -1,50 +1,43 @@
 import React from "react";
-import { Button, Space, Tooltip } from "antd";
+import { Button, Space } from "antd";
 import { useTranslation } from "react-i18next";
-
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-
+import { IoLogoFacebook, IoLogoInstagram, IoLogoTwitter } from "react-icons/io";
 import useFontFamily from "../../utils/useFontFamily";
 
-const SocialMediaButton = ({ color, icon, tooltip }) => {
-  const { t, i18n } = useTranslation();
+const SocialMediaButton = ({ color, icon }) => {
+  const { i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
 
-  const title = t(tooltip);
-
   return (
-    <Tooltip title={<p style={{ fontFamily: fontFamilyLight }}>{title}</p>}>
-      <Button
-        shape="circle"
-        className="flex items-center justify-center border-none"
-        style={{ color }}
-      >
-        {icon}
-      </Button>
-    </Tooltip>
+    <Button
+      shape="circle"
+      className="flex items-center justify-center border-none"
+      style={{ color, fontFamily: fontFamilyLight }}
+    >
+      {icon}
+    </Button>
   );
 };
 
 const SocialMediaButtons = ({ color, size = "default" }) => {
   return (
     <Space>
-      <SocialMediaButton
-        color={color}
-        icon={<FaFacebookF size={size} />}
-        tooltip={"facebook"}
-      />
-      <SocialMediaButton
-        color={color}
-        icon={<FaTwitter size={size} />}
-        tooltip="twitter"
-      />
-      <SocialMediaButton
-        color={color}
-        icon={<FaInstagram size={size} />}
-        tooltip="Instagram"
-      />
+      {socialMediaData.map(({ platform, icon }) => (
+        <SocialMediaButton
+          key={platform}
+          color={color}
+          icon={icon({ size })}
+          tooltip={platform.toLowerCase()}
+        />
+      ))}
     </Space>
   );
 };
+
+const socialMediaData = [
+  { platform: "Facebook", icon: IoLogoFacebook },
+  { platform: "Twitter", icon: IoLogoTwitter },
+  { platform: "Instagram", icon: IoLogoInstagram },
+];
 
 export default SocialMediaButtons;

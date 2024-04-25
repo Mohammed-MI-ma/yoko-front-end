@@ -84,15 +84,14 @@ const LoginPage = () => {
     setOtp("");
     setModalOpen(false);
   };
+
   //__3__sendOTP2Mail
   const sendOtp = () => {
     dispatch(sendOTP({ email, t }));
   };
-
+  //__4__isEmailExists
   const isEmailExists = async () => {
     try {
-      //__Post_request (params: email,role:"user")
-
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
         { email: email, role: "user" }
@@ -100,12 +99,12 @@ const LoginPage = () => {
 
       if (response.status === 200) {
         if (response.data.result) {
-          message.success(t("userFoundSuccess"));
+          //If the user is connected
           sendOtp();
           setModalOpen(true);
         }
       } else {
-        message.error("Unexpected response status");
+        message.error(t("Unexpected response status"));
       }
     } catch (error) {
       if (error.response) {
@@ -114,10 +113,10 @@ const LoginPage = () => {
           sendOtp();
           setModalOpen(true);
         } else if (error.response.status === 429) {
-          // Too many requests
+          //__to_Many_Requests
           message.error(t("tooManyRequests"));
         } else {
-          // Other server error
+          //__serverError
           message.error(t("serverError", { status: error.response.status }));
         }
       } else if (error.request) {
@@ -129,42 +128,52 @@ const LoginPage = () => {
       }
     }
   };
-
+  //__5__search if exists
   const simpleSearchEmailInDatabase = async (myEmail) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
         { email: myEmail, role: "user" }
       );
+
       if (response.status === 200) {
-        if (response.data.result) {
-          message.success(t("sorry alreadt existed"));
-          return true;
+        if (
+          response.data.result &&
+          response.data.user?.provider === "internal"
+        ) {
+          message.error(t("sorry already existed with inertnal"));
+          return { response: false, status: 352 };
+        } else if (
+          response.data.result &&
+          response.data.user?.provider === "firebase"
+        ) {
+          message.success(t("user already regitred"));
+          return { response: true, status: 353 };
         }
-      } else {
-        return false;
       }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 404) {
-          return false;
+          //__user_not_found means first time registred
+          message.success(t("Welcome to YOKO"));
+          return { response: true, status: 200 };
         } else if (error.response.status === 429) {
-          // Too many requests
+          //__too_many_request
           message.error(t("tooManyRequests"));
-          return false;
+          return { response: false, status: 429 };
         } else {
           // Other server error
           message.error(t("serverError", { status: error.response.status }));
-          return false;
+          return { response: false, status: 500 };
         }
       } else if (error.request) {
-        // The request was made but no response was received
+        //__request_was_made_but_no_response_was_received
         message.error(t("serverUnreachable"));
-        return false;
+        return { response: false, status: 500 };
       } else {
-        // Something happened in setting up the request that triggered an error
+        //__something_happened_in_setting_up_the_request_that_triggered_an_error
         message.error("An error occurred", error.request);
-        return false;
+        return { response: false, status: 500 };
       }
     }
   };
@@ -211,29 +220,65 @@ const LoginPage = () => {
     auth
       .signInWithPopup(provider)
       .then(async (result) => {
-        const accessToken = result.credential.accessToken;
-        console.log("Access Token:", accessToken);
         const user = result.user;
-        console.log("User:", user);
         const retrievedEmail = user?.email;
 
         try {
-          const res = await simpleSearchEmailInDatabase(retrievedEmail);
-          if (res === true) {
-            const idToken = await user.getIdToken();
-            console.log("ID Token:", idToken);
-            const rsul = await revokeRefreshToken(idToken);
+          const { response, status } = await simpleSearchEmailInDatabase(
+            retrievedEmail
+          );
+          const idToken = await user.getIdToken();
 
-            //revoke the access token on the backend endpoint so the token wont be reutilsbale elsewhere
-            //setLogin(false)
-          } else {
+          if (!response && status === 352) {
+            //__Bloqued_the_new_user_loggedIn_using_the_provider
+            await revokeRefreshToken(idToken);
+          } else if (response && status === 353) {
+            const resss = await axios.post(
+              `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/findUserByEmail`,
+              { email: user.email, role: "user" }
+            );
+            const cart = await axios.get(
+              `${process.env.REACT_APP_BASE_API_URI_DEV}api/application/cart/${resss?.data?.user?._id}`
+            );
+            dispatch(
+              setUserLoginFulfilled({
+                user: {
+                  ...resss?.data?.user,
+                  id: resss?.data?.user?._id,
+                  cart: cart?.data?.cart,
+                },
+                access_token: idToken,
+                refreshToken: "sdqsdqsd",
+              })
+            );
+            dispatch(setIsLoggedIn(true));
+            localStorage.setItem("userData", JSON.stringify(resss?.data?.user));
+            localStorage.setItem("access_token", idToken);
+            localStorage.setItem("refreshToken", "qsdqsd");
+            message.success("connected succes ");
+          } else if (response && status === 200) {
             //add the user to the databse insert it and return a serialized user
-            //setLogin(true)
+            const resss = await axios.post(
+              `${process.env.REACT_APP_BASE_API_URI_DEV}api/auth/addUser`,
+              { user: user }
+            );
+            dispatch(
+              setUserLoginFulfilled({
+                user: resss?.data?.user,
+                access_token: idToken,
+                refreshToken: "sdqsdqsd",
+              })
+            );
+
+            dispatch(setIsLoggedIn(true));
+            localStorage.setItem("userData", JSON.stringify(resss?.data?.user));
+            localStorage.setItem("access_token", idToken);
+            localStorage.setItem("refreshToken", "qsdqsd");
+            message.success("created user suuccc ");
           }
         } catch (error) {
           console.error("Error searching email in database:", error);
         }
-
         try {
           const idToken = await user.getIdToken();
           console.log("ID Token:", idToken);

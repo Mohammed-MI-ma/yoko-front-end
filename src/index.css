@@ -8,12 +8,12 @@
 
 /* Font Sizes */
 :root {
-  --font-tiny-size: 0.625rem; /* 10px converted to rem */
-  --font-extra-small-size: 0.625rem; /* 10px converted to rem */
-  --font-small-size: 0.875rem; /* 14px converted to rem */
-  --font-medium-size: 1rem; /* 16px converted to rem */
-  --font-large-size: 1.125rem; /* 18px converted to rem */
-  --font-extra-large-size: 1.5rem; /* 24px converted to rem */
+  --font-tiny-size: 0.625rem;
+  --font-extra-small-size: 0.625rem;
+  --font-small-size: 0.875rem;
+  --font-medium-size: 1rem;
+  --font-large-size: 1.125rem;
+  --font-extra-large-size: 1.5rem;
 }
 
 /* Colors */
@@ -54,7 +54,7 @@
 
 /* Other Variables */
 :root {
-  --max-width-container: 75rem; /* 1200px converted to rem */
+  --max-width-container: 75rem;
 }
 body {
   margin: 0;

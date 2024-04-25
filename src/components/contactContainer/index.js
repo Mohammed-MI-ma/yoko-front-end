@@ -6,30 +6,20 @@ import { useSelector } from "react-redux";
 import useDirection from "../../utils/useDirection";
 import useFontFamily from "../../utils/useFontFamily";
 
-const ContactContainer = () => {
-  const [errorDisplayed, setErrorDisplayed] = useState(false);
+const ContactEmail = ({ email, onClick, loading, error, errorDisplayed }) => {
   const { t, i18n } = useTranslation();
   const direction = useDirection(i18n.language);
-
-  const contactInfo = useSelector((state) => state.contact.contactInfo);
-  const loading = useSelector((state) => state.contact.loading);
-  const error = useSelector((state) => state.contact.error);
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
-  useEffect(() => {
-    if (error && !errorDisplayed) {
-      setErrorDisplayed(true);
-    }
-  }, [error, errorDisplayed]);
 
-  const handleEmailClick = useCallback(() => {
+  const handleClick = useCallback(() => {
     if (!loading && !error && !errorDisplayed) {
-      window.location.href = `mailto:${contactInfo?.email}`;
+      onClick();
     }
-  }, [contactInfo, loading, error, errorDisplayed]);
+  }, [loading, error, errorDisplayed, onClick]);
 
   return (
     <span
-      onClick={handleEmailClick}
+      onClick={handleClick}
       className="flex items-center gap-1"
       style={{
         cursor: loading || error || errorDisplayed ? "default" : "pointer",
@@ -47,9 +37,36 @@ const ContactContainer = () => {
           <i>{t("Réessayer")}</i>
         </small>
       ) : (
-        <small>{contactInfo?.email}</small>
+        <small>{email}</small>
       )}
     </span>
+  );
+};
+
+const ContactContainer = () => {
+  const [errorDisplayed, setErrorDisplayed] = useState(false);
+  const contactInfo = useSelector((state) => state.contact.contactInfo);
+  const loading = useSelector((state) => state.contact.loading);
+  const error = useSelector((state) => state.contact.error);
+
+  useEffect(() => {
+    if (error && !errorDisplayed) {
+      setErrorDisplayed(true);
+    }
+  }, [error, errorDisplayed]);
+
+  const handleEmailClick = useCallback(() => {
+    window.location.href = `mailto:${contactInfo?.email}`;
+  }, [contactInfo]);
+
+  return (
+    <ContactEmail
+      email={contactInfo?.email}
+      onClick={handleEmailClick}
+      loading={loading}
+      error={error}
+      errorDisplayed={errorDisplayed}
+    />
   );
 };
 

@@ -1,5 +1,5 @@
 //__React
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Dropdown, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { DownOutlined } from "@ant-design/icons";
@@ -34,17 +34,21 @@ import { CustomDivider } from "../../pages/DashboardPage";
 //_styling
 import style from "./Footer.module.css";
 import { Link } from "react-router-dom";
+import { fetchContactInfo } from "../../actions/contactActions";
 
 const RIGHT = "right";
 const LEFT = "left";
 const AR = "ar";
 
 const Footer = () => {
-  const language = useSelector((state) => state.application.language);
-  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+  const direction = useDirection(i18n.language);
+
+  const language = useSelector((state) => state.application.language);
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
   const responsiveState = useResponsiveState();
+
   const items = [
     {
       key: "1",
@@ -55,7 +59,15 @@ const Footer = () => {
       label: <p style={{ fontFamily: fontFamilyLight }}>{t("arabic")}</p>,
     },
   ];
-  const direction = useDirection(i18n.language);
+
+  //CONTACT_API
+  const dispatchFetchContactInfo = useCallback(() => {
+    dispatch(fetchContactInfo());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatchFetchContactInfo();
+  }, [dispatchFetchContactInfo]);
 
   const handleChange = (value) => {
     switch (value) {
@@ -88,7 +100,6 @@ const Footer = () => {
     dispatch(setLanguage(lng));
     dispatch(setSiteDirection(direction));
   };
-  // Memoize the pages array creation
   const memoizedContactUsBloc = useMemo(() => {
     try {
       if (!language || !t) return [];

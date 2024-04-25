@@ -3,44 +3,43 @@ import { createRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
 import Backend from "i18next-xhr-backend";
-import { BrowserRouter as Router } from "react-router-dom"; // Import BrowserRouter
-import "animate.css";
-
-//__COMPONENTS
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import App from "./App";
-
-//__STYLING
+import Store from "./store";
+import "animate.css";
 import "./index.css";
 
-import { Provider } from "react-redux";
-//__STORE
-import Store from "./store";
-
-// Initialize i18n
-i18n
-  .use(Backend)
-  //.use(LanguageDetector)
-  .init({
-    fallbackLng: "fr", // Fallback language
-    debug: false, // Disable debug mode in production
+// Initialize i18n with proper error handling
+try {
+  i18n.use(Backend).init({
+    fallbackLng: "fr",
+    debug: false,
     interpolation: {
-      escapeValue: false, // Not needed for React
+      escapeValue: false,
     },
     resources: {
       ar: {
-        translation: require("./i18n/ar/translation.json"), // Arabic translation
+        translation: require("./i18n/ar/translation.json"),
       },
       fr: {
-        translation: require("./i18n/fr/translation.json"), // French translation
-      },
-      en: {
-        translation: require("./i18n/en/translation.json"), // English translation
+        translation: require("./i18n/fr/translation.json"),
       },
     },
   });
+} catch (error) {
+  console.error("Error initializing i18n:", error);
+}
+
+// Ensure the root element exists before rendering the app
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("Root element with id 'root' not found.");
+}
 
 // Render the app using createRoot
-const root = createRoot(document.getElementById("root"));
+const root = createRoot(rootElement);
+
 root.render(
   <I18nextProvider i18n={i18n}>
     <React.StrictMode>
