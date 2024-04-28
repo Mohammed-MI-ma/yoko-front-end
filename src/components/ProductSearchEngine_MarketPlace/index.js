@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Input } from "antd";
+import { Input, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { FaSearch } from "react-icons/fa";
 
@@ -17,6 +17,7 @@ const ProductSearchEngineMarketPlace = ({
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
+  const language = useSelector((state) => state.application.language);
 
   const handleSearch = useCallback(
     (value) => {
@@ -60,14 +61,33 @@ const ProductSearchEngineMarketPlace = ({
   return (
     <section className={"w-full"}>
       <Input
+        suffix={
+          <>
+            {language === "ar" && (
+              <>
+                <p style={{ fontSize: ".75rem", fontFamily: fontFamilyLight }}>
+                  /{t(customPrefix)}
+                </p>
+                <FaSearch />
+              </>
+            )}
+          </>
+        }
         prefix={
           <>
-            <FaSearch />
-            &nbsp;<p style={{ fontSize: ".75rem" }}>/{t(customPrefix)}</p>
+            {language !== "ar" && (
+              <>
+                <FaSearch />
+                <p style={{ fontSize: ".75rem", fontFamily: fontFamilyLight }}>
+                  /{t(customPrefix)}
+                </p>
+              </>
+            )}
           </>
         }
         allowClear
         size="large"
+        onKeyPress={(e) => preventArabicInput(e, fontFamilyLight, t)}
         placeholder={memoizedTranslations.placeholder}
         style={{
           borderRadius: "6.25rem",
@@ -81,3 +101,10 @@ const ProductSearchEngineMarketPlace = ({
 };
 
 export default ProductSearchEngineMarketPlace;
+export function preventArabicInput(event, font, t) {
+  var charCode = event.which || event.keyCode;
+  if (charCode >= 0x0600 && charCode <= 0x06ff) {
+    message.warning(<p style={{ fontFamily: font }}>{t("Please note")}</p>);
+    event.preventDefault();
+  }
+}

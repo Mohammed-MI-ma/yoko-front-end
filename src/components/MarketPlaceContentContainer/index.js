@@ -1,5 +1,5 @@
 import { Content } from "antd/es/layout/layout";
-import React, { useState } from "react";
+import React from "react";
 import MarketPlaceBriksComponent from "../MarketPlaceBriksComponent";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../utils/useFontFamily";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import CardProduct from "../CardProduct";
 import { Result } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
+import style from "./MarketPlaceContentContainer.module.css";
 const contentStyle = {
   textAlign: "center",
   color: "#fff",
@@ -22,7 +23,7 @@ const MarketPlaceContentContainer = ({ onSearch, currentPage }) => {
       {onSearch ? (
         <Content style={{ ...contentStyle }} id="anOtherContent">
           {products?.length ? (
-            <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
+            <div className={`${style.grid}`}>
               {products.map((product) => (
                 <CardProduct key={product.id} product={product} />
               ))}
@@ -59,7 +60,7 @@ const MarketPlaceContentContainer = ({ onSearch, currentPage }) => {
             <Content style={contentStyle}>
               {[
                 {
-                  title: t("Nouveautés"),
+                  title: t("market"),
                   toPage: "/web/guest/market/newProducts",
                   category: null,
                 },
@@ -96,7 +97,7 @@ const MarketPlaceContentContainer = ({ onSearch, currentPage }) => {
           ) : (
             <Content style={{ ...contentStyle }} id="anOtherContent">
               {products?.length ? (
-                <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
+                <div className={`${style.grid}`}>
                   {products.map((product) => (
                     <CardProduct key={product.id} product={product} />
                   ))}
@@ -129,7 +130,7 @@ const MarketPlaceContentContainer = ({ onSearch, currentPage }) => {
             </Content>
           )}
         </>
-      )}{" "}
+      )}
     </>
   );
 };

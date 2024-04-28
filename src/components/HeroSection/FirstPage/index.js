@@ -13,9 +13,12 @@ import CenteredContainer from "../../CenteredContainer";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../../utils/useFontFamily";
 import { HeroActionButton } from "../PHILIPSPage";
+import { useSelector } from "react-redux";
 
-const FirstPage = ({ language, t }) => {
-  const { i18n } = useTranslation();
+const FirstPage = () => {
+  const { t, i18n } = useTranslation();
+  const language = useSelector((state) => state.application.language);
+
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const HeaderHeroMemoized = React.memo(() => (
     <HeaderHero>

@@ -3,7 +3,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
-const CustomSuspense = ({ children }) => {
+const CustomSuspense = ({ children, key }) => {
   return (
     <Suspense
       fallback={
@@ -13,13 +13,13 @@ const CustomSuspense = ({ children }) => {
           indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
         />
       }
-      // Gestion des erreurs
       onError={(error) => console.error("Error during suspense:", error)}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ x: 200, opacity: 0 }} // Initial animation state
+        animate={{ x: 0, opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
+        exit={{ opacity: 0 }} // Animation when component exits
+        key={key}
       >
         {children}
       </motion.div>

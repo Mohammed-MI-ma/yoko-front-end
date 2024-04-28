@@ -6,7 +6,7 @@ import { Result } from "antd";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../utils/useFontFamily";
 import { FrownOutlined } from "@ant-design/icons";
-
+import style from "./MarketPlaceBriksComponent.module.css";
 const MarketPlaceBriksComponent = ({ title, toPage, category }) => {
   const [products, setProducts] = useState([]);
   const { t, i18n } = useTranslation();
@@ -37,7 +37,7 @@ const MarketPlaceBriksComponent = ({ title, toPage, category }) => {
     return () => {
       // Clean up function
     };
-  }, []);
+  }, [category]);
 
   return (
     <>
@@ -45,7 +45,7 @@ const MarketPlaceBriksComponent = ({ title, toPage, category }) => {
         {title}
       </HeaderComponent>
       {products.length ? (
-        <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
+        <div className={`${style.grid}`}>
           {products.map((product) => (
             <CardProduct key={product.id} product={product} />
           ))}

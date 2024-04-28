@@ -24,13 +24,7 @@ const BreadCrumbContent = () => {
           color: "var(--color-primary)",
         }}
       >
-        {lastItem === "delivery" ? (
-          t("YOKO")
-        ) : (
-          <>
-            {t("YOKO")}&nbsp;{t("Market")}
-          </>
-        )}
+        {lastItem === "delivery" ? t("YOKO") : <>{t("YOKO Market")}</>}
       </span>
 
       <small> - {t(lastItem)}</small>

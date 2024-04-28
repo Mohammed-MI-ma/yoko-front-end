@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,6 @@ import Loader from "./components/Loader";
 import Footer from "./components/Footer";
 
 import axios from "axios";
-import { fetchContactInfo } from "./actions/contactActions";
 import {
   setDrawerOpenCart,
   setDrawerOpenSettings,
@@ -35,7 +34,6 @@ import SettingsAdminDrawer from "./components/SettingsAdminDrawer";
 
 import style from "./App.module.css";
 
-import { ROLE } from "./utils/roles";
 import CartDrawer from "./components/CartDrawer";
 import { setCart } from "./reducers/applicationService/marketPlace/marketPlaceSlice";
 
@@ -146,17 +144,6 @@ function App() {
     console.log("fuck");
   }, [isLoggedIn, location.pathname]);
 
-  //CONTACT_API
-  /*
-  const dispatchFetchContactInfo = useCallback(() => {
-    d(fetchContactInfo());
-    retreiveCart();
-  }, [d]);
-
-  useEffect(() => {
-    dispatchFetchContactInfo();
-  }, [dispatchFetchContactInfo]);
-*/
   if (!appIsReady) {
     return <Loader isLoading={loading} />;
   }
@@ -202,8 +189,3 @@ function App() {
 }
 
 export default App;
-
-const isAdminAuthenticated = () => {
-  const user = JSON.parse(localStorage.getItem("userData"));
-  return user && user.role === ROLE.admin;
-};

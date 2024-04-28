@@ -2,11 +2,17 @@ import React from "react";
 import { Button, List } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import style from "./sideList.module.css";
+import { useSelector } from "react-redux";
+import useFontFamily from "../../utils/useFontFamily";
 
 const SideList = () => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const location = useLocation();
+  const language = useSelector((state) => state.application.language);
+  const fontFamilyRegular = useFontFamily(i18n.language, "normal");
+
   const navigate = useNavigate();
 
   const data = [
@@ -14,7 +20,6 @@ const SideList = () => {
     "Fruits",
     "Vegetables&Herbs",
     "Butchery&Poultry",
-    "Fishery",
     "Bread",
     "Bakery",
     "GroceryEssentials",
@@ -32,6 +37,10 @@ const SideList = () => {
       renderItem={(item) => (
         <Button
           className={style.itemList}
+          style={{
+            textAlign: language === "ar" ? "right" : "left",
+            fontFamily: fontFamilyRegular,
+          }}
           type="text"
           onClick={() =>
             item === "market"

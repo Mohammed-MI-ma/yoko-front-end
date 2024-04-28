@@ -122,6 +122,8 @@
   "Add new Delivery Information": "AJOUTER UN NOUVEAU LIVREUR",
   "fileAttenteActualise": "file attente actualisée",
   "brand": "Marque",
+  "Sections": "Sections",
+
   "productName": "Nom Produit",
   "description": "Description",
   "category": "Categories",
@@ -166,7 +168,7 @@
   "SEE MORE": "VOIR PLUS",
   "RechercherDansYOKOMarket": "Rechercher dans YOKO Market",
   "order delivery now": "Commandez",
-
+  "Please note": "Notre recherche prend actuellement en charge uniquement les lettres latines. Les caractères arabes ne sont pas encore pris en charge. Merci pour votre compréhension.",
   "DISCOVER THE DELIVERY BOY": "Découvrez le livreur avec YOKO",
   "we have all you need": "Nous avons tout ce dont vous avez besoin."
 }

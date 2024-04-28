@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const HeroContainer = ({ bgColor, language, children }) => {
+const HeroContainer = ({ bgColor, children }) => {
+  const language = useSelector((state) => state.application.language);
+
   const flexDirectionClass =
     language === "fr" ? "lg:flex-row-reverse" : "lg:flex-row";
 

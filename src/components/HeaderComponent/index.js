@@ -3,12 +3,18 @@ import style from "./HeaderComponent.module.css";
 import { useTranslation } from "react-i18next";
 import useFontFamily from "../../utils/useFontFamily";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeaderComponent = ({ children, toPage, category }) => {
   const { t, i18n } = useTranslation();
+  const language = useSelector((state) => state.application.language);
+
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   return (
-    <div className={style.headerStyle}>
+    <div
+      className={style.headerStyle}
+      style={{ flexDirection: language === "ar" ? "row-reverse" : "row" }}
+    >
       <h1
         style={{
           color: "var(--color-text)",
