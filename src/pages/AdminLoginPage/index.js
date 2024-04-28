@@ -44,7 +44,7 @@ const AdminLoginPage = ({ fixedHeight }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate("/web/guest/acceuil");
     }
   }, [isLoggedIn, navigate]);
 

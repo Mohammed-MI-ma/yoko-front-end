@@ -43,6 +43,7 @@ const authSlice = createSlice({
       localStorage.removeItem("userData");
       localStorage.removeItem("is_logged_in");
       localStorage.removeItem("loginData");
+      localStorage.removeItem("loginData");
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;

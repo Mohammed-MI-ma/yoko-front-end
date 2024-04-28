@@ -1,52 +1,33 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Traditional, Traditional_low } from "../../images";
 import ComingSoon from "../../components/ComingSoon";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
-import { setLanguage } from "../../reducers/applicationService/applicationSlice";
-import { AnimatePresence } from "framer-motion";
-import useResponsiveState from "../../utils/useResponsiveState";
+import useFontFamily from "../../utils/useFontFamily";
 
-const TraditionalFoodPage = ({
-  fixedWidth,
-  highDefinitionImgUrl = Traditional,
-  fixedHeight,
-}) => {
-  const { t } = useTranslation();
-  const responsiveState = useResponsiveState();
-
-  const [imageUrl, setImageUrl] = useState(Traditional_low); // Set your initial lightweight image URL here
-  const [imageLoaded, setImageLoaded] = useState(false);
+const TraditionalFoodPage = ({ highDefinitionImgUrl = Traditional }) => {
+  const { i18n, t } = useTranslation();
   const language = useSelector((state) => state.application.language);
-  const primaryRegularFont = useMemo(
-    () => `Primary-regular-${language}`,
-    [language]
-  );
+
+  const fontFamilyLight = useFontFamily(i18n.language, "normal");
+  const [imageUrl, setImageUrl] = useState(Traditional_low);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   useEffect(() => {
     if (!imageLoaded) {
-      // Load your high definition image here
-      const highDefinitionImageUrl = highDefinitionImgUrl; // Set your high definition image URL here
+      const highDefinitionImageUrl = highDefinitionImgUrl;
       const img = new Image();
       img.src = highDefinitionImageUrl;
-      // Inside the image onload event handler
-
-      // Inside the image onload event handler
       img.onload = () => {
-        // Clear any existing timeout
         clearTimeout(timeoutId);
-
-        // Update the state with the high definition image URL
         setImageUrl(highDefinitionImageUrl);
         setImageLoaded(true);
       };
-
-      // Set a timeout to handle slow network conditions
       const timeoutId = setTimeout(() => {
-        // Fallback to default image or display placeholder
-        setImageUrl(null); // Set your default image URL here
+        setImageUrl(Traditional_low);
         setImageLoaded(true);
-      }, 5000); // Set the timeout duration (in milliseconds) as needed
+      }, 5000);
     }
   }, [imageLoaded, highDefinitionImgUrl]);
   const containerStyles = {
@@ -54,8 +35,6 @@ const TraditionalFoodPage = ({
     backgroundPosition: "top",
     backgroundSize: "cover",
     borderBottom: "0px",
-    width: fixedWidth || "100%", // Use fixed width or full width if not provided
-    height: fixedHeight || "auto", // Use fixed height or auto height if not provided
     position: "relative",
     backgroundColor: "white",
     minHeight: "75vh",
@@ -87,7 +66,6 @@ const TraditionalFoodPage = ({
         <meta property="og:type" content="website" />
         <meta property="og:image" content={imageUrl} />
         <meta name="twitter:card" content="summary_large_image" />
-        {/* Add other meta tags as needed */}
       </Helmet>
       <div className="w-full">
         <div
@@ -95,15 +73,9 @@ const TraditionalFoodPage = ({
           style={containerStyles}
         >
           <ComingSoon
-            font={language === "ar" ? primaryRegularFont : "Neue_Power-fr"}
+            font={language === "ar" ? fontFamilyLight : "Neue_Power-fr"}
             title={
-              <h1
-                style={{
-                  fontSize: responsiveState.fixedFontSizeTitleComingSoon,
-                }}
-              >
-                {t("Traditional Food")}
-              </h1>
+              <h1 style={{ fontSize: "4rem" }}>{t("Traditional Food")}</h1>
             }
           />
         </div>

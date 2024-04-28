@@ -3,6 +3,9 @@
   height: calc(100vh - 100px);
   color: #fff;
   text-align: center;
+  max-height: 500px;
+  display: flex;
+  justify-content: center;
 }
 .headerStyle {
   font-size: 1.5rem;

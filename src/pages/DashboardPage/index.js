@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,18 +24,25 @@ import AnimatesIcon from "../../components/AnimatesIcon";
 import CenteredContainer from "../../components/CenteredContainer";
 import useDirection from "../../utils/useDirection";
 import { setCredentials } from "../../reducers/authService/authSlice";
+import { ROLE } from "../../utils/roles";
+import { useNavigate } from "react-router-dom";
 
 const MAX_LENGTH = 100;
 const DashboardPage = () => {
   const { t, i18n } = useTranslation();
-  const { preferences } = useSelector((state) => state.auth.userInfo);
+  const { preferences, role } = useSelector((state) => state.auth.userInfo);
   const language = useSelector((state) => state.application.language);
   const accessToken = useSelector((state) => state.auth.userToken);
   const d = useDispatch();
   const direction = useDirection(i18n.language);
-
+  const navigate = useNavigate();
   const fontFamilyBold = useFontFamily(i18n.language, "bold");
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
+  useEffect(() => {
+    if (role && role !== ROLE.admin) {
+      navigate("/");
+    }
+  }, [navigate, role]);
 
   return (
     <>

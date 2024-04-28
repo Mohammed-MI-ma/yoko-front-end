@@ -3,7 +3,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
-const CustomSuspense = ({ children, key }) => {
+const CustomSuspense = ({ children, id }) => {
   return (
     <Suspense
       fallback={
@@ -19,7 +19,7 @@ const CustomSuspense = ({ children, key }) => {
         initial={{ x: 200, opacity: 0 }} // Initial animation state
         animate={{ x: 0, opacity: 1, transition: { delay: 0.5 } }} // Animation when component enters
         exit={{ opacity: 0 }} // Animation when component exits
-        key={key}
+        key={id}
       >
         {children}
       </motion.div>

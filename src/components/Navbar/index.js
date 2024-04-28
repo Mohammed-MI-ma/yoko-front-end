@@ -3,18 +3,14 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { Avatar } from "antd";
-
 import CenteredContainer from "../CenteredContainer";
 import useFontFamily from "../../utils/useFontFamily";
 
 import NavbarActionsButtons from "../NavbarActionsButtons";
-import SearchInputField from "../SearchInputField";
 
 import style from "./Navbar.module.css";
 
 import { Logo } from "../../images";
-import HideComponentOnRoutes from "../HideComponentOnRoutes";
 const Navbar = () => {
   const { i18n } = useTranslation();
   const languag = useSelector((state) => state.application.language);
@@ -59,7 +55,7 @@ const Navbar = () => {
               flexDirection: languag === "ar" ? "row-reverse" : "row",
             }}
           >
-            <NavbarActionsButtons font={fontFamilylight} />
+            <NavbarActionsButtons />
           </CenteredContainer>
         </div>
       </div>

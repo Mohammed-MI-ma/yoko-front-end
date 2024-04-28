@@ -24,16 +24,11 @@ const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 //__404_page
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
-const isAdminAuthenticated = () => {
-  const user = JSON.parse(localStorage.getItem("userData"));
-  return user && user.role === ROLE.admin;
-};
-
 export const routes = [
   {
     path: "/",
     element: (
-      <CustomSuspense key="AtterrissagePage">
+      <CustomSuspense id="AtterrissagePage">
         <AtterrissagePage />
       </CustomSuspense>
     ),
@@ -42,7 +37,7 @@ export const routes = [
   {
     path: "/web/guest/pageAtterrissage",
     element: (
-      <CustomSuspense key="AtterrissagePage1">
+      <CustomSuspense id="AtterrissagePage1">
         <AtterrissagePage />
       </CustomSuspense>
     ),
@@ -51,7 +46,7 @@ export const routes = [
   {
     path: "/web/guest/acceuil",
     element: (
-      <CustomSuspense key="HomePage">
+      <CustomSuspense id="HomePage">
         <HomePage />
       </CustomSuspense>
     ),
@@ -60,7 +55,7 @@ export const routes = [
   {
     path: "/web/guest/traditional",
     element: (
-      <CustomSuspense key="traditional">
+      <CustomSuspense id="traditional">
         <TraditionalFoodPage />
       </CustomSuspense>
     ),
@@ -69,7 +64,7 @@ export const routes = [
   {
     path: "/web/guest/eat",
     element: (
-      <CustomSuspense key="YOKOEatPage">
+      <CustomSuspense id="YOKOEatPage">
         <YOKOEatPage />
       </CustomSuspense>
     ),
@@ -78,7 +73,7 @@ export const routes = [
   {
     path: "/web/guest/cart",
     element: (
-      <CustomSuspense key="CartPage">
+      <CustomSuspense id="CartPage">
         <CartPage />
       </CustomSuspense>
     ),
@@ -87,7 +82,7 @@ export const routes = [
   {
     path: "/web/guest/delivery",
     element: (
-      <CustomSuspense key="delivery">
+      <CustomSuspense id="delivery">
         <DeliveryBoyPage />
       </CustomSuspense>
     ),
@@ -96,7 +91,7 @@ export const routes = [
   {
     path: "/web/guest/market",
     element: (
-      <CustomSuspense key="market">
+      <CustomSuspense id="market">
         <MarketPage />
       </CustomSuspense>
     ),
@@ -105,7 +100,7 @@ export const routes = [
   {
     path: "/web/guest/market/Fruits",
     element: (
-      <CustomSuspense key="Fruits">
+      <CustomSuspense id="Fruits">
         <MarketPage />
       </CustomSuspense>
     ),
@@ -114,7 +109,7 @@ export const routes = [
   {
     path: "/web/guest/market/Vegetables&Herbs",
     element: (
-      <CustomSuspense key="Vegetables">
+      <CustomSuspense id="Vegetables">
         <MarketPage />
       </CustomSuspense>
     ),
@@ -125,7 +120,7 @@ export const routes = [
   {
     path: "/yoko/account/log-in",
     element: (
-      <CustomSuspense key="log">
+      <CustomSuspense id="log">
         <LoginPage />
       </CustomSuspense>
     ),
@@ -134,7 +129,7 @@ export const routes = [
   {
     path: "/yoko/account/log-in-admin",
     element: (
-      <CustomSuspense key="admin">
+      <CustomSuspense id="admin">
         <AdminLoginPage />
       </CustomSuspense>
     ),
@@ -143,19 +138,17 @@ export const routes = [
   // TODO: //ADMIN DASHBOARD ROUTE
   {
     path: "/yoko/account/dashboard",
-    element: isAdminAuthenticated() ? (
-      <CustomSuspense key="dashboard">
+    element: (
+      <CustomSuspense id="dashboard">
         <DashboardPage />
       </CustomSuspense>
-    ) : (
-      <Navigate to="/" replace />
     ),
   },
   // TODO: //404 ROUTE
   {
     path: "*",
     element: (
-      <CustomSuspense key="404">
+      <CustomSuspense id="404">
         <NotFoundPage />
       </CustomSuspense>
     ),

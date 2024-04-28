@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Spin,
-  Button,
-  ConfigProvider,
-  Space,
-  Badge,
-  Dropdown,
-  Divider,
-} from "antd";
+import { Spin, Button, ConfigProvider, Space, Badge, Dropdown } from "antd";
 import { useLocation } from "react-router-dom";
 import { FaCartArrowDown } from "react-icons/fa";
 import { FiMessageSquare } from "react-icons/fi";
@@ -26,6 +18,7 @@ import { setDrawerOpenCart } from "../../reducers/applicationService/application
 
 import { useTransition } from "react";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
+import useDirection from "../../utils/useDirection";
 
 const SignUpButton = ({ text, font, icon }) => {
   return (
@@ -66,13 +59,16 @@ const SignUpButton = ({ text, font, icon }) => {
   );
 };
 
-const NavbarActionsButtons = ({ font }) => {
+const NavbarActionsButtons = () => {
   const { t, i18n } = useTranslation();
   const language = useSelector((state) => state.application.language);
+  const fontFamilylight = useFontFamily(i18n.language, "normal");
+
   const fontFamilybold = useFontFamily(i18n.language, "bold");
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const cart = useSelector((state) => state.marketPlace.cartME);
   const dispatch = useDispatch();
+  const direction = useDirection(i18n.language);
 
   const user = useSelector((state) => state.auth.userInfo); // Assuming user is stored in the Redux state
   const fontFamilyLight = useFontFamily(i18n.language, "normal");
@@ -117,14 +113,33 @@ const NavbarActionsButtons = ({ font }) => {
         break;
     }
   }, [location]);
+
   const items = [
     {
       key: "1",
-      label: <p style={{ fontFamily: fontFamilyLight }}>{t("french")}</p>,
+      label: (
+        <p
+          style={{
+            fontFamily: fontFamilyLight,
+            textAlign: direction === "rtl" ? "right" : "left",
+          }}
+        >
+          {t("Casablanca")}
+        </p>
+      ),
     },
     {
       key: "2",
-      label: <p style={{ fontFamily: fontFamilyLight }}>{t("arabic")}</p>,
+      label: (
+        <p
+          style={{
+            fontFamily: fontFamilyLight,
+            textAlign: direction === "rtl" ? "right" : "left",
+          }}
+        >
+          {t("Rabat")}
+        </p>
+      ),
     },
   ];
   const onClick = ({ key }) => {
@@ -153,7 +168,7 @@ const NavbarActionsButtons = ({ font }) => {
             },
           }}
         >
-          <Space>
+          <Space dir={direction}>
             {isPending ? (
               <div style={style}>
                 <Spin
@@ -179,28 +194,47 @@ const NavbarActionsButtons = ({ font }) => {
                         borderRadius: "100px",
                         display: "flex",
                         justifyContent: "space-between",
+                        fontFamily: fontFamilylight,
                       }}
                     >
-                      {true ? t("CASABLANCA") : t("french")}
+                      {true ? t("Casablanca") : t("Rabat")}
                       <DownOutlined />
                     </Space>
                   </Dropdown>
                 </div>
                 {user?.role === "admin" && (
                   <CenteredContainer className={"flex-col"}>
-                    <p style={{ fontSize: "var(--font-tiny-size)" }}>Mode</p>
+                    <p
+                      style={{
+                        fontSize: "var(--font-tiny-size)",
+                        fontFamily: fontFamilylight,
+                      }}
+                    >
+                      {t("Mode")}
+                    </p>
                     <Switch
                       onChange={onChange}
                       checked={checked}
                       size={"large"}
                       checkedChildren={
-                        <p style={{ fontFamily: font }}>Admin</p>
+                        <p style={{ fontFamily: fontFamilylight }}>
+                          {t("Admin")}
+                        </p>
                       }
                       unCheckedChildren={
-                        <p style={{ fontFamily: font }}>Visiteur</p>
+                        <p style={{ fontFamily: fontFamilylight }}>
+                          {t("Visiteur")}
+                        </p>
                       }
                     />
-                    <p style={{ fontSize: "var(--font-tiny-size)" }}>activé</p>
+                    <p
+                      style={{
+                        fontSize: "var(--font-tiny-size)",
+                        fontFamily: fontFamilylight,
+                      }}
+                    >
+                      {t("activé")}
+                    </p>
                   </CenteredContainer>
                 )}
               </>
